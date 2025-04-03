@@ -52,18 +52,9 @@ public class GreedyAuto extends LinearOpMode {
         robot.DriveByEncoderTicks(-720, 1700, -655, 1587, 0.3);
     }
 
-    void ForwardALittle(){
-        robot.DriveByEncoderTicks(57,71,91, 81, 0.25);
-    }
-
     void Rotate180(){
         robot.DriveByEncoderTicks(-1328, 1385, 1442, -1403, 0.25);
     }
-
-    void Ending(){
-        robot.DriveByEncoderTicks(-1131, 1725, -1139, 1671, 0.9);
-    }
-
     void HangingSequence(){
         robot.SetViperSlidePos(RobotHardware.TopRungEncoders - 9000);
         sleep(500);

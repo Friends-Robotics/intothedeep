@@ -8,7 +8,7 @@ import Y13CompCode.FSL.HardwareMaps.RobotHardware;
 public class SimpleAuto extends LinearOpMode {
     RobotHardware robot = new RobotHardware(this);
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode(){
         robot.init(true);
         waitForStart();
 
