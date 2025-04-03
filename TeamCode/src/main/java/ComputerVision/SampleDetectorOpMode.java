@@ -37,13 +37,13 @@ public class SampleDetectorOpMode extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-//        while (opModeIsActive()) {
-//            telemetry.addData("Detected:", pipeline.isGoldDetected());
-//            telemetry.addData("Gold X:", pipeline.getGoldX());
-//            telemetry.addData("Gold Y:", pipeline.getGoldY());
-//            telemetry.addData("Angle:", pipeline.getGoldAngle());
-//            telemetry.update();
-//        }
+        while (opModeIsActive()) {
+            telemetry.addData("Detected:", pipeline.isSampleDetected());
+            telemetry.addData("Gold X:", pipeline.getSampleX());
+            telemetry.addData("Gold Y:", pipeline.getSampleY());
+            telemetry.addData("Angle:", pipeline.getSampleAngle());
+            telemetry.update();
+        }
 
         webcam.stopStreaming();
     }
