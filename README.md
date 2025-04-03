@@ -1,4 +1,9 @@
-## Welcome to the Offical Pedro Pathing Quickstart!  
+# Into The Deep Unified Robot Controller
 
-Follow the steps on our [website](https://pedropathing.com/) to tune and setup!  
-Feel Free to reach out on the [Offical Pedro Pathing Discord Server](https://discord.gg/2GfC4qBP5s)!
+This contains all of the code for the Into The Deep FTC competition ( 24 / 25 )
+
+### please read
+
+DO NOT click on dialog box saying upgrade AGP, or something similar, please ignore it
+
+to contribute, make branch and pr to main
