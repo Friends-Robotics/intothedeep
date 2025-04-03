@@ -5,21 +5,24 @@ import com.pedropathing.localization.constants.*;
 
 public class LConstants {
     static {
-        ThreeWheelConstants.forwardTicksToInches = .001989436789;
-        ThreeWheelConstants.strafeTicksToInches = .001989436789;
-        ThreeWheelConstants.turnTicksToInches = .001989436789;
-        ThreeWheelConstants.leftY = 1;
-        ThreeWheelConstants.rightY = -1;
-        ThreeWheelConstants.strafeX = -2.5;
-        ThreeWheelConstants.leftEncoder_HardwareMapName = "leftFront";
-        ThreeWheelConstants.rightEncoder_HardwareMapName = "rightRear";
-        ThreeWheelConstants.strafeEncoder_HardwareMapName = "rightFront";
+        // Multipliers
+        ThreeWheelConstants.forwardTicksToInches = .0009;
+        ThreeWheelConstants.strafeTicksToInches = .001;
+        ThreeWheelConstants.turnTicksToInches = .0009;
+
+        // Odometer offsets
+        ThreeWheelConstants.leftY = 4.143;
+        ThreeWheelConstants.rightY = -4.143;
+        ThreeWheelConstants.strafeX = -5.361;
+
+        // Encoder ports (encoders are attached to motor encoder ports)
+        ThreeWheelConstants.leftEncoder_HardwareMapName = "BRW";
+        ThreeWheelConstants.rightEncoder_HardwareMapName = "FLW";
+        ThreeWheelConstants.strafeEncoder_HardwareMapName = "FRW";
+
+        // Encoder directions
         ThreeWheelConstants.leftEncoderDirection = Encoder.REVERSE;
-        ThreeWheelConstants.rightEncoderDirection = Encoder.REVERSE;
-        ThreeWheelConstants.strafeEncoderDirection = Encoder.FORWARD;
+        ThreeWheelConstants.rightEncoderDirection = Encoder.FORWARD;
+        ThreeWheelConstants.strafeEncoderDirection = Encoder.REVERSE;
     }
 }
-
-
-
-

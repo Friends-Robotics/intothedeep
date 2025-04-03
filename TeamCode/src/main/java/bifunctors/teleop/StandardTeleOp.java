@@ -1,12 +1,12 @@
-package Y13CompCode.FSL.TeleOps;
+package bifunctors.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import Y13CompCode.FSL.Enums.IntakeMotorStates;
-import Y13CompCode.FSL.Enums.ViperSlideDirections;
-import Y13CompCode.FSL.HardwareMaps.RobotHardware;
+import bifunctors.helper.IntakeMotorStates;
+import bifunctors.helper.ViperSlideDirections;
+import bifunctors.hardwaremap.RobotHardware;
 
 @TeleOp(name="StandardTeleOp", group="Y13CompCode/FSL")
 public class StandardTeleOp extends LinearOpMode {

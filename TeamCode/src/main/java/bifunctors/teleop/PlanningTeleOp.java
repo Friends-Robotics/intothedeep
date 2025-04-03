@@ -1,4 +1,4 @@
-package Y13CompCode.FSL.TeleOps;
+package bifunctors.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;

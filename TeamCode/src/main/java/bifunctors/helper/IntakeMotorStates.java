@@ -1,3 +1,3 @@
-package Y13CompCode.FSL.Enums;
+package bifunctors.helper;
 
 public enum IntakeMotorStates {IN, OUT, NONE}

@@ -1,12 +1,12 @@
-package Y13CompCode.FSL.HardwareMaps;
+package bifunctors.hardwaremap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import Y13CompCode.FSL.Enums.IntakeMotorStates;
-import Y13CompCode.FSL.Enums.ViperSlideDirections;
+import bifunctors.helper.IntakeMotorStates;
+import bifunctors.helper.ViperSlideDirections;
 
 
 public class RobotHardware {

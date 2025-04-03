@@ -1,9 +1,9 @@
-package Y13CompCode.FSL.Autonomous;
+package bifunctors.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import Y13CompCode.FSL.HardwareMaps.RobotHardware;
+import bifunctors.hardwaremap.RobotHardware;
 
 @Autonomous(name = "Greedy Auto", group = "Y13CompCode/FSL")
 public class GreedyAuto extends LinearOpMode {
