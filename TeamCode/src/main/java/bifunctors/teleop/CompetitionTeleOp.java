@@ -5,9 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import bifunctors.hardwaremap.HardwareMap;
 import bifunctors.helper.GamepadEx;
-import bifunctors.helper.Mecanum;
+import bifunctors.hardwaremap.components.Mecanum;
 import static bifunctors.helper.GamepadEx.primary;
-import static bifunctors.helper.GamepadEx.secondary;
 import static bifunctors.helper.GamepadEx.GamepadButton.*;
 
 @TeleOp(name="Competition", group="Linear OpMode")
@@ -20,13 +19,7 @@ public class CompetitionTeleOp extends LinearOpMode {
         telemetry.addData("Status", "Initialised HardwareMap");
 
         // Create mecanum drive
-        Mecanum m = Mecanum.Init(
-                teamHardwareMap.FrontRightMotor,
-                teamHardwareMap.FrontLeftMotor,
-                teamHardwareMap.BackRightMotor,
-                teamHardwareMap.BackLeftMotor,
-                0.5
-        );
+        Mecanum m = new Mecanum(teamHardwareMap.FrontRightMotor, teamHardwareMap.BackRightMotor, teamHardwareMap.BackLeftMotor, teamHardwareMap.FrontLeftMotor, 1);
 
         telemetry.addData("Status", "Initialised Mecanum");
         telemetry.update();

@@ -1,35 +1,40 @@
-package bifunctors.helper;
+package bifunctors.hardwaremap.components;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Mecanum {
-    private DcMotorSimple frontRightMotor,
+    private final DcMotorSimple
+            frontRightMotor,
             frontLeftMotor,
             backRightMotor,
             backLeftMotor;
 
     public double PowerMultiplier = 1;
-    public Telemetry telemetry = null;
 
     /**
      * Creates the Mecanum object. Sets private fields and configures motor directions.
-     * @param frontRight Front Right Motor Object
-     * @param frontLeft Front Left Motor Object
-     * @param backRight Back Right Motor Object
-     * @param backLeft Back Left Motor Object
-     * @return A new Mecanum object
+     * @param frontRightMotor Front Right Motor Object
+     * @param frontLeftMotor Front Left Motor Object
+     * @param backRightMotor Back Right Motor Object
+     * @param backLeftMotor Back Left Motor Object
      */
-    public static Mecanum Init(DcMotorSimple frontRight, DcMotorSimple frontLeft, DcMotorSimple backRight, DcMotorSimple backLeft, double power) {
-        Mecanum m = new Mecanum();
-        m.frontRightMotor = frontRight;
-        m.frontLeftMotor = frontLeft;
-        m.backRightMotor = backRight;
-        m.backLeftMotor = backLeft;
-        m.PowerMultiplier = power;
-        return m;
+    public Mecanum(DcMotorSimple frontRightMotor, DcMotorSimple backRightMotor, DcMotorSimple backLeftMotor, DcMotorSimple frontLeftMotor, double powerMultiplier){
+        this.frontRightMotor = frontRightMotor;
+        this.backRightMotor = backRightMotor;
+        this.backLeftMotor = backLeftMotor;
+        this.frontLeftMotor = frontLeftMotor;
+        this.PowerMultiplier = powerMultiplier;
+    }
+
+    public void SendMecanumTelemetry(Telemetry telemetry){
+        telemetry.addLine().addData("FR power", frontRightMotor.getPower());
+        telemetry.addLine().addData("BR power", backRightMotor.getPower());
+        telemetry.addLine().addData("BL power", backLeftMotor.getPower());
+        telemetry.addLine().addData("FL power", frontLeftMotor.getPower());
     }
 
     /**
@@ -37,15 +42,8 @@ public class Mecanum {
      * @param gp Gamepad object
      */
     public void Move(Gamepad gp) {
-        // If invalid power multiplier range is provided then just set value to 1
-        if(!(PowerMultiplier > 0 && PowerMultiplier <= 1)) {
-            if(telemetry != null) {
-                telemetry.addLine("Power Multiplier should be between 0 and 1");
-                telemetry.addLine("Power Multiplier defaulting to 1");
-                telemetry.update();
-            }
-            PowerMultiplier = 1;
-        }
+        // If invalid power multiplier is provided then clamp to either 0 or 1
+        PowerMultiplier = Math.max(0, Math.min(1, PowerMultiplier));
 
         // Y values need to be inverted
         double y = -gp.left_stick_y;
