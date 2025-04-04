@@ -22,7 +22,7 @@ public class BifunctorsHM {
 
     public BifunctorsHM(LinearOpMode opMode){this.opMode = opMode;}
 
-    public void init(){
+    public void initAll(){
         initDriveTrain();
     }
 
