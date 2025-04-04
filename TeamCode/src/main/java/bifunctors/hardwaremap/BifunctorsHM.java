@@ -45,6 +45,6 @@ public class BifunctorsHM {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
-        mecanum = Mecanum.Init(frontRightWheelMotor, frontLeftWheelMotor, backRightWheelMotor, backLeftWheelMotor, 1);
+        mecanum = new Mecanum(frontRightWheelMotor, frontLeftWheelMotor, backRightWheelMotor, backLeftWheelMotor, 1);
     }
 }

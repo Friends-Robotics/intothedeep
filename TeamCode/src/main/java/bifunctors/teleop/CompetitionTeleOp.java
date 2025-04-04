@@ -47,13 +47,7 @@ public class CompetitionTeleOp extends LinearOpMode {
         telemetry.addData("Status", "Initialised HardwareMap");
 
         // Create mecanum drive
-        Mecanum m = Mecanum.Init(
-                teamHardwareMap.FrontRightMotor,
-                teamHardwareMap.FrontLeftMotor,
-                teamHardwareMap.BackRightMotor,
-                teamHardwareMap.BackLeftMotor,
-                0.5
-        );
+        Mecanum m = new Mecanum(teamHardwareMap.FrontRightMotor, teamHardwareMap.BackRightMotor, teamHardwareMap.BackLeftMotor, teamHardwareMap.FrontLeftMotor, 1);
 
         telemetry.addData("Status", "Initialised Mecanum");
         telemetry.update();

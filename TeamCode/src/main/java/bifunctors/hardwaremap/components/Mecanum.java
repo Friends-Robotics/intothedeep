@@ -1,5 +1,6 @@
 package bifunctors.hardwaremap.components;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -16,20 +17,17 @@ public class Mecanum {
 
     /**
      * Creates the Mecanum object. Sets private fields and configures motor directions.
-     * @param frontRight Front Right Motor Object
-     * @param frontLeft Front Left Motor Object
-     * @param backRight Back Right Motor Object
-     * @param backLeft Back Left Motor Object
-     * @return A new Mecanum object
+     * @param frontRightMotor Front Right Motor Object
+     * @param frontLeftMotor Front Left Motor Object
+     * @param backRightMotor Back Right Motor Object
+     * @param backLeftMotor Back Left Motor Object
      */
-    public static Mecanum Init(DcMotorSimple frontRight, DcMotorSimple frontLeft, DcMotorSimple backRight, DcMotorSimple backLeft, double power) {
-        Mecanum m = new Mecanum();
-        m.frontRightMotor = frontRight;
-        m.frontLeftMotor = frontLeft;
-        m.backRightMotor = backRight;
-        m.backLeftMotor = backLeft;
-        m.PowerMultiplier = power;
-        return m;
+    public Mecanum(DcMotorSimple frontRightMotor, DcMotorSimple backRightMotor, DcMotorSimple backLeftMotor, DcMotorSimple frontLeftMotor, double powerMultiplier){
+        this.frontRightMotor = frontRightMotor;
+        this.backRightMotor = backRightMotor;
+        this.backLeftMotor = backLeftMotor;
+        this.frontLeftMotor = frontLeftMotor;
+        this.PowerMultiplier = powerMultiplier;
     }
 
     /**

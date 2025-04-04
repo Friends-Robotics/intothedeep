@@ -19,7 +19,7 @@ public class TestingTeleOp extends LinearOpMode {
         telemetry.addData("Status", "Initialised HardwareMap");
 
         // Create mecanum drive
-        Mecanum m = Mecanum.Init(
+        Mecanum m = new Mecanum(
                 teamHardwareMap.FrontRightMotor,
                 teamHardwareMap.FrontLeftMotor,
                 teamHardwareMap.BackRightMotor,
