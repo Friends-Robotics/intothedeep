@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import bifunctors.hardwaremap.BifunctorsHM;
-import bifunctors.hardwaremap.components.Mecanum;
-import bifunctors.helper.GamepadEx;
 
 @TeleOp(name = "Mecanum Only TeleOp", group = "Testing")
 public class MecanumOnlyTeleOp extends LinearOpMode {
