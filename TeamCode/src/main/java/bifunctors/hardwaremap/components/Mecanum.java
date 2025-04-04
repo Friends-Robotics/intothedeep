@@ -1,4 +1,4 @@
-package bifunctors.helper;
+package bifunctors.hardwaremap.components;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;

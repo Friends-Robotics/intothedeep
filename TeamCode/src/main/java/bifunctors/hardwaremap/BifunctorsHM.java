@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import bifunctors.helper.Mecanum;
+import bifunctors.hardwaremap.components.Mecanum;
 
 public class BifunctorsHM {
     private final LinearOpMode opMode;
@@ -25,6 +25,7 @@ public class BifunctorsHM {
     public void init(){
         initDriveTrain();
     }
+
     public void initDriveTrain()
     {
         frontRightWheelMotor = opMode.hardwareMap.get(DcMotor.class, "FRW");
