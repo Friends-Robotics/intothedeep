@@ -8,7 +8,7 @@ import bifunctors.hardwaremap.components.Mecanum;
 
 public class BifunctorsHM {
     private final LinearOpMode opMode;
-    private Mecanum mecanum;
+    public Mecanum Mecanum;
     private DcMotor frontRightWheelMotor;
     private DcMotor backRightWheelMotor;
     private DcMotor backLeftWheelMotor;
@@ -45,6 +45,6 @@ public class BifunctorsHM {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
-        mecanum = new Mecanum(frontRightWheelMotor, frontLeftWheelMotor, backRightWheelMotor, backLeftWheelMotor, 1);
+        Mecanum = new Mecanum(frontRightWheelMotor, frontLeftWheelMotor, backRightWheelMotor, backLeftWheelMotor, 1);
     }
 }
