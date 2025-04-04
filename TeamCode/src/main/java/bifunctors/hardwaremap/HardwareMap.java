@@ -61,7 +61,6 @@ public class HardwareMap {
     public Servo ClawServo;
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap) {
-
         FrontRightMotor = hardwaremap.get(DcMotorSimple.class, "FRW");
         FrontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
