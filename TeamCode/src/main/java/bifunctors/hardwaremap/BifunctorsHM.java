@@ -13,12 +13,7 @@ public class BifunctorsHM {
     private DcMotor backRightWheelMotor;
     private DcMotor backLeftWheelMotor;
     private DcMotor frontLeftWheelMotor;
-    private final DcMotor[] DriveTrainMotors = new DcMotor[]{
-        frontRightWheelMotor,
-        backRightWheelMotor,
-        backLeftWheelMotor,
-        frontLeftWheelMotor
-    };
+    private DcMotor[] driveTrainMotors;
 
     public BifunctorsHM(LinearOpMode opMode){this.opMode = opMode;}
 
@@ -40,7 +35,14 @@ public class BifunctorsHM {
         frontLeftWheelMotor = opMode.hardwareMap.get(DcMotor.class, "FLW");
         frontLeftWheelMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        for(DcMotor motor : DriveTrainMotors){
+        driveTrainMotors = new DcMotor[]{
+                frontRightWheelMotor,
+                backRightWheelMotor,
+                backLeftWheelMotor,
+                frontLeftWheelMotor
+        };
+
+        for(DcMotor motor : driveTrainMotors){
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
