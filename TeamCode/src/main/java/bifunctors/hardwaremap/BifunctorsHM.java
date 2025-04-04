@@ -46,5 +46,6 @@ public class BifunctorsHM {
         }
 
         Mecanum = new Mecanum(frontRightWheelMotor, frontLeftWheelMotor, backRightWheelMotor, backLeftWheelMotor, 1);
+        opMode.telemetry.addLine().addData(">", "Drive train initialised");
     }
 }
