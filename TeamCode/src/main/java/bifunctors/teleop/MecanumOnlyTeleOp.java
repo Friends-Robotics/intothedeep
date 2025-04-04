@@ -14,15 +14,6 @@ public class MecanumOnlyTeleOp extends LinearOpMode {
 
         // Init hardware map
         TestingHardwareMap map = new TestingHardwareMap(hardwareMap);
-
-        Mecanum mecanum = new Mecanum(
-                map.FrontRightWheel,
-                map.BackRightWheel,
-                map.BackLeftWheel,
-                map.FrontLeftWheel,
-                0.5
-        );
-
         telemetry.addLine("All hardware and controllers initialised");
         telemetry.update();
 
@@ -30,14 +21,14 @@ public class MecanumOnlyTeleOp extends LinearOpMode {
 
         while(opModeIsActive()){
             if(gamepad1.right_trigger >= 0.15) {
-                mecanum.PowerMultiplier = 0.3;
+                map.MecanumSet.PowerMultiplier = 0.3;
             }
             else {
-                mecanum.PowerMultiplier = 0.7;
+                map.MecanumSet.PowerMultiplier = 0.7;
             }
 
-            mecanum.Move(gamepad1);
-            mecanum.SendMecanumTelemetry(telemetry);
+            map.MecanumSet.Move(gamepad1);
+            map.MecanumSet.SendMecanumTelemetry(telemetry);
 
             telemetry.update();
         }

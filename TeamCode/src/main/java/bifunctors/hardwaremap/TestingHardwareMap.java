@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import bifunctors.hardwaremap.components.Mecanum;
+
 public class TestingHardwareMap {
     /*
         -----------------------------------------------------------------------
@@ -20,6 +22,7 @@ public class TestingHardwareMap {
     public DcMotorEx FrontRightWheel;
     public DcMotorEx BackLeftWheel;
     public DcMotorEx BackRightWheel;
+    public Mecanum MecanumSet;
 
     public TestingHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
         FrontRightWheel = hardwareMap.get(DcMotorEx.class, "FRW");
@@ -45,5 +48,7 @@ public class TestingHardwareMap {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+
+        MecanumSet = new Mecanum(FrontRightWheel, BackRightWheel, BackLeftWheel, FrontLeftWheel, 0.5);
     }
 }
