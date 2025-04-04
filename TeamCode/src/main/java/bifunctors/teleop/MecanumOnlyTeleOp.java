@@ -11,8 +11,8 @@ import bifunctors.hardwaremap.components.Mecanum;
 public class MecanumOnlyTeleOp extends LinearOpMode {
     @Override
     public void runOpMode(){
-        // Init hardware map
 
+        // Init hardware map
         TestingHardwareMap map = new TestingHardwareMap(hardwareMap);
 
         Mecanum mecanum = new Mecanum(
@@ -23,7 +23,7 @@ public class MecanumOnlyTeleOp extends LinearOpMode {
                 0.5
         );
 
-        telemetry.addLine().addData(">", "All hardware and controllers initialised");
+        telemetry.addLine("All hardware and controllers initialised");
         telemetry.update();
 
         waitForStart();
