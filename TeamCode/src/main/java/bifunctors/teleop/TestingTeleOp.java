@@ -1,5 +1,6 @@
 package bifunctors.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -9,6 +10,7 @@ import bifunctors.hardwaremap.components.Mecanum;
 import static bifunctors.helper.GamepadEx.primary;
 import static bifunctors.helper.GamepadEx.GamepadButton.*;
 
+@Disabled
 @TeleOp(name="Testing", group="Linear OpMode")
 public class TestingTeleOp extends LinearOpMode {
     @Override

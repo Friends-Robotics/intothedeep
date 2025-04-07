@@ -19,14 +19,13 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package bifunctors.teleop;
 
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.SortOrder;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -60,7 +59,6 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Disabled
 @TeleOp(name = "Concept: Vision Color-Locator", group = "Concept")
 public class ConceptVisionColorLocator extends LinearOpMode
 {
@@ -129,7 +127,7 @@ public class ConceptVisionColorLocator extends LinearOpMode
          */
         VisionPortal portal = new VisionPortal.Builder()
                 .addProcessor(colorLocator)
-                .setCameraResolution(new Size(320, 240))
+                .setCameraResolution(new Size(1920, 1080))
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .build();
 
