@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import bifunctors.hardwaremap.BifunctorsHardwareMap;
-import bifunctors.helper.OutakePIDFConstants;
-import bifunctors.helper.PIDController;
+import bifunctors.helper.MotorControl.OutakePIDFConstants;
+import bifunctors.helper.MotorControl.PIDController;
 
 @TeleOp
 public class PIDControlTesting extends LinearOpMode{

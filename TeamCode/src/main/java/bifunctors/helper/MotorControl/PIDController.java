@@ -1,4 +1,4 @@
-package bifunctors.helper;
+package bifunctors.helper.MotorControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 

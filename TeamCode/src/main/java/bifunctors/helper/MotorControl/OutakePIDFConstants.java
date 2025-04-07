@@ -1,4 +1,4 @@
-package bifunctors.helper;
+package bifunctors.helper.MotorControl;
 
 import com.acmerobotics.dashboard.config.Config;
 
