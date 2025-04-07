@@ -43,7 +43,7 @@ public class TestingTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            // m.Move(gamepad1);
+            m.Move(gamepad1);
 
             telemetry.update();
         }
