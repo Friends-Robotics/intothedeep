@@ -7,7 +7,7 @@ import bifunctors.hardwaremap.BifunctorsHardwareMap;
 import bifunctors.helper.MotorControl.OutakePIDFConstants;
 import bifunctors.helper.MotorControl.PIDController;
 
-@TeleOp
+@TeleOp(name = "PIDF Control Testing", group = "Testing")
 public class PIDFControlTesting extends LinearOpMode{
 
     @Override
