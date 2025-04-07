@@ -8,11 +8,13 @@ import bifunctors.helper.MotorControl.OutakePIDFConstants;
 import bifunctors.helper.MotorControl.PIDController;
 
 @TeleOp
-public class PIDControlTesting extends LinearOpMode{
+public class PIDFControlTesting extends LinearOpMode{
 
     @Override
     public void runOpMode(){
         BifunctorsHardwareMap map = new BifunctorsHardwareMap(hardwareMap);
+
+        //This could be a PIDFController too.
         PIDController controller = new PIDController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD);
 
         telemetry.addData("Status", "Initialised HardwareMap");
