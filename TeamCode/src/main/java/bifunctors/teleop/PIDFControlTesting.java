@@ -1,11 +1,13 @@
 package bifunctors.teleop;
 
+import com.pedropathing.util.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import bifunctors.hardwaremap.BifunctorsHardwareMap;
 import bifunctors.helper.MotorControl.OutakePIDFConstants;
 import bifunctors.helper.MotorControl.PIDController;
+import bifunctors.helper.MotorControl.SlidePIDFController;
 
 @TeleOp(name = "PIDF Control Testing", group = "Testing")
 public class PIDFControlTesting extends LinearOpMode{
@@ -15,7 +17,7 @@ public class PIDFControlTesting extends LinearOpMode{
         BifunctorsHardwareMap map = new BifunctorsHardwareMap(hardwareMap);
 
         //This could be a PIDFController too.
-        PIDController controller = new PIDController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD);
+        SlidePIDFController controller = new SlidePIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);
 
         telemetry.addData("Status", "Initialised HardwareMap");
         telemetry.update();
@@ -23,11 +25,17 @@ public class PIDFControlTesting extends LinearOpMode{
         waitForStart();
 
         while(opModeIsActive()){
-            if(gamepad1.cross){
-                //map.Example.setPower(controller.PIDControl(map.Example.getCurrentPosition(), 100)); ONE POSITION
+            if(gamepad1.right_trigger > 0.1){
+                map.LeftViperSlide.setPower(controller.PIDControl(map.LeftViperSlide.getCurrentPosition(), 2000));
+                map.RightViperSlide.setPower(controller.PIDControl(map.RightViperSlide.getCurrentPosition(), 2000));
+            }
+            else if(gamepad1.circle){
+                map.LeftViperSlide.setPower(controller.PIDControl(map.LeftViperSlide.getCurrentPosition(), 1000));
+                map.RightViperSlide.setPower(controller.PIDControl(map.RightViperSlide.getCurrentPosition(), 1000));
             }
             else{
-                //map.Example.setPower(controller.PIDControl(map.Example.getCurrentPosition(), -100)); DIFFERENT POSITION
+                map.LeftViperSlide.setPower(controller.FeedForwardControl());
+                map.RightViperSlide.setPower(controller.FeedForwardControl());
             }
         }
     }
