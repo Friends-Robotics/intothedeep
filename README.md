@@ -13,3 +13,6 @@ To contribute, make branch and pr to main.
 [FTC Cookbook](https://cookbook.dairy.foundation/introduction.html) - very useful for programming <br>
 [gm0](https://gm0.org/en/latest/) - useful all around <br>
 [Pedro Pathing](https://pedropathing.com/) - GOATED localisation <br>
+[ftc++](https://ftc-1.gitbook.io/ftc++) - more stuff <br>
+[CTRL ALT FTC](https://www.ctrlaltftc.com/) - control theory guide <br>
+[FTC Lib](https://docs.ftclib.org/ftclib) - FTC library docs with other useful info <br>
