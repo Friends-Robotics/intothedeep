@@ -43,19 +43,10 @@ public class BifunctorsHardwareMap {
         FrontLeftWheel = hardwareMap.get(DcMotorEx.class, "FLW");
         FrontLeftWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        DcMotorEx[] driveTrainMotors = new DcMotorEx[]{
-                FrontRightWheel,
-                BackRightWheel,
-                BackLeftWheel,
-                FrontLeftWheel
-        };
-
-        for(DcMotorEx motor : driveTrainMotors){
+        for(DcMotorEx motor : new DcMotorEx[]{ FrontRightWheel, BackRightWheel, BackLeftWheel, FrontLeftWheel }){
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-
-        MecanumSet = new Mecanum(FrontRightWheel, BackRightWheel, BackLeftWheel, FrontLeftWheel, 0.5);
 
         LeftViperSlide = hardwareMap.get(DcMotorEx.class, "LVS");
         LeftViperSlide.setDirection(DcMotorSimple.Direction.FORWARD);
