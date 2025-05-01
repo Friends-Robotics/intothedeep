@@ -17,11 +17,17 @@ public class BifunctorsHardwareMap {
         --------------------+-----------------------+--------------------------
         | BLW               | Back Left Wheel       | Control Hub Motor 2     |
         --------------------+-----------------------+--------------------------
+        | LVS               | Left Viper Slide      | Expansion Hub Motor 1   |
+        --------------------+-----------------------+--------------------------
+        | RVS               | Right Viper Slide     | Expansion Hub Motor 2   |
+        --------------------+-----------------------+--------------------------
     */
     public DcMotorEx FrontLeftWheel;
     public DcMotorEx FrontRightWheel;
     public DcMotorEx BackLeftWheel;
     public DcMotorEx BackRightWheel;
+    public DcMotorEx LeftViperSlide;
+    public DcMotorEx RightViperSlide;
     public Mecanum MecanumSet;
 
     public BifunctorsHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
@@ -37,18 +43,21 @@ public class BifunctorsHardwareMap {
         FrontLeftWheel = hardwareMap.get(DcMotorEx.class, "FLW");
         FrontLeftWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        DcMotorEx[] driveTrainMotors = new DcMotorEx[]{
-                FrontRightWheel,
-                BackRightWheel,
-                BackLeftWheel,
-                FrontLeftWheel
-        };
-
-        for(DcMotorEx motor : driveTrainMotors){
+        for(DcMotorEx motor : new DcMotorEx[]{ FrontRightWheel, BackRightWheel, BackLeftWheel, FrontLeftWheel }){
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
-        MecanumSet = new Mecanum(FrontRightWheel, BackRightWheel, BackLeftWheel, FrontLeftWheel, 0.5);
+        LeftViperSlide = hardwareMap.get(DcMotorEx.class, "LVS");
+        LeftViperSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        LeftViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LeftViperSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        RightViperSlide = hardwareMap.get(DcMotorEx.class, "RVS");
+        RightViperSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RightViperSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
