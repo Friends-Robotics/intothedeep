@@ -1,17 +1,26 @@
 package bifunctors.hardwaremap.components;
 
+import android.security.identity.MessageDecryptionException;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.robotcore.internal.webserver.websockets.CommandNotImplementedException;
 
 public class Mecanum {
-    private final DcMotorSimple
+    private final DcMotorEx
             frontRightMotor,
             frontLeftMotor,
             backRightMotor,
             backLeftMotor;
+
+    private final IMU robotIMU;
 
     public double PowerMultiplier = 1;
 
@@ -22,19 +31,31 @@ public class Mecanum {
      * @param backRightMotor Back Right Motor Object
      * @param backLeftMotor Back Left Motor Object
      */
-    public Mecanum(DcMotorSimple frontRightMotor, DcMotorSimple backRightMotor, DcMotorSimple backLeftMotor, DcMotorSimple frontLeftMotor, double powerMultiplier){
+    public Mecanum(DcMotorEx frontRightMotor, DcMotorEx backRightMotor, DcMotorEx backLeftMotor, DcMotorEx frontLeftMotor, double powerMultiplier, IMU robotIMU){
         this.frontRightMotor = frontRightMotor;
         this.backRightMotor = backRightMotor;
         this.backLeftMotor = backLeftMotor;
         this.frontLeftMotor = frontLeftMotor;
         this.PowerMultiplier = powerMultiplier;
+        this.robotIMU = robotIMU;
     }
 
     public void SendMecanumTelemetry(Telemetry telemetry){
-        telemetry.addLine().addData("FR power", frontRightMotor.getPower());
-        telemetry.addLine().addData("BR power", backRightMotor.getPower());
-        telemetry.addLine().addData("BL power", backLeftMotor.getPower());
-        telemetry.addLine().addData("FL power", frontLeftMotor.getPower());
+        telemetry.addLine("FR")
+                .addData("Power", frontRightMotor.getPower())
+                        .addData("Current", frontRightMotor.getCurrent(CurrentUnit.AMPS));
+
+        telemetry.addLine("BR")
+                .addData("Power", backRightMotor.getPower())
+                        .addData("Current", backRightMotor.getCurrent(CurrentUnit.AMPS));
+
+        telemetry.addLine("BL")
+                .addData("Power", backLeftMotor.getPower())
+                        .addData("Current", backLeftMotor.getCurrent(CurrentUnit.AMPS));
+
+        telemetry.addLine("FL")
+                .addData("Power", frontLeftMotor.getPower())
+                    .addData("Current", frontLeftMotor.getCurrent(CurrentUnit.AMPS));
     }
 
     /**
@@ -47,7 +68,7 @@ public class Mecanum {
 
         // Y values need to be inverted
         double y = -gp.left_stick_y;
-        double x = gp.left_stick_x;
+        double x = gp.left_stick_x * 1.1;
         double rx = gp.right_stick_x;
 
         // Denominator is the largest motor power (absolute value) or 1
@@ -63,5 +84,31 @@ public class Mecanum {
         frontLeftMotor.setPower(frontLeftPower * PowerMultiplier);
         backRightMotor.setPower(backRightPower * PowerMultiplier);
         backLeftMotor.setPower(backLeftPower * PowerMultiplier);
+    }
+
+    public void FieldCentricMove(Gamepad gp){
+        double y = -gp.left_stick_y;
+        double x = gp.left_stick_x;
+        double rx = gp.right_stick_x;
+
+        if(gp.options) robotIMU.resetYaw();
+
+        double heading = robotIMU.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+        double rotx = x * Math.cos(-heading) - y * Math.sin(-heading);
+        double roty = x * Math.sin(-heading) + y * Math.sin(-heading);
+
+        rotx = rotx * 1.1;
+
+        double denominator = Math.max(Math.abs(roty) + Math.abs(rotx) + Math.abs(rx), 1);
+        double frontLeftPower = (roty + rotx + rx) / denominator;
+        double backLeftPower = (roty - rotx + rx) / denominator;
+        double frontRightPower = (roty - rotx - rx) / denominator;
+        double backRightPower = (roty + rotx - rx) / denominator;
+
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
     }
 }

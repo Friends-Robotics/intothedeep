@@ -13,7 +13,7 @@ public class MecanumOnlyTeleOp extends LinearOpMode {
 
         // Init hardware map
         BifunctorsHardwareMap map = new BifunctorsHardwareMap(hardwareMap);
-        Mecanum MecanumSet = new Mecanum(map.FrontRightWheel, map.BackRightWheel, map.BackLeftWheel, map.FrontLeftWheel, 0.5);
+        Mecanum MecanumSet = new Mecanum(map.FrontRightWheel, map.BackRightWheel, map.BackLeftWheel, map.FrontLeftWheel, 0.5, map.RobotIMU);
         telemetry.addLine("All hardware and controllers initialised");
         telemetry.update();
 
