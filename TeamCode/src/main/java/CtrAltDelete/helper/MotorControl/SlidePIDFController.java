@@ -1,4 +1,4 @@
-package bifunctors.helper.MotorControl;
+package CtrAltDelete.helper.MotorControl;
 
 public class SlidePIDFController extends PIDController{
     double KF;

@@ -1,13 +1,13 @@
-package bifunctors.teleop;
+package CtrAltDelete.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import bifunctors.helper.IntakeMotorStates;
-import bifunctors.helper.ViperSlideDirections;
-import bifunctors.hardwaremap.RobotHardware;
+import CtrAltDelete.helper.IntakeMotorStates;
+import CtrAltDelete.helper.ViperSlideDirections;
+import CtrAltDelete.hardwaremap.RobotHardware;
 
 @Disabled
 @TeleOp(name="StandardTeleOp", group="Y13CompCode/FSL")

@@ -1,4 +1,4 @@
-package bifunctors.hardwaremap;
+package CtrAltDelete.hardwaremap;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;

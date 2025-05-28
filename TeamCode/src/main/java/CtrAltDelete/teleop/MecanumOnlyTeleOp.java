@@ -1,10 +1,10 @@
-package bifunctors.teleop;
+package CtrAltDelete.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import bifunctors.hardwaremap.BifunctorsHardwareMap;
-import bifunctors.hardwaremap.components.Mecanum;
+import CtrAltDelete.hardwaremap.BifunctorsHardwareMap;
+import CtrAltDelete.hardwaremap.components.Mecanum;
 
 @TeleOp(name = "Mecanum Only TeleOp", group = "Testing")
 public class MecanumOnlyTeleOp extends LinearOpMode {

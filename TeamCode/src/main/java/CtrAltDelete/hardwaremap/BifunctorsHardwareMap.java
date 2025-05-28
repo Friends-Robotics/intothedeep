@@ -1,12 +1,13 @@
-package bifunctors.hardwaremap;
+package CtrAltDelete.hardwaremap;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
-import bifunctors.hardwaremap.components.Mecanum;
+import CtrAltDelete.hardwaremap.components.Mecanum;
 
 public class BifunctorsHardwareMap {
     /*
@@ -31,6 +32,7 @@ public class BifunctorsHardwareMap {
     public DcMotorEx LeftViperSlide;
     public DcMotorEx RightViperSlide;
     public IMU RobotIMU;
+    public ColorSensor ColorSensor;
     public Mecanum MecanumSet;
 
     public BifunctorsHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){

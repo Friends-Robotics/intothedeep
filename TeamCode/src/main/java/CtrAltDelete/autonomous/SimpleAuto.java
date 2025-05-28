@@ -1,8 +1,8 @@
-package bifunctors.autonomous;
+package CtrAltDelete.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import bifunctors.hardwaremap.RobotHardware;
+import CtrAltDelete.hardwaremap.RobotHardware;
 
 @Autonomous(name = "Simple Auto", group = "Y13CompCode/FSL")
 public class SimpleAuto extends LinearOpMode {
