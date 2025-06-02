@@ -9,9 +9,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import CtrAltDelete.hardwaremap.components.Mecanum;
-import CtrAltDelete.teleop.ColourSensor;
 
-public class BifunctorsHardwareMap {
+public class CtrlAltDefeatHardwareMap {
     /*
         -----------------------------------------------------------------------
         | FRW               | Front Right Wheel     | Control Hub Motor 0     |
@@ -39,7 +38,7 @@ public class BifunctorsHardwareMap {
     public DcMotorEx test;
     public Mecanum MecanumSet;
 
-    public BifunctorsHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
+    public CtrlAltDefeatHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
         FrontRightWheel = hardwareMap.get(DcMotorEx.class, "FRW");
         FrontRightWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 

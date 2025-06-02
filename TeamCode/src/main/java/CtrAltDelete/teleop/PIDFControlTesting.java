@@ -3,7 +3,7 @@ package CtrAltDelete.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import CtrAltDelete.hardwaremap.BifunctorsHardwareMap;
+import CtrAltDelete.hardwaremap.CtrlAltDefeatHardwareMap;
 import CtrAltDelete.helper.MotorControl.OutakePIDFConstants;
 import CtrAltDelete.helper.MotorControl.SlidePIDFController;
 
@@ -12,7 +12,7 @@ public class PIDFControlTesting extends LinearOpMode{
 
     @Override
     public void runOpMode(){
-        BifunctorsHardwareMap map = new BifunctorsHardwareMap(hardwareMap);
+        CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
 
         //This could be a PIDFController too.
         SlidePIDFController controller = new SlidePIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);

@@ -1,21 +1,18 @@
 package CtrAltDelete.teleop;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.robot.Robot;
 
-import CtrAltDelete.hardwaremap.BifunctorsHardwareMap;
+import CtrAltDelete.hardwaremap.CtrlAltDefeatHardwareMap;
 
 @TeleOp(name = "ColourSensor", group = "Robot")
 public class ColourSensor extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        BifunctorsHardwareMap map = new BifunctorsHardwareMap(hardwareMap);
+        CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
         int searchingColour = CycleColours(0);
         Gamepad previousGamepad2 = new Gamepad();
         map.ColorSensor.enableLed(true);
