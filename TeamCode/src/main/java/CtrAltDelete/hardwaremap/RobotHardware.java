@@ -1,12 +1,12 @@
-package bifunctors.hardwaremap;
+package CtrAltDelete.hardwaremap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import bifunctors.helper.IntakeMotorStates;
-import bifunctors.helper.ViperSlideDirections;
+import CtrAltDelete.helper.IntakeMotorStates;
+import CtrAltDelete.helper.ViperSlideDirections;
 
 
 public class RobotHardware {

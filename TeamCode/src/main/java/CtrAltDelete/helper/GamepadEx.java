@@ -1,4 +1,4 @@
-package bifunctors.helper;
+package CtrAltDelete.helper;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import java.util.Arrays;

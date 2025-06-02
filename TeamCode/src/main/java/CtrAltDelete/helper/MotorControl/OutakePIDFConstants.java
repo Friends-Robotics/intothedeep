@@ -1,4 +1,4 @@
-package bifunctors.helper.MotorControl;
+package CtrAltDelete.helper.MotorControl;
 
 import com.acmerobotics.dashboard.config.Config;
 

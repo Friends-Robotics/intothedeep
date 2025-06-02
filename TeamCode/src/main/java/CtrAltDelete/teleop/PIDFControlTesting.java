@@ -1,13 +1,11 @@
-package bifunctors.teleop;
+package CtrAltDelete.teleop;
 
-import com.pedropathing.util.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import bifunctors.hardwaremap.BifunctorsHardwareMap;
-import bifunctors.helper.MotorControl.OutakePIDFConstants;
-import bifunctors.helper.MotorControl.PIDController;
-import bifunctors.helper.MotorControl.SlidePIDFController;
+import CtrAltDelete.hardwaremap.BifunctorsHardwareMap;
+import CtrAltDelete.helper.MotorControl.OutakePIDFConstants;
+import CtrAltDelete.helper.MotorControl.SlidePIDFController;
 
 @TeleOp(name = "PIDF Control Testing", group = "Testing")
 public class PIDFControlTesting extends LinearOpMode{

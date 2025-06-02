@@ -1,4 +1,4 @@
-package bifunctors.hardwaremap.components;
+package CtrAltDelete.hardwaremap.components;
 
 import com.qualcomm.robotcore.hardware.Servo;
 

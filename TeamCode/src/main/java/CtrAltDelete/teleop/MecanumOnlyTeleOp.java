@@ -1,10 +1,10 @@
-package bifunctors.teleop;
+package CtrAltDelete.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import bifunctors.hardwaremap.BifunctorsHardwareMap;
-import bifunctors.hardwaremap.components.Mecanum;
+import CtrAltDelete.hardwaremap.BifunctorsHardwareMap;
+import CtrAltDelete.hardwaremap.components.Mecanum;
 
 @TeleOp(name = "Mecanum Only TeleOp", group = "Testing")
 public class MecanumOnlyTeleOp extends LinearOpMode {
@@ -13,7 +13,7 @@ public class MecanumOnlyTeleOp extends LinearOpMode {
 
         // Init hardware map
         BifunctorsHardwareMap map = new BifunctorsHardwareMap(hardwareMap);
-        Mecanum MecanumSet = new Mecanum(map.FrontRightWheel, map.BackRightWheel, map.BackLeftWheel, map.FrontLeftWheel, 0.5);
+        Mecanum MecanumSet = new Mecanum(map.FrontRightWheel, map.BackRightWheel, map.BackLeftWheel, map.FrontLeftWheel, 0.5, map.RobotIMU);
         telemetry.addLine("All hardware and controllers initialised");
         telemetry.update();
 

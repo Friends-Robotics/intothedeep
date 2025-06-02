@@ -1,4 +1,4 @@
-package bifunctors.helper.MotorControl;
+package CtrAltDelete.helper.MotorControl;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
