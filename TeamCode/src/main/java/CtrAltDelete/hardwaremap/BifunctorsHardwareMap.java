@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import CtrAltDelete.hardwaremap.components.Mecanum;
+import CtrAltDelete.teleop.ColourSensor;
 
 public class BifunctorsHardwareMap {
     /*
@@ -33,6 +35,8 @@ public class BifunctorsHardwareMap {
     public DcMotorEx RightViperSlide;
     public IMU RobotIMU;
     public ColorSensor ColorSensor;
+    public TouchSensor ts;
+    public DcMotorEx test;
     public Mecanum MecanumSet;
 
     public BifunctorsHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
@@ -54,6 +58,8 @@ public class BifunctorsHardwareMap {
         }
 
         RobotIMU = hardwareMap.get(IMU.class, "imu");
+        ColorSensor = hardwareMap.get(ColorSensor.class, "cs");
+        ts = hardwareMap.get(TouchSensor.class, "ts");
 
         //Change these to how the control hub is positioned
         RevHubOrientationOnRobot orientation = new RevHubOrientationOnRobot(
@@ -62,18 +68,21 @@ public class BifunctorsHardwareMap {
 
         RobotIMU.initialize(new IMU.Parameters(orientation));
 
+        test = hardwareMap.get(DcMotorEx.class, "t");
+    }
 
-
-//        LeftViperSlide = hardwareMap.get(DcMotorEx.class, "LVS");
-//        LeftViperSlide.setDirection(DcMotorSimple.Direction.FORWARD);
-//        LeftViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        LeftViperSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        LeftViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//
-//        RightViperSlide = hardwareMap.get(DcMotorEx.class, "RVS");
-//        RightViperSlide.setDirection(DcMotorSimple.Direction.REVERSE);
-//        RightViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        RightViperSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        RightViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    public int DetermineColour(double r, double g, double b){
+        if(r > 120){
+            return 1;
+        }
+        else if(b > 120){
+            return -1;
+        }
+        else if(g > 80){
+            return 0;
+        }
+        else{
+            return -2;
+        }
     }
 }
