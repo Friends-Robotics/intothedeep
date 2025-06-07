@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import CtrAltDelete.hardwaremap.components.Mecanum;
@@ -36,7 +37,8 @@ public class CtrlAltDefeatHardwareMap {
     public ColorSensor ColorSensor;
     public TouchSensor ts;
     public DcMotorEx test;
-    public Mecanum MecanumSet;
+    public Servo IntakeServo;
+    public DcMotorEx IntakeMotor;
 
     public CtrlAltDefeatHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
         FrontRightWheel = hardwareMap.get(DcMotorEx.class, "FRW");
@@ -68,20 +70,13 @@ public class CtrlAltDefeatHardwareMap {
         RobotIMU.initialize(new IMU.Parameters(orientation));
 
         test = hardwareMap.get(DcMotorEx.class, "t");
-    }
+        test.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-    public int DetermineColour(double r, double g, double b){
-        if(r > 120){
-            return 1;
-        }
-        else if(b > 120){
-            return -1;
-        }
-        else if(g > 80){
-            return 0;
-        }
-        else{
-            return -2;
-        }
+        IntakeServo = hardwareMap.get(Servo.class, "iServo");
+        IntakeServo.scaleRange(0.13, 0.5); //CHECK
+
+        IntakeMotor = hardwareMap.get(DcMotorEx.class, "iMotor");
+        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        IntakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 }
