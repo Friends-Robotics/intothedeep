@@ -1,5 +1,8 @@
 package CtrAltDelete.teleop;
 
+import android.graphics.Color;
+import android.graphics.ColorSpace;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -13,9 +16,9 @@ public class ColourSensor extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
-        int searchingColour = CycleColours(0);
+        String searchingColour = CycleColours("yellow");
         Gamepad previousGamepad2 = new Gamepad();
-        map.ColorSensor.enableLed(true);
+
         waitForStart();
         while(opModeIsActive()){
             previousGamepad2.copy(gamepad2);
@@ -24,16 +27,16 @@ public class ColourSensor extends LinearOpMode {
             int b = map.ColorSensor.blue();
             int g = map.ColorSensor.green();
 
-            double r_scaled = (double)r / (r + g + b) * 255;
-            double g_scaled = (double)g / (r + g + b) * 255;
-            double b_scaled = (double) b / (r + g + b) * 255;
+            float[] hsv = new float[3];
 
-            if(gamepad2.ps && !previousGamepad2.ps){
+            Color.RGBToHSV(r,g,b, hsv);
+
+            if(gamepad2.touchpad && !previousGamepad2.touchpad){
                 searchingColour = CycleColours(searchingColour);
             }
 
             if(gamepad2.right_trigger > 0){
-                if(map.DetermineColour(r_scaled, g_scaled, b_scaled) == searchingColour){
+                if(DetermineColour(hsv).equals(searchingColour)){
                     map.test.setPower(0);
                 }
                 else{
@@ -42,9 +45,12 @@ public class ColourSensor extends LinearOpMode {
             }
 
             telemetry.addData("light ", ((OpticalDistanceSensor)map.ColorSensor).getLightDetected());
-            telemetry.addData("red ", r_scaled);
-            telemetry.addData("blue ", b_scaled);
-            telemetry.addData("green ", g_scaled);
+            telemetry.addData("red ", r);
+            telemetry.addData("blue ", b);
+            telemetry.addData("green ", g);
+            telemetry.addData("hue", hsv[0]);
+            telemetry.addData("saturation", hsv[1]);
+            telemetry.addData("value", hsv[2]);
             telemetry.update();
 
             //red: r > 120 -> returns 1
@@ -56,18 +62,38 @@ public class ColourSensor extends LinearOpMode {
             //NONE: returns -2
         }
     }
-    private int CycleColours(int currentColour){
+    private String CycleColours(String currentColour){
         switch(currentColour){
-            case 1:
+            case "red":
                 gamepad2.setLedColor(0, 0, 255, Gamepad.LED_DURATION_CONTINUOUS);
-                return -1;
-            case -1:
+                return "blue";
+            case "blue":
                 gamepad2.setLedColor(255, 255, 0, Gamepad.LED_DURATION_CONTINUOUS);
-                return 0;
-            case 0:
+                return "yellow";
+            case "yellow":
                 gamepad2.setLedColor(255, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
-                return 1;
-            default: return -2;
+                return "red";
+            default: return "none";
+        }
+    }
+
+    private String DetermineColour(float[] hsv){
+        float hue = hsv[0];
+        float sat = hsv[1];
+        float val = hsv[2];
+
+        if (sat < 0.3 || val < 0.2) {
+            return "none";
+        }
+
+        if (hue < 30 || hue > 330) {
+            return "red";
+        } else if (hue >= 30 && hue <= 70) {
+            return "yellow";
+        } else if (hue >= 180 && hue <= 250) {
+            return "blue";
+        } else {
+            return "none";
         }
     }
 }
