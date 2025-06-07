@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import CtrAltDelete.hardwaremap.CtrlAltDefeatHardwareMap;
 import CtrAltDelete.hardwaremap.components.Intake;
 
-@TeleOp
+@TeleOp(name = "Intake Test", group = "Testing")
 public class IntakeTeleOp extends LinearOpMode {
 
     @Override
