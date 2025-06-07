@@ -19,6 +19,9 @@ public class IntakeTeleOp extends LinearOpMode {
             else if(gamepad2.left_bumper) intake.ReadyPosition(gamepad2);
 
             if(gamepad2.touchpad) intake.CycleColours(gamepad2);
+
+            intake.SendTelemetry(telemetry);
+            telemetry.update();
         }
     }
 }

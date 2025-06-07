@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Intake {
 
     private final Servo intakeServo;
@@ -94,5 +96,15 @@ public class Intake {
                 searchingColor = "none";
             break;
         }
+    }
+
+    public void SendTelemetry(Telemetry telemetry){
+        telemetry.addLine("Colour Sensor")
+                .addData("Piece Held: ", pieceHeld)
+                .addData("Searching Colour: ", searchingColor);
+        telemetry.addLine("Servo")
+                .addData("Position: ", intakeServo.getPosition());
+        telemetry.addLine("DC Motor")
+                .addData("Power: ", intakeMotor.getPower());
     }
 }
