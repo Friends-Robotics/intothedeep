@@ -1,5 +1,6 @@
 package friends.teleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -7,6 +8,7 @@ import friends.hardwareMap.CtrlAltDefeatHardwareMap;
 import friends.helper.MotorControl.OutakePIDFConstants;
 import friends.helper.MotorControl.SlidePIDFController;
 
+@Disabled
 @TeleOp(name = "PIDF Control Testing", group = "Testing")
 public class PIDFControlTesting extends LinearOpMode{
 

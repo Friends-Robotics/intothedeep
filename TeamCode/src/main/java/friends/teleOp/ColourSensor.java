@@ -2,6 +2,7 @@ package friends.teleOp;
 
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 import friends.hardwareMap.CtrlAltDefeatHardwareMap;
 
+@Disabled
 @TeleOp(name = "ColourSensor", group = "Robot")
 public class ColourSensor extends LinearOpMode {
 

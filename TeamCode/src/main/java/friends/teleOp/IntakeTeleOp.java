@@ -1,11 +1,13 @@
 package friends.teleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import friends.hardwareMap.CtrlAltDefeatHardwareMap;
 import friends.hardwareMap.components.Intake;
 
+@Disabled
 @TeleOp(name = "Intake Test", group = "Testing")
 public class IntakeTeleOp extends LinearOpMode {
 

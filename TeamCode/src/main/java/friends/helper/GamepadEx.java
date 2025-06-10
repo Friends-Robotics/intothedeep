@@ -9,111 +9,52 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class GamepadEx {
-    public enum GamepadButton {
-        A,
-        B,
-        X,
-        Y,
-        RIGHT_TRIGGER,
-        LEFT_TRIGGER,
-        RIGHT_BUMPER,
-        LEFT_BUMPER,
-        DPAD_LEFT,
-        DPAD_RIGHT,
-        DPAD_UP,
-        DPAD_DOWN,
-        LEFT_STICK,
-        RIGHT_STICK,
-        ALWAYS
-    }
-
-    public static GamepadEx primary;
-    public static GamepadEx secondary;
-
-
-    private final Map<Set<GamepadButton>, BiConsumer<Gamepad, Gamepad>> bindings =
+    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindings =
             new HashMap<>();
-    private final Map<Set<GamepadButton>, BiConsumer<Gamepad, Gamepad>> bindingsAlt =
+    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindingsAlt =
             new HashMap<>();
 
     private final Gamepad gamepad;
-    private final Gamepad prev;
-
-    public static void initGamepads(Gamepad g1, Gamepad g2) {
-        primary = new GamepadEx(g1);
-        secondary = new GamepadEx(g2);
-    }
 
     public GamepadEx(Gamepad gp) {
         gamepad = gp;
-        prev = new Gamepad();
     }
 
-    public void bind(GamepadButton btn, BiConsumer<Gamepad, Gamepad> callback) {
-        bind(Set.of(btn), callback);
+    public void bind(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
+        bind(btn, callback);
+    }
+    public void bindAlt(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
+        bindAlt(btn, callback);
     }
 
     public void bind(
             GamepadButton btn,
-            BiConsumer<Gamepad, Gamepad> downCallback,
-            BiConsumer<Gamepad, Gamepad> upCallback) {
+            BiConsumer<Gamepad, ButtonReader> downCallback,
+            BiConsumer<Gamepad, ButtonReader> upCallback) {
         bind(btn, downCallback);
         bindAlt(btn, upCallback);
     }
 
-    public void bind(Set<GamepadButton> buttons, BiConsumer<Gamepad, Gamepad> callback) {
-        if (bindings.containsKey(buttons)) {
-            return;
-        }
-        bindings.put(buttons, callback);
-    }
-
-    public void bind(BiConsumer<Gamepad, Gamepad> callback, GamepadButton... btns) {
-        bind(Arrays.stream(btns).collect(Collectors.toSet()), callback);
-    }
-
-    public void bindAlt(GamepadButton btn, BiConsumer<Gamepad, Gamepad> callback) {
-        bindAlt(Set.of(btn), callback);
-    }
-
-    public void bindAlt(Set<GamepadButton> buttons, BiConsumer<Gamepad, Gamepad> callback) {
-        if (bindingsAlt.containsKey(buttons)) {
-            return;
-        }
-        bindingsAlt.put(buttons, callback);
-    }
-
-    public void bindAlt(BiConsumer<Gamepad, Gamepad> callback, GamepadButton... btns) {
-        bindAlt(Arrays.stream(btns).collect(Collectors.toSet()), callback);
-    }
-
-    public void updateGamepad(Gamepad gp) {
-        prev.copy(gamepad);
-        gamepad.copy(gp);
-    }
 
     public void update() {
-        for (Map.Entry<Set<GamepadButton>, BiConsumer<Gamepad, Gamepad>> entry :
+        for (Map.Entry<GamepadButton, BiConsumer<Gamepad, ButtonReader>> entry :
                 bindings.entrySet()) {
-            if (entry.getKey().stream().allMatch(this::getButtonState)) {
-                entry.getValue().accept(gamepad, prev);
+            if (get(entry.getKey())) {
+                ButtonReader reader = new ButtonReader(this, entry.getKey());
+                entry.getValue().accept(gamepad, reader);
             }
         }
 
-        for (Map.Entry<Set<GamepadButton>, BiConsumer<Gamepad, Gamepad>> entry :
-                bindingsAlt.entrySet()) {
-            if (entry.getKey().stream().allMatch(this::getButtonState)) {
-                entry.getValue().accept(gamepad, prev);
-            }
-        }
+//        for (Map.Entry<GamepadButton, BiConsumer<Gamepad, ButtonReader>> entry :
+//                bindingsAlt.entrySet()) {
+//            if (!get(entry.getKey())) {
+//                ButtonReader reader = new ButtonReader(this, entry.getKey());
+//                entry.getValue().accept(gamepad, reader);
+//            }
+//        }
     }
 
-    public void update(Gamepad newGamepad) {
-        updateGamepad(newGamepad);
-        update();
-    }
-
-    public boolean getButtonState(GamepadButton btn) {
+    public boolean get(GamepadButton btn) {
         switch (btn) {
             case A:
                 return gamepad.a;
@@ -143,8 +84,6 @@ public class GamepadEx {
                 return gamepad.left_stick_x > 0 && gamepad.left_stick_y > 0;
             case RIGHT_STICK:
                 return gamepad.right_stick_x > 0 && gamepad.right_stick_y > 0;
-            case ALWAYS:
-                return true; // Consider if this is truly needed.
             default:
                 return false; // Add a default case to handle unexpected button values.
         }
