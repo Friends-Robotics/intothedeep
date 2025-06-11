@@ -23,6 +23,7 @@ public class GamepadEx {
     public void bind(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
         bind(btn, callback);
     }
+
     public void bindAlt(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
         bindAlt(btn, callback);
     }
@@ -85,7 +86,7 @@ public class GamepadEx {
             case RIGHT_STICK:
                 return gamepad.right_stick_x > 0 && gamepad.right_stick_y > 0;
             default:
-                return false; // Add a default case to handle unexpected button values.
+                return false;
         }
     }
 }

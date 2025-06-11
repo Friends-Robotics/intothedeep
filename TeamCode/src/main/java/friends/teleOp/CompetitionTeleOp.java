@@ -24,7 +24,7 @@ public class CompetitionTeleOp extends LinearOpMode {
                 map.BackLeftMotor,
                 map.FrontLeftMotor,
                 1,
-                map.Imu);
+                map.Mew);
 
         telemetry.addData("Status", "Initialised Mecanum");
         telemetry.update();
@@ -33,7 +33,6 @@ public class CompetitionTeleOp extends LinearOpMode {
 
         primary.bind(A, (c, reader) -> {
             if(reader.justPressed()) {
-                telemetry.addLine("Pressed Key 'A'");
             }
         });
 

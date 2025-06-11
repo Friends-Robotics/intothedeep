@@ -1,21 +1,21 @@
 package friends.hardwareMap;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
 
 public class HardwareMap {
     /*
         -----------------------------------------------------------------------
-        | FRW               | Front Right Wheel     | Control Hub Motor 3     |
+        | FRW               | Front Right Wheel     | Control Hub Motor 0     |
         --------------------+-----------------------+--------------------------
-        | FLW               | Front Left Wheel      | Control Hub Motor 0     |
+        | FLW               | Front Left Wheel      | Control Hub Motor 3     |
         --------------------+-----------------------+--------------------------
-        | BRW               | Back Right Wheel      | Control Hub Motor 2     |
+        | BRW               | Back Right Wheel      | Control Hub Motor 1     |
         --------------------+-----------------------+--------------------------
-        | BLW               | Back Left Wheel       | Control Hub Motor 1     |
+        | BLW               | Back Left Wheel       | Control Hub Motor 2     |
         --------------------+-----------------------+--------------------------
         | RO                | Right Odometer        | Control Hub Encoder 2   |
         --------------------+-----------------------+--------------------------
@@ -26,18 +26,6 @@ public class HardwareMap {
         | RVM               | Right Viper Motor     | Extension Hub Motor 0   |
         -----------------------------------------------------------------------
         | LVM               | Left Viper Motor      | Extension Hub Motor 1   |
-        -----------------------------------------------------------------------
-        | VBS               | Viper Bucket Servo    | Control Hub Servo 1     |
-        -----------------------------------------------------------------------
-        | RES               | Right Extend Servo    | Control Hub Servo 0     |
-        -----------------------------------------------------------------------
-        | LES               | Left Extend Servo     | Control Hub Servo 2     |
-        -----------------------------------------------------------------------
-        | RAS               | Right Arm Servo       | Control Hub Servo 3     |
-        -----------------------------------------------------------------------
-        | LAS               | Left Arm Servo        | Control Hub Servo 4     |
-        -----------------------------------------------------------------------
-        | CLS               | Claw Servo            | Control Hub Servo 5     |
         -----------------------------------------------------------------------
         | IMU               | IMU                   | ???                     |
         -----------------------------------------------------------------------
@@ -55,15 +43,7 @@ public class HardwareMap {
     public DcMotorEx RightViperMotor;
     public DcMotorEx LeftViperMotor;
 
-    public Servo RightExtendServo;
-    public Servo LeftExtendServo;
-
-    public Servo ViperBucketServo;
-    public Servo RightArmServo;
-    public Servo LeftArmServo;
-    public Servo ClawServo;
-
-    public IMU Imu;
+    public IMU Mew;
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap) {
         FrontRightMotor = hardwaremap.get(DcMotorEx.class, "FRW");
@@ -93,19 +73,12 @@ public class HardwareMap {
         LeftViperMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         LeftViperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        RightExtendServo = hardwaremap.get(Servo.class, "RES");
-        LeftExtendServo = hardwaremap.get(Servo.class, "LES");
-        LeftExtendServo.setDirection(Servo.Direction.REVERSE);
+        Mew = hardwaremap.get(IMU.class, "imu");
 
-        ViperBucketServo = hardwaremap.get(Servo.class, "VBS");
+        RevHubOrientationOnRobot orientation = new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
 
-        RightArmServo = hardwaremap.get(Servo.class, "RAS");
-        RightArmServo.setDirection(Servo.Direction.REVERSE);
-
-        LeftArmServo = hardwaremap.get(Servo.class, "LAS");
-
-        ClawServo = hardwaremap.get(Servo.class, "CLS");
-
-        Imu = hardwaremap.get(IMU.class, "imu");
+        Mew.initialize(new IMU.Parameters(orientation));
     }
 }
