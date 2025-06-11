@@ -1,23 +1,23 @@
 package friends.teleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import friends.helper.MotorControl.PIDFConstants;
 
-import friends.hardwareMap.CtrlAltDefeatHardwareMap;
-import friends.helper.MotorControl.OutakePIDFConstants;
-import friends.helper.MotorControl.SlidePIDFController;
+import friends.hardwareMap.HardwareMap;
+import friends.helper.MotorControl.PIDFController;
 
-@Disabled
 @TeleOp(name = "PIDF Control Testing", group = "Testing")
 public class PIDFControlTesting extends LinearOpMode{
 
     @Override
     public void runOpMode(){
-        CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
+        HardwareMap map = new HardwareMap(hardwareMap);
+
+        PIDFConstants constants = new PIDFConstants();
 
         //This could be a PIDFController too.
-        SlidePIDFController controller = new SlidePIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);
+        PIDFController controller = new PIDFController(constants);
 
         telemetry.addData("Status", "Initialised HardwareMap");
         telemetry.update();
@@ -25,17 +25,19 @@ public class PIDFControlTesting extends LinearOpMode{
         waitForStart();
 
         while(opModeIsActive()){
+            int left_pos = map.LeftViperMotor.getCurrentPosition();
+            int right_pos = map.RightViperMotor.getCurrentPosition();
             if(gamepad1.right_trigger > 0.1){
-                map.LeftViperSlide.setPower(controller.PIDControl(map.LeftViperSlide.getCurrentPosition(), 2000));
-                map.RightViperSlide.setPower(controller.PIDControl(map.RightViperSlide.getCurrentPosition(), 2000));
+                map.LeftViperMotor.setPower(controller.PIDControl(left_pos, 2000));
+                map.RightViperMotor.setPower(controller.PIDControl(right_pos, 2000));
             }
             else if(gamepad1.circle){
-                map.LeftViperSlide.setPower(controller.PIDControl(map.LeftViperSlide.getCurrentPosition(), 1000));
-                map.RightViperSlide.setPower(controller.PIDControl(map.RightViperSlide.getCurrentPosition(), 1000));
+                map.LeftViperMotor.setPower(controller.PIDControl(left_pos, 1000));
+                map.RightViperMotor.setPower(controller.PIDControl(right_pos, 1000));
             }
             else{
-                map.LeftViperSlide.setPower(controller.FeedForwardControl());
-                map.RightViperSlide.setPower(controller.FeedForwardControl());
+                map.LeftViperMotor.setPower(controller.FeedForwardControl());
+                map.RightViperMotor.setPower(controller.FeedForwardControl());
             }
         }
     }

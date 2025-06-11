@@ -46,13 +46,13 @@ public class GamepadEx {
             }
         }
 
-//        for (Map.Entry<GamepadButton, BiConsumer<Gamepad, ButtonReader>> entry :
-//                bindingsAlt.entrySet()) {
-//            if (!get(entry.getKey())) {
-//                ButtonReader reader = new ButtonReader(this, entry.getKey());
-//                entry.getValue().accept(gamepad, reader);
-//            }
-//        }
+        for (Map.Entry<GamepadButton, BiConsumer<Gamepad, ButtonReader>> entry :
+                bindingsAlt.entrySet()) {
+            if (!get(entry.getKey())) {
+                ButtonReader reader = new ButtonReader(this, entry.getKey());
+                entry.getValue().accept(gamepad, reader);
+            }
+        }
     }
 
     public boolean get(GamepadButton btn) {
