@@ -1,7 +1,6 @@
 package CtrAltDelete.teleop;
 
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -37,10 +36,10 @@ public class ColourSensor extends LinearOpMode {
 
             if(gamepad2.right_trigger > 0){
                 if(DetermineColour(hsv).equals(searchingColour)){
-                    map.test.setPower(0);
+                    map.DrawerSlide.setPower(0);
                 }
                 else{
-                    map.test.setPower(0.2);
+                    map.DrawerSlide.setPower(0.2);
                 }
             }
 

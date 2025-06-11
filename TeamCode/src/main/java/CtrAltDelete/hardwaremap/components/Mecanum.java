@@ -35,7 +35,7 @@ public class Mecanum {
         this.robotIMU = robotIMU;
     }
 
-    public void SendMecanumTelemetry(Telemetry telemetry){
+    public void SendTelemetry(Telemetry telemetry){
         telemetry.addLine("FR")
                 .addData("Power", frontRightMotor.getPower())
                         .addData("Current", frontRightMotor.getCurrent(CurrentUnit.AMPS));

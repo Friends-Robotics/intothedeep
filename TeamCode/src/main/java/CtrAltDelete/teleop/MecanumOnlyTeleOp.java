@@ -28,7 +28,7 @@ public class MecanumOnlyTeleOp extends LinearOpMode {
             }
 
             MecanumSet.Move(gamepad1);
-            MecanumSet.SendMecanumTelemetry(telemetry);
+            MecanumSet.SendTelemetry(telemetry);
 
             telemetry.update();
         }

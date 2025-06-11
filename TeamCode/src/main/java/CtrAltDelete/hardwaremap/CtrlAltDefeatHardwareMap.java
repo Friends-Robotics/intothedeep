@@ -9,8 +9,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import CtrAltDelete.hardwaremap.components.Mecanum;
-
 public class CtrlAltDefeatHardwareMap {
     /*
         -----------------------------------------------------------------------
@@ -36,7 +34,7 @@ public class CtrlAltDefeatHardwareMap {
     public IMU RobotIMU;
     public ColorSensor ColorSensor;
     public TouchSensor ts;
-    public DcMotorEx test;
+    public DcMotorEx DrawerSlide;
     public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
 
@@ -69,14 +67,15 @@ public class CtrlAltDefeatHardwareMap {
 
         RobotIMU.initialize(new IMU.Parameters(orientation));
 
-        test = hardwareMap.get(DcMotorEx.class, "t");
-        test.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        DrawerSlide = hardwareMap.get(DcMotorEx.class, "slide");
+        DrawerSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        DrawerSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        DrawerSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        IntakeServo = hardwareMap.get(Servo.class, "iServo");
-        IntakeServo.scaleRange(0.13, 0.5); //CHECK
-
-        IntakeMotor = hardwareMap.get(DcMotorEx.class, "iMotor");
-        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        IntakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+//        IntakeServo = hardwareMap.get(Servo.class, "iServo");
+//        IntakeServo.scaleRange(0.13, 0.5); //CHECK
+//
+//        IntakeMotor = hardwareMap.get(DcMotorEx.class, "iMotor");
+//        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }

@@ -7,33 +7,46 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import CtrAltDelete.helper.MotorControl.DrawerPIDFConstants;
+import CtrAltDelete.helper.MotorControl.PIDController;
+
 public class Intake {
 
     private final Servo intakeServo;
+    private final DcMotorEx drawerMotor;
     private final DcMotorEx intakeMotor;
     private final ColorSensor colorSensor;
     private String searchingColor;
     private boolean pieceHeld;
+    private final PIDController drawerPID = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD);
 
-    public Intake(Servo s, DcMotorEx m, ColorSensor c){
+    public Intake(Servo s, DcMotorEx m, ColorSensor c, DcMotorEx dm){
         intakeServo = s;
         intakeMotor = m;
         colorSensor = c;
         colorSensor.enableLed(true);
+        drawerMotor = dm;
     }
 
+    //NEEDS TO BE LOOPED
     public void StandbyPosition(){
         intakeServo.setPosition(1);
         intakeMotor.setPower(0);
+        drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 0));
     }
 
+    //NEEDS TO BE LOOPED
     public void ReadyPosition(Gamepad gp){
+        drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 80));
         if(pieceHeld){
             if(DetermineColour(GetHSV()).equals(searchingColor) && !gp.cross){
                 intakeServo.setPosition(0.5);
                 intakeMotor.setPower(-0.9);
             }
             pieceHeld = false;
+            StandbyPosition();
         }
         else {
             if(!DetermineColour(GetHSV()).equals(searchingColor) && !gp.cross) {
@@ -41,8 +54,8 @@ public class Intake {
                 intakeMotor.setPower(0.9);
             }
             pieceHeld = true;
+            StandbyPosition();
         }
-        StandbyPosition();
     }
 
     public float[] GetHSV(){
@@ -94,5 +107,15 @@ public class Intake {
                 searchingColor = "none";
             break;
         }
+    }
+
+    public void SendTelemetry(Telemetry telemetry){
+        telemetry.addLine("Colour Sensor")
+                .addData("Piece Held: ", pieceHeld)
+                .addData("Searching Colour: ", searchingColor);
+        telemetry.addLine("Servo")
+                .addData("Position: ", intakeServo.getPosition());
+        telemetry.addLine("DC Motor")
+                .addData("Power: ", intakeMotor.getPower());
     }
 }
