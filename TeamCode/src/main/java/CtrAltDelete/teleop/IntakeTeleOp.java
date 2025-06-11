@@ -12,7 +12,7 @@ public class IntakeTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
-        Intake intake = new Intake(map.IntakeServo, map.IntakeMotor, map.ColorSensor);
+        Intake intake = new Intake(map.IntakeServo, map.IntakeMotor, map.ColorSensor, map.DrawerSlide);
         waitForStart();
         while(opModeIsActive()){
             if(gamepad2.right_bumper) intake.StandbyPosition();
