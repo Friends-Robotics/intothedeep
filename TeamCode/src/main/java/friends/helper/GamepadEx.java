@@ -1,5 +1,7 @@
 package friends.helper;
 
+import android.util.Pair;
+
 import com.qualcomm.robotcore.hardware.Gamepad;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,23 +11,34 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class GamepadEx {
-    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindings =
+    private Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindings =
             new HashMap<>();
-    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindingsAlt =
+    private Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindingsAlt =
             new HashMap<>();
+    private Map<GamepadButton, ButtonReader> buttonReaders = new HashMap<>();
 
-    private final Gamepad gamepad;
+    private Gamepad gamepad;
 
     public GamepadEx(Gamepad gp) {
         gamepad = gp;
     }
 
     public void bind(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
-        bind(btn, callback);
+        if(bindings.containsKey(btn)) return;
+        if(!buttonReaders.containsKey(btn)) {
+            ButtonReader reader = new ButtonReader(this, btn);
+            buttonReaders.put(btn, reader);
+        }
+        bindings.put(btn, callback);
     }
 
     public void bindAlt(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
-        bindAlt(btn, callback);
+        if(bindingsAlt.containsKey(btn)) return;
+        if(!buttonReaders.containsKey(btn)) {
+            ButtonReader reader = new ButtonReader(this, btn);
+            buttonReaders.put(btn, reader);
+        }
+        bindingsAlt.put(btn, callback);
     }
 
     public void bind(
@@ -37,11 +50,18 @@ public class GamepadEx {
     }
 
 
-    public void update() {
+    public void update(Gamepad gp) {
+        gamepad = gp;
+        // Update all button readers
+        for(Map.Entry<GamepadButton, ButtonReader> entry : buttonReaders.entrySet()) {
+            ButtonReader reader = entry.getValue();
+            reader.read();
+        }
+
         for (Map.Entry<GamepadButton, BiConsumer<Gamepad, ButtonReader>> entry :
                 bindings.entrySet()) {
             if (get(entry.getKey())) {
-                ButtonReader reader = new ButtonReader(this, entry.getKey());
+                ButtonReader reader = buttonReaders.get(entry.getKey());
                 entry.getValue().accept(gamepad, reader);
             }
         }
@@ -49,7 +69,7 @@ public class GamepadEx {
         for (Map.Entry<GamepadButton, BiConsumer<Gamepad, ButtonReader>> entry :
                 bindingsAlt.entrySet()) {
             if (!get(entry.getKey())) {
-                ButtonReader reader = new ButtonReader(this, entry.getKey());
+                ButtonReader reader = buttonReaders.get(entry.getKey());
                 entry.getValue().accept(gamepad, reader);
             }
         }

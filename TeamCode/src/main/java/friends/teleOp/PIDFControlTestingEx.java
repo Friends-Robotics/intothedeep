@@ -52,7 +52,7 @@ public class PIDFControlTestingEx extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
-            primary.update();
+            primary.update(gamepad1);
 
             telemetry.update();
         }
