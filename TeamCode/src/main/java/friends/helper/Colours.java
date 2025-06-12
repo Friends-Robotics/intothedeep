@@ -10,8 +10,7 @@ public enum Colours {
     YELLOW(255, 255, 0),
     NONE(0, 0, 0);
 
-
-    private Colours(int r, int g, int b) {
+    Colours(int r, int g, int b) {
         this.r = r;
         this.g = g;
         this.b = b;

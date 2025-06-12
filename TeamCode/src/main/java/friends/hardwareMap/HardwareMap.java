@@ -28,7 +28,9 @@ import com.qualcomm.robotcore.hardware.Servo;
     -----------------------------------------------------------------------
     | LVM               | Left Viper Motor      | Extension Hub Motor 1   |
     -----------------------------------------------------------------------
-    | IMU               | IMU                   | ???                     |
+    | IMU               | IMU                   | I2C Bus 2               |
+    -----------------------------------------------------------------------
+    | OTOS              | OTOS                  | I2C Bus 1               |
     -----------------------------------------------------------------------
  */
 public class HardwareMap {
@@ -83,7 +85,7 @@ public class HardwareMap {
         LeftViperMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         LeftViperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        Mew = hardwaremap.get(IMU.class, "imu");
+        Mew = hardwaremap.get(IMU.class, "IMU");
 
         RevHubOrientationOnRobot orientation = new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
