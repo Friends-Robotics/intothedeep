@@ -9,8 +9,8 @@ import friends.helper.MotorControl.PIDFController;
 import friends.helper.GamepadEx;
 import static friends.helper.GamepadButton.*;
 
-@TeleOp(name = "PIDF Control Testing Ex", group = "Testing")
-public class PIDFControlTestingEx extends LinearOpMode {
+@TeleOp(name = "PIDF Control", group = "Testing")
+public class PIDFTesting extends LinearOpMode {
 
     @Override
     public void runOpMode(){
@@ -18,31 +18,41 @@ public class PIDFControlTestingEx extends LinearOpMode {
 
         PIDFConstants constants = new PIDFConstants();
 
-        //This could be a PIDFController too.
         PIDFController controller = new PIDFController(constants);
 
         GamepadEx primary = new GamepadEx(gamepad1);
 
-        primary.bind(RIGHT_TRIGGER, (c, reader) -> {
+        // KEY => RIGHT TRIGGER
+        // FUN => Set Viper Slide Motor Powers Using PIDF
+        // Maximum Value Of 2000
+        primary.bind(RIGHT_TRIGGER, (gamepad, reader) -> {
             map.LeftViperMotor.setPower(controller.PIDControl(
                 map.LeftViperMotor.getCurrentPosition(),
                 2000));
+
             map.RightViperMotor.setPower(controller.PIDControl(
                 map.RightViperMotor.getCurrentPosition(),
                 2000));
         });
 
-        primary.bind(B, (c, reader) -> {
+        // KEY => LEFT TRIGGER
+        // FUN => Set Viper Slide Motor Powers Using PIDF
+        // Maximum Value Of 1000
+        primary.bind(B, (gamepad, reader) -> {
             map.LeftViperMotor.setPower(controller.PIDControl(
                 map.LeftViperMotor.getCurrentPosition(),
                 1000));
+
             map.RightViperMotor.setPower(controller.PIDControl(
                 map.RightViperMotor.getCurrentPosition(),
                 1000));
         });
 
-        primary.bind(X, (c , reader) -> {
+        // KEY => X
+        // FUN => Set Viper Slide Motor Powers To FeedForwardControl
+        primary.bind(X, (gamepad , reader) -> {
             map.LeftViperMotor.setPower(controller.FeedForwardControl());
+
             map.RightViperMotor.setPower(controller.FeedForwardControl());
         });
 

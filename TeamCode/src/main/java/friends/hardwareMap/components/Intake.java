@@ -14,10 +14,10 @@ public class Intake {
     private String searchingColor;
     private boolean pieceHeld;
 
-    public Intake(Servo s, DcMotorEx m, ColorSensor c){
-        intakeServo = s;
-        intakeMotor = m;
-        colorSensor = c;
+    public Intake(Servo servo, DcMotorEx motor, ColorSensor sensor){
+        intakeServo = servo;
+        intakeMotor = motor;
+        colorSensor = sensor;
         colorSensor.enableLed(true);
     }
 

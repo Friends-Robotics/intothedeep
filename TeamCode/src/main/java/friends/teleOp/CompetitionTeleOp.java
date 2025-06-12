@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Mecanum;
+import friends.helper.Count;
 import friends.helper.GamepadEx;
 
 import static friends.helper.GamepadButton.*;
@@ -32,12 +33,18 @@ public class CompetitionTeleOp extends LinearOpMode {
 
         telemetry.addData("Status","Initialised GamepadEx");
 
-        final int[] count = {0};
+        Count count = new Count();
 
-        primary.bind(A, (c, reader) -> {
+        primary.bind(A, (gp, reader) -> {
+            // Rising Edge
             if(!reader.justPressed()) return;
 
-            m.PowerMultiplier = ++count[0] % 2 == 0 ? 1 : 0.5;
+            m.PowerMultiplier = ++count.value % 2 == 0 ? 1 : 0.5;
+            // Red if power is 1, blue if power is 0.5
+            gamepad1.setLedColor(255 * count.value % 2 == 0 ? 1 : 0,
+                    0,
+                    255 * count.value % 2 == 0 ? 0 : 1,
+                    -1);
         });
 
         telemetry.update();
@@ -48,7 +55,7 @@ public class CompetitionTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             m.Move(gamepad1);
 
-            telemetry.addData("Power mulitplier", m.PowerMultiplier);
+            telemetry.addData("Power multiplier", m.PowerMultiplier);
 
             primary.update(gamepad1);
 

@@ -11,11 +11,11 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class GamepadEx {
-    private Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindings =
+    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindings =
             new HashMap<>();
-    private Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindingsAlt =
+    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> bindingsAlt =
             new HashMap<>();
-    private Map<GamepadButton, ButtonReader> buttonReaders = new HashMap<>();
+    private final Map<GamepadButton, ButtonReader> buttonReaders = new HashMap<>();
 
     private Gamepad gamepad;
 
@@ -52,6 +52,7 @@ public class GamepadEx {
 
     public void update(Gamepad gp) {
         gamepad = gp;
+
         // Update all button readers
         for(Map.Entry<GamepadButton, ButtonReader> entry : buttonReaders.entrySet()) {
             ButtonReader reader = entry.getValue();
@@ -78,17 +79,21 @@ public class GamepadEx {
     public boolean get(GamepadButton btn) {
         switch (btn) {
             case A:
+            case CROSS:
                 return gamepad.a;
             case B:
+            case CIRCLE:
                 return gamepad.b;
             case X:
+            case SQUARE:
                 return gamepad.x;
             case Y:
+            case TRIANGLE:
                 return gamepad.y;
             case RIGHT_TRIGGER:
-                return gamepad.right_trigger > 0;
+                return gamepad.right_trigger > 0.1;
             case LEFT_TRIGGER:
-                return gamepad.left_trigger > 0;
+                return gamepad.left_trigger > 0.1;
             case DPAD_LEFT:
                 return gamepad.dpad_left;
             case DPAD_UP:
@@ -102,9 +107,11 @@ public class GamepadEx {
             case LEFT_BUMPER:
                 return gamepad.left_bumper;
             case LEFT_STICK:
-                return gamepad.left_stick_x > 0 && gamepad.left_stick_y > 0;
+                return gamepad.left_stick_x > 0.1 && gamepad.left_stick_y > 0.1;
             case RIGHT_STICK:
-                return gamepad.right_stick_x > 0 && gamepad.right_stick_y > 0;
+                return gamepad.right_stick_x > 0.1 && gamepad.right_stick_y > 0.1;
+            case TOUCHPAD:
+                return gamepad.touchpad;
             default:
                 return false;
         }
