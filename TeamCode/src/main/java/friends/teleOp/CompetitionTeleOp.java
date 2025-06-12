@@ -33,17 +33,19 @@ public class CompetitionTeleOp extends LinearOpMode {
 
         telemetry.addData("Status","Initialised GamepadEx");
 
-        Count count = new Count();
+        Check check = new Check();
 
         primary.bind(A, (gp, reader) -> {
             // Rising Edge
             if(!reader.justPressed()) return;
+            check.value = !check.value;
+            
 
-            m.PowerMultiplier = ++count.value % 2 == 0 ? 1 : 0.5;
+            m.PowerMultiplier = check.value ? 1 : 0.5;
             // Red if power is 1, blue if power is 0.5
-            gamepad1.setLedColor(255 * count.value % 2 == 0 ? 1 : 0,
+            gamepad1.setLedColor(255 * check.value ? 1 : 0,
                     0,
-                    255 * count.value % 2 == 0 ? 0 : 1,
+                    255 * check.value ? 0 : 1,
                     -1);
         });
 
