@@ -1,6 +1,6 @@
 package friends.helper;
 
 public class Count {
-    public int value = 0;
+    public float value = 0;
 }
 
