@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import CtrAltDelete.hardwaremap.components.Claw;
+
 public class CtrlAltDefeatHardwareMap {
     /*
         -----------------------------------------------------------------------
@@ -38,6 +40,9 @@ public class CtrlAltDefeatHardwareMap {
     public DcMotorEx DrawerSlide;
     public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
+
+    public Servo WristServo;
+    public Servo ClawServo;
 
     public CtrlAltDefeatHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
         FrontRightWheel = hardwareMap.get(DcMotorEx.class, "FRW");
@@ -84,6 +89,10 @@ public class CtrlAltDefeatHardwareMap {
         RightViperSlide.setDirection(DcMotorSimple.Direction.REVERSE);
         RightViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         RightViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+//        WristServo = hardwareMap.get(Servo.class, "WS");
+//
+//        ClawServo = hardwareMap.get(Servo.class, "CS");
 
 //        IntakeServo = hardwareMap.get(Servo.class, "iServo");
 //        IntakeServo.scaleRange(0.13, 0.5); //CHECK

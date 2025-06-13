@@ -45,10 +45,10 @@ public class BucketAuto extends OpMode {
                 teamHardwareMap.RightExtendServo,
                 teamHardwareMap.LeftExtendServo
         );
-
-        claw = new Claw(
-                teamHardwareMap.ClawServo
-        );
+//
+//        claw = new Claw(
+//                teamHardwareMap.ClawServo
+//        );
 
 //
 //        // Create viper slide controller

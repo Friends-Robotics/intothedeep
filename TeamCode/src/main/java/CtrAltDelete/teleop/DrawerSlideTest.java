@@ -24,7 +24,7 @@ public class DrawerSlideTest extends LinearOpMode {
         while (opModeIsActive()) {
             // Manual control using left stick Y (invert as needed)
             map.DrawerSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            map.DrawerSlide.setPower(0.9 * -gamepad2.left_stick_y);
+            map.DrawerSlide.setPower(0.6 * -gamepad2.left_stick_y);
 
             // When CROSS (X/A) is pressed, go to target position
             if (gamepad2.cross) {
