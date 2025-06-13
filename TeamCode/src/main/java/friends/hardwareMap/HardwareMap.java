@@ -49,10 +49,11 @@ public class HardwareMap {
     public ColorSensor ColorSensor;
     public ServoImplEx RightHangServo;
     public ServoImplEx LeftHangServo;
-    public Servo IntakeServo;
-    public DcMotorEx IntakeMotor;
-
+    public Servo RightArmServo;
+    public Servo LeftArmServo;
     public DcMotorEx HorizontalMotor;
+    public Servo Claw;
+    public Servo Wrist;
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap, DcMotor.RunMode runMode) {
         FrontRightMotor = hardwaremap.get(DcMotorEx.class, "FRW");
@@ -89,6 +90,9 @@ public class HardwareMap {
 
         Mew.initialize(new IMU.Parameters(orientation));
 
+        Claw = hardwaremap.get(Servo.class, "CL");
+        Wrist = hardwaremap.get(Servo.class, "WR");
+
 //        ColorSensor = hardwaremap.get(ColorSensor.class, "cs");
 
 //        IntakeServo = hardwaremap.get(Servo.class, "iServo");
@@ -104,8 +108,12 @@ public class HardwareMap {
 //        LeftHangServo = hardwaremap.get(ServoImplEx.class, "LHS");
 //        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
-        HorizontalMotor = hardwaremap.get(DcMotorEx.class, "slide");
+        HorizontalMotor = hardwaremap.get(DcMotorEx.class, "SLIDE");
         HorizontalMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        RightArmServo = hardwaremap.get(Servo.class, "RAS");
+        LeftArmServo = hardwaremap.get(Servo.class, "LAS");
+
     }
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap) {
