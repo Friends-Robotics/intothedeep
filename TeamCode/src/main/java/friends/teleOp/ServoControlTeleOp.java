@@ -18,7 +18,9 @@ import static friends.helper.GamepadButton.*;
 public class ServoControlTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
-        String NAME = "PLACEHOLDER";
+        // CLOSE 0.35
+        // OPEN 0.7
+        String NAME = "CL";
         Servo servo = hardwareMap.get(Servo.class, NAME);
         GamepadEx primary = new GamepadEx(gamepad1);
 

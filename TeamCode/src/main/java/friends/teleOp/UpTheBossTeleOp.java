@@ -24,14 +24,14 @@ public class UpTheBossTeleOp extends LinearOpMode {
         Servo claw = map.Claw;
         Servo wrist = map.Wrist;
 
-        float ARM_PICKUP = 1f;
-        float ARM_DEPOSIT = 0.3f;
+        double ARM_PICKUP = 1;
+        double ARM_DEPOSIT = 0.3;
 
-        float CLAW_OPEN = 0;
-        float CLAW_CLOSE = 1;
+        double CLAW_OPEN = 0.7;
+        double CLAW_CLOSE = 0.35;
 
-        float WRIST_UP = 0;
-        float WRIST_DOWN = 1;
+        double WRIST_UP = 0;
+        double WRIST_DOWN = 1;
 
         GamepadEx primary = new GamepadEx(gamepad1);
 
