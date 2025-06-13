@@ -97,8 +97,8 @@ public class HardwareMap {
 
         RightHangServo = hardwaremap.get(ServoImplEx.class, "RHS");
         RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
-        LeftHangServo = hardwaremap.get(ServoImplEx.class, "LHS");
-        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
+//        LeftHangServo = hardwaremap.get(ServoImplEx.class, "LHS");
+//        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
     }
 

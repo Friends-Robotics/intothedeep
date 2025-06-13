@@ -10,7 +10,7 @@ import friends.hardwareMap.components.Mecanum;
 import friends.helper.Check;
 import friends.helper.Colours;
 import friends.helper.GamepadEx;
-import friends.helper.MotorControl.PIDFConstants;
+import friends.helper.MotorControl.RightViperPIDFConstants;
 import friends.helper.MotorControl.PIDFController;
 
 import static friends.helper.GamepadButton.*;
@@ -34,9 +34,7 @@ public class CheekyTeleOp extends LinearOpMode {
 
         telemetry.addData("Status", "Initialised Mecanum");
 
-        PIDFConstants constants = new PIDFConstants();
-
-        PIDFController controller = new PIDFController(constants);
+        PIDFController controller = new PIDFController(RightViperPIDFConstants.KP, RightViperPIDFConstants.KI, RightViperPIDFConstants.KD, RightViperPIDFConstants.KF);
 
         telemetry.addData("Status", "Initialised PIDF Controller");
 
@@ -59,10 +57,10 @@ public class CheekyTeleOp extends LinearOpMode {
         /// Secondary
 
         secondary.down(RIGHT_BUMPER, (gamepad, reader) -> {
-            map.LeftViperMotor.setPower(controller.PIDControl(
+            map.LeftViperMotor.setPower(controller.PIDControl(telemetry,
                     map.LeftViperMotor.getCurrentPosition(),
                     2000));
-            map.RightViperMotor.setPower(controller.PIDControl(
+            map.RightViperMotor.setPower(controller.PIDControl(telemetry,
                     map.RightViperMotor.getCurrentPosition(),
                     2000));
         });
@@ -74,10 +72,10 @@ public class CheekyTeleOp extends LinearOpMode {
         });
 
         secondary.down(LEFT_BUMPER, (gamepad, reader) -> {
-            map.LeftViperMotor.setPower(controller.PIDControl(
+            map.LeftViperMotor.setPower(controller.PIDControl(telemetry,
                     map.LeftViperMotor.getCurrentPosition(),
                     -2000));
-            map.RightViperMotor.setPower(controller.PIDControl(
+            map.RightViperMotor.setPower(controller.PIDControl(telemetry,
                     map.RightViperMotor.getCurrentPosition(),
                     -2000));
         });

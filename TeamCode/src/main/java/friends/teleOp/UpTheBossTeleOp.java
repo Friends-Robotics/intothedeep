@@ -2,13 +2,15 @@ package friends.teleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import friends.hardwareMap.HardwareMap;
 import friends.helper.GamepadEx;
 import static friends.helper.GamepadButton.*;
 
-@TeleOp(name = "Viper Slide", group = "Testing")
-public class ViperSlideTeleOp extends LinearOpMode {
+@TeleOp(name = "UP THE QUAKERS", group = "Testing")
+public class UpTheBossTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode(){
@@ -67,24 +69,39 @@ public class ViperSlideTeleOp extends LinearOpMode {
             telemetry.addData("Left Current Power", map.LeftViperMotor.getPower());
         });
 
-        primary.down(Y, (gamepad, reader) -> {
-            map.RightHangServo.setPosition(1);
-        });
-        primary.up(Y, (gamepad, reader) -> {
-            map.RightHangServo.setPosition(0);
-        });
-
         // KEY => A, CROSS
         // FUN => Set Hang Servos to max position if A pressed, else minimum position
-//        primary.down(A, (gamepad, reader) -> {
-//            map.RightHangServo.setPosition(1);
-//            map.LeftHangServo.setPosition(1);
-//        });
-//
-//        primary.up(A, (gamepad, reader) -> {
-//            map.RightHangServo.setPosition(0);
-//            map.LeftHangServo.setPosition(0);
-//        });
+        primary.down(A, (gamepad, reader) -> {
+            map.RightHangServo.setPosition(1);
+            map.LeftHangServo.setPosition(1);
+        });
+
+        primary.up(A, (gamepad, reader) -> {
+            map.RightHangServo.setPosition(0);
+            map.LeftHangServo.setPosition(0);
+        });
+
+
+
+        // MACRO
+        primary.pressed(B, (gamepad, reader) -> {
+            DcMotorEx right = map.RightViperMotor;
+            DcMotorEx left = map.LeftViperMotor;
+
+            right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            right.setTargetPositionTolerance(10);
+            right.setTargetPositionTolerance(10);
+
+            right.setTargetPosition(2000);
+            left.setTargetPosition(2000);
+
+            waitUntil(right.getCurrentPosition() == right.getTargetPosition()
+                    && left.getTargetPosition() == left.getCurrentPosition());
+        });
+
+
 
         telemetry.addData("Status", "Initialised HardwareMap");
         telemetry.update();
@@ -97,4 +114,11 @@ public class ViperSlideTeleOp extends LinearOpMode {
             telemetry.update();
         }
     }
+
+    private void waitUntil(boolean predicate) {
+        while(!predicate) {
+            continue;
+        }
+    }
 }
+
