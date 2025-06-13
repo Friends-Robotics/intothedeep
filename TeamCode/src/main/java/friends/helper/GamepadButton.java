@@ -19,5 +19,7 @@ public enum GamepadButton {
     LEFT_STICK,
     RIGHT_STICK,
     TOUCHPAD,
+    LEFT_STICK_BUTTON,
+    RIGHT_STICK_BUTTON
 }
 

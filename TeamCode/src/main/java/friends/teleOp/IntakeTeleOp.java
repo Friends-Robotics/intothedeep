@@ -21,21 +21,21 @@ public class IntakeTeleOp extends LinearOpMode {
 
         // KEY => Right Bumper
         // FUN => Set intake to standby position
-        primary.bind(RIGHT_BUMPER, (gamepad, reader) -> {
+        primary.down(RIGHT_BUMPER, (gamepad, reader) -> {
             intake.StandbyPosition();
         });
 
         // KEY => Left Bumper
         // FUN => Set intake to the ready position
         // Uses gamepad1
-        primary.bind(LEFT_BUMPER, (gamepad, reader) -> {
+        primary.down(LEFT_BUMPER, (gamepad, reader) -> {
             intake.ReadyPosition(gamepad1);
         });
 
         // KEY => Touchpad
         // FUN => Cycles the selected colour
         // Uses gamepad1
-        primary.bind(TOUCHPAD, (gamepad, reader) -> {
+        primary.down(TOUCHPAD, (gamepad, reader) -> {
             intake.CycleColours(gamepad1);
         });
 
@@ -44,7 +44,7 @@ public class IntakeTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while(opModeIsActive()){
-            primary.update(gamepad1);
+            primary.update();
             telemetry.update();
         }
     }

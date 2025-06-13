@@ -9,8 +9,8 @@ import friends.helper.MotorControl.PIDFController;
 import friends.helper.GamepadEx;
 import static friends.helper.GamepadButton.*;
 
-@TeleOp(name = "PIDF Control", group = "Testing")
-public class PIDFTesting extends LinearOpMode {
+@TeleOp(name = "Viper Slide PIDF", group = "Testing")
+public class PIDFTestingTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode(){
@@ -23,9 +23,8 @@ public class PIDFTesting extends LinearOpMode {
         GamepadEx primary = new GamepadEx(gamepad1);
 
         // KEY => RIGHT TRIGGER
-        // FUN => Set Viper Slide Motor Powers Using PIDF
-        // Maximum Value Of 2000
-        primary.bind(RIGHT_TRIGGER, (gamepad, reader) -> {
+        // FUN => Set Viper Slide Motor Power to 1
+        primary.down(RIGHT_TRIGGER, (gamepad, reader) -> {
             map.LeftViperMotor.setPower(controller.PIDControl(
                 map.LeftViperMotor.getCurrentPosition(),
                 2000));
@@ -35,24 +34,34 @@ public class PIDFTesting extends LinearOpMode {
                 2000));
         });
 
-        // KEY => LEFT TRIGGER
-        // FUN => Set Viper Slide Motor Powers Using PIDF
-        // Maximum Value Of 1000
-        primary.bind(B, (gamepad, reader) -> {
+        primary.up(RIGHT_TRIGGER, (gamepad, reader) -> {
+            if(gamepad.left_trigger > 0) return;
+            map.RightViperMotor.setPower(0);
+            map.LeftViperMotor.setPower(0);
+        });
+
+        // KEY => RIGHT TRIGGER
+        // FUN => Set Viper Slide Motor Power to 1
+        primary.down(LEFT_TRIGGER, (gamepad, reader) -> {
             map.LeftViperMotor.setPower(controller.PIDControl(
-                map.LeftViperMotor.getCurrentPosition(),
-                1000));
+                    map.LeftViperMotor.getCurrentPosition(),
+                    -2000));
 
             map.RightViperMotor.setPower(controller.PIDControl(
-                map.RightViperMotor.getCurrentPosition(),
-                1000));
+                    map.RightViperMotor.getCurrentPosition(),
+                    -2000));
+        });
+
+        primary.up(LEFT_TRIGGER, (gamepad, reader) -> {
+            if(gamepad.right_trigger > 0) return;
+            map.RightViperMotor.setPower(0);
+            map.LeftViperMotor.setPower(0);
         });
 
         // KEY => X
         // FUN => Set Viper Slide Motor Powers To FeedForwardControl
-        primary.bind(X, (gamepad , reader) -> {
+        primary.down(X, (gamepad , reader) -> {
             map.LeftViperMotor.setPower(controller.FeedForwardControl());
-
             map.RightViperMotor.setPower(controller.FeedForwardControl());
         });
 

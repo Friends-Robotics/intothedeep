@@ -19,21 +19,25 @@ public class GamepadTeleOp extends LinearOpMode {
 
         telemetry.addData("Status","Initialised GamepadEx");
 
+
         // KEY => A
         // FUN => Change colour based on count
-        // CAPTURES => count, telemetry
-        primary.bind(A, (c, reader) -> {
-            telemetry.addLine("A Pressed");
-            if(!reader.justPressed()) return;
+        primary.pressed(A, (c, reader) -> {
             count.value += 1;
             int col = count.value % 3;
             telemetry.addLine("A Just Pressed");
             gamepad1.setLedColor(255 * (col == 1 ? 1 : 0), 255 * (col == 2 ? 1 : 0), 255 * (col == 0 ? 1 : 0), -1);
         });
 
+        // KEY => A
+        // FUN => Add telemetry
+        primary.down(A, (gamepad, reader) -> {
+            telemetry.addLine("A Pressed");
+        });
+
         // KEY => !A
-        // FUN => Update telemetry
-         primary.bindAlt(A, (c, reader) -> {
+        // FUN => Add telemetry
+         primary.up(A, (c, reader) -> {
              telemetry.addLine("A Not Pressed");
          });
 
@@ -44,7 +48,7 @@ public class GamepadTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            primary.update(gamepad1);
+            primary.update();
             telemetry.addData("Colour val", count.value % 3);
 
             telemetry.update();

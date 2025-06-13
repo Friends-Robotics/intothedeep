@@ -19,12 +19,10 @@ public class ButtonReader {
         current = state.getAsBoolean();
     }
 
-    public boolean down() {
-        return state.getAsBoolean();
-    }
+    public boolean down() { return state.getAsBoolean(); }
+    public boolean up() { return !state.getAsBoolean(); }
 
-    public boolean justPressed() {
-        return (!last && current);
-    }
+    public boolean justPressed() { return (!last && current); }
+    public boolean justReleased() { return (!current && last); }
 }
 
