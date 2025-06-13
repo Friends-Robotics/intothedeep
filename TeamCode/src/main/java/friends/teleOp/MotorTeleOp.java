@@ -49,26 +49,11 @@ public class MotorTeleOp extends LinearOpMode {
         });
 
         primary.down(A, (gamepad, reader) -> {
-            map.FrontRightMotor.setPower(1);
+            map.HorizontalMotor.setPower(1);
         });
-        primary.down(B, (gamepad, reader) -> {
-            map.FrontLeftMotor.setPower(1);
+        primary.up(A, (gamepad, reader) -> {
+            map.HorizontalMotor.setPower(0);
         });
-        primary.down(X, (gamepad, reader) -> {
-            map.BackRightMotor.setPower(1);
-        });
-        primary.down(Y, (gamepad, reader) -> {
-            map.BackLeftMotor.setPower(1);
-        });
-
-        primary.pressed(DPAD_DOWN, (gamepad, reader) ->
-            map.FrontRightMotor.setDirection(map.FrontRightMotor.getDirection() == DcMotorSimple.Direction.FORWARD ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD));
-        primary.pressed(DPAD_RIGHT, (gamepad, reader) ->
-            map.FrontLeftMotor.setDirection(map.FrontLeftMotor.getDirection() == DcMotorSimple.Direction.FORWARD ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD));
-        primary.pressed(DPAD_LEFT, (gamepad, reader) ->
-            map.BackRightMotor.setDirection(map.BackRightMotor.getDirection() == DcMotorSimple.Direction.FORWARD ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD));
-        primary.pressed(DPAD_UP, (gamepad, reader) ->
-            map.BackLeftMotor.setDirection(map.BackLeftMotor.getDirection() == DcMotorSimple.Direction.FORWARD ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD));
 
         telemetry.update();
         waitForStart();

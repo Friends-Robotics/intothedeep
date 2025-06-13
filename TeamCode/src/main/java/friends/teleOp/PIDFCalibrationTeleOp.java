@@ -15,7 +15,7 @@ import friends.helper.MotorControl.RightViperPIDFConstants;
 
 import static friends.helper.GamepadButton.*;
 
-@TeleOp(name = "CALIBRATION PIDF", group = "Testing")
+@TeleOp(name = "PIDF Calibration", group = "Testing")
 public class PIDFCalibrationTeleOp extends LinearOpMode {
 
     @Override

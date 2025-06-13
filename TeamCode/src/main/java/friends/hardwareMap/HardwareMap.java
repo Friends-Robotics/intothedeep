@@ -32,6 +32,8 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
     -----------------------------------------------------------------------
     | IMU               | IMU                   | I2C Bus 2               |
     -----------------------------------------------------------------------
+    | IMU               | IMU                   | I2C Bus 2               |
+    -----------------------------------------------------------------------
  */
 public class HardwareMap {
 
@@ -49,6 +51,8 @@ public class HardwareMap {
     public ServoImplEx LeftHangServo;
     public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
+
+    public DcMotorEx HorizontalMotor;
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap, DcMotor.RunMode runMode) {
         FrontRightMotor = hardwaremap.get(DcMotorEx.class, "FRW");
@@ -100,6 +104,8 @@ public class HardwareMap {
 //        LeftHangServo = hardwaremap.get(ServoImplEx.class, "LHS");
 //        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
+        HorizontalMotor = hardwaremap.get(DcMotorEx.class, "slide");
+        HorizontalMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap) {
