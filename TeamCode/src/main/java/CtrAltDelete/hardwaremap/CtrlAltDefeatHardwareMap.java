@@ -1,5 +1,6 @@
 package CtrAltDelete.hardwaremap;
 
+import com.qualcomm.hardware.motors.GoBILDA5202Series;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -57,8 +58,8 @@ public class CtrlAltDefeatHardwareMap {
         }
 
         RobotIMU = hardwareMap.get(IMU.class, "imu");
-        ColorSensor = hardwareMap.get(ColorSensor.class, "cs");
-        ts = hardwareMap.get(TouchSensor.class, "ts");
+//        ColorSensor = hardwareMap.get(ColorSensor.class, "cs");
+//        ts = hardwareMap.get(TouchSensor.class, "ts");
 
         //Change these to how the control hub is positioned
         RevHubOrientationOnRobot orientation = new RevHubOrientationOnRobot(
@@ -71,6 +72,18 @@ public class CtrlAltDefeatHardwareMap {
         DrawerSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         DrawerSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         DrawerSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        LeftViperSlide = hardwareMap.get(DcMotorEx.class, "LVM");
+        LeftViperSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftViperSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        LeftViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        RightViperSlide = hardwareMap.get(DcMotorEx.class, "RVM");
+        RightViperSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightViperSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RightViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 //        IntakeServo = hardwareMap.get(Servo.class, "iServo");
 //        IntakeServo.scaleRange(0.13, 0.5); //CHECK
