@@ -29,6 +29,7 @@ public class GamepadEx {
         gamepad = gp;
     }
 
+    /// Runs Continuously Every Update Cycle
     public void down(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
         if(downs.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
@@ -37,6 +38,7 @@ public class GamepadEx {
         }
         downs.put(btn, callback);
     }
+    /// Runs Once When Key Is Pressed
     public void pressed(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
         if(presses.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
@@ -46,6 +48,7 @@ public class GamepadEx {
         presses.put(btn, callback);
     }
 
+    /// Runs Continuously Every Update Cycle
     public void up(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
         if(ups.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
@@ -54,6 +57,7 @@ public class GamepadEx {
         }
         ups.put(btn, callback);
     }
+    /// Runs Once When Key Is Released
     public void released(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
         if(releases.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
