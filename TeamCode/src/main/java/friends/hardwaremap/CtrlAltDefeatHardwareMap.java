@@ -87,6 +87,11 @@ public class CtrlAltDefeatHardwareMap {
         RightViperSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         RightViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        IntakeMotor = hardwareMap.get(DcMotorEx.class, "IM");
+        IntakeServo = hardwareMap.get(Servo.class, "IS");
+        IntakeServo.scaleRange(0.13, 0.5); //CHECK
+
+
 //        WristServo = hardwareMap.get(Servo.class, "WS");
 //
 //        ClawServo = hardwareMap.get(Servo.class, "CS");
