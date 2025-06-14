@@ -58,27 +58,23 @@ public class Mecanum {
      * @param gp Gamepad object
      */
     public void Move(Gamepad gp) {
-        // If invalid power multiplier is provided then clamp to either 0 or 1
-        PowerMultiplier = Math.max(0, Math.min(1, PowerMultiplier));
-
-        // Y values need to be inverted
-        double y = -gp.left_stick_y;
-        double x = gp.left_stick_x * 1.1;
+        double y = -gp.left_stick_y; // Remember, Y stick value is reversed
+        double x = gp.left_stick_x * 1.1; // Counteract imperfect strafing
         double rx = gp.right_stick_x;
 
         // Denominator is the largest motor power (absolute value) or 1
         // This ensures all the powers maintain the same ratio,
         // but only if at least one is out of the range [-1, 1]
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontRightPower = (y - x - rx) / denominator;
         double frontLeftPower = (y + x + rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
 
-        frontRightMotor.setPower(frontRightPower * PowerMultiplier);
-        frontLeftMotor.setPower(frontLeftPower * PowerMultiplier);
-        backRightMotor.setPower(backRightPower * PowerMultiplier);
-        backLeftMotor.setPower(backLeftPower * PowerMultiplier);
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
     }
 
     public void FieldCentricMove(Gamepad gp){

@@ -17,20 +17,23 @@ public class IntakeTeleOp extends LinearOpMode {
         Intake intake = new Intake(map.IntakeServo, map.IntakeMotor, map.ColorSensor, map.DrawerSlide);
         GamepadEx gp1 = new GamepadEx(gamepad1);
 
-        gp1.down(GamepadButton.LEFT_BUMPER, (gamepad, buttonReader) ->{
-            intake.StandbyPosition();
-        });
-
-        gp1.down(GamepadButton.RIGHT_BUMPER, (gamepad, buttonReader) -> {
-            intake.ReadyPosition(gamepad1);
-        });
-
-        gp1.down(GamepadButton.TOUCHPAD, (gamepad, buttonReader) -> {
+        gp1.pressed(GamepadButton.TOUCHPAD, (gamepad, buttonReader) -> {
             intake.CycleColours(gamepad1);
         });
 
         waitForStart();
         while(opModeIsActive()){
+
+            if(gamepad1.right_bumper){
+                intake.ReadyPosition(gamepad1);
+            }
+            else if(gamepad1.left_bumper){
+                intake.SpinMotor();
+            }
+            else{
+                intake.StandbyPosition();
+            }
+
             intake.SendTelemetry(telemetry);
             telemetry.update();
             gp1.update();

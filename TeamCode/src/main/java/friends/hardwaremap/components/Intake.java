@@ -14,16 +14,16 @@ import friends.helper.MotorControl.PIDController;
 
 public class Intake {
 
-    private final Servo intakeServo;
+//    private final Servo intakeServo;
     private final DcMotorEx drawerMotor;
     private final DcMotorEx intakeMotor;
     private final ColorSensor colorSensor;
-    private String searchingColor;
+    private String searchingColor = "red";
     private boolean pieceHeld;
     private final PIDController drawerPID = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD);
 
     public Intake(Servo s, DcMotorEx m, ColorSensor c, DcMotorEx dm){
-        intakeServo = s;
+//        intakeServo = s;
         intakeMotor = m;
         colorSensor = c;
         colorSensor.enableLed(true);
@@ -32,29 +32,20 @@ public class Intake {
 
     //NEEDS TO BE LOOPED
     public void StandbyPosition(){
-        intakeServo.setPosition(1);
+        //intakeServo.setPosition(1);
         intakeMotor.setPower(0);
         drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 0));
     }
 
     //NEEDS TO BE LOOPED
     public void ReadyPosition(Gamepad gp){
-        drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 80));
-        if(pieceHeld){
-            if(DetermineColour(GetHSV()).equals(searchingColor) && !gp.cross){
-                intakeServo.setPosition(0.5);
-                intakeMotor.setPower(-0.9);
+//        drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 80));
+        if(!pieceHeld) {
+            intakeMotor.setPower(0.5);
+            if (DetermineColour(GetHSV()).equals(searchingColor)) {
+                pieceHeld = true;
+                StandbyPosition();
             }
-            pieceHeld = false;
-            StandbyPosition();
-        }
-        else {
-            if(!DetermineColour(GetHSV()).equals(searchingColor) && !gp.cross) {
-                intakeServo.setPosition(0);
-                intakeMotor.setPower(0.9);
-            }
-            pieceHeld = true;
-            StandbyPosition();
         }
     }
 
@@ -78,10 +69,8 @@ public class Intake {
             return "none";
         }
 
-        if (hue < 30 || hue > 330) {
+        if (hue < 20 || hue > 340) {
             return "red";
-        } else if (hue >= 30 && hue <= 70) {
-            return "yellow";
         } else if (hue >= 180 && hue <= 250) {
             return "blue";
         } else {
@@ -96,11 +85,7 @@ public class Intake {
                 searchingColor = "blue";
                 break;
             case "blue":
-                gp.setLedColor(255, 255, 0, Gamepad.LED_DURATION_CONTINUOUS);
-                searchingColor = "yellow";
-                break;
-            case "yellow":
-                gp.setLedColor(255, 0, 0, Gamepad.LED_DURATION_CONTINUOUS);
+                gp.setLedColor(255,0, 0, Gamepad.LED_DURATION_CONTINUOUS);
                 searchingColor = "red";
                 break;
             default:
@@ -113,9 +98,14 @@ public class Intake {
         telemetry.addLine("Colour Sensor")
                 .addData("Piece Held: ", pieceHeld)
                 .addData("Searching Colour: ", searchingColor);
-        telemetry.addLine("Servo")
-                .addData("Position: ", intakeServo.getPosition());
+//        telemetry.addLine("Servo")
+//                .addData("Position: ", intakeServo.getPosition());
         telemetry.addLine("DC Motor")
                 .addData("Power: ", intakeMotor.getPower());
+    }
+
+    public void SpinMotor(){
+        pieceHeld = false;
+        intakeMotor.setPower(-0.9);
     }
 }

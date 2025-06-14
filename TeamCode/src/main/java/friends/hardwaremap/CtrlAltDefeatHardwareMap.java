@@ -37,7 +37,6 @@ public class CtrlAltDefeatHardwareMap {
     public DcMotorEx DrawerSlide;
     public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
-
     public Servo WristServo;
     public Servo ClawServo;
 
@@ -59,8 +58,8 @@ public class CtrlAltDefeatHardwareMap {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
-        RobotIMU = hardwareMap.get(IMU.class, "imu");
-//        ColorSensor = hardwareMap.get(ColorSensor.class, "cs");
+        RobotIMU = hardwareMap.get(IMU.class, "IMU");
+        ColorSensor = hardwareMap.get(ColorSensor.class, "CS");
 //        ts = hardwareMap.get(TouchSensor.class, "ts");
 
         //Change these to how the control hub is positioned
@@ -70,7 +69,7 @@ public class CtrlAltDefeatHardwareMap {
 
         RobotIMU.initialize(new IMU.Parameters(orientation));
 
-        DrawerSlide = hardwareMap.get(DcMotorEx.class, "slide");
+        DrawerSlide = hardwareMap.get(DcMotorEx.class, "DS");
         DrawerSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         DrawerSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         DrawerSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -88,18 +87,17 @@ public class CtrlAltDefeatHardwareMap {
         RightViperSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         IntakeMotor = hardwareMap.get(DcMotorEx.class, "IM");
-        IntakeServo = hardwareMap.get(Servo.class, "IS");
-        IntakeServo.scaleRange(0.13, 0.5); //CHECK
+        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        IntakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
-//        WristServo = hardwareMap.get(Servo.class, "WS");
-//
-//        ClawServo = hardwareMap.get(Servo.class, "CS");
-
-//        IntakeServo = hardwareMap.get(Servo.class, "iServo");
+//        IntakeServo = hardwareMap.get(Servo.class, "IS");
 //        IntakeServo.scaleRange(0.13, 0.5); //CHECK
+
+
+
+
+        WristServo = hardwareMap.get(Servo.class, "WR");
 //
-//        IntakeMotor = hardwareMap.get(DcMotorEx.class, "iMotor");
-//        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ClawServo = hardwareMap.get(Servo.class, "CL");
     }
 }
