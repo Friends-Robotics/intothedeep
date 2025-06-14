@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import CtrAltDelete.hardwaremap.CtrlAltDefeatHardwareMap;
 import CtrAltDelete.hardwaremap.components.Intake;
+import CtrAltDelete.helper.GamepadEx;
 
 @TeleOp(name = "Intake Test", group = "Testing")
 public class IntakeTeleOp extends LinearOpMode {
@@ -13,6 +14,10 @@ public class IntakeTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
         Intake intake = new Intake(map.IntakeServo, map.IntakeMotor, map.ColorSensor, map.DrawerSlide);
+        GamepadEx.initGamepads(gamepad1, gamepad2);
+
+        GamepadEx.secondary.bind(GamepadEx.GamepadButton.RIGHT_BUMPER
+
         waitForStart();
         while(opModeIsActive()){
             if(gamepad2.right_bumper) intake.StandbyPosition();
