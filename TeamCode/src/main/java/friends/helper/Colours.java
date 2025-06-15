@@ -29,7 +29,7 @@ public enum Colours {
             case RED: return BLUE;
             case BLUE: return YELLOW;
             case YELLOW: return RED;
-        };
+        }
         return BLUE;
     }
 

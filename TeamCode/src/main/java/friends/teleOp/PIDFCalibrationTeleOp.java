@@ -33,12 +33,8 @@ public class PIDFCalibrationTeleOp extends LinearOpMode {
         map.RightViperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         map.LeftViperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        primary.pressed(A, (gamepad, reader) -> {
-            target_pos[0] = 80;
-        });
-        primary.pressed(B, (gamepad, reader) -> {
-            target_pos[0] = 10;
-        });
+        primary.pressed(A, () -> target_pos[0] = 80);
+        primary.pressed(B, () -> target_pos[0] = 10);
 
         telemetry.addData("Status", "Initialised HardwareMap");
         telemetry.update();

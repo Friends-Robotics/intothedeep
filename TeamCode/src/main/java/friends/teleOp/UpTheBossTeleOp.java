@@ -39,7 +39,7 @@ public class UpTheBossTeleOp extends LinearOpMode {
         ///  MACRO TWO   : Close Claw -> Flip Servo -> Deposit Position
 
         // MACRO ONE
-        primary.pressed(CROSS, (gamepad, reader) -> {
+        primary.pressed(CROSS, () -> {
             // Set pickup position for both arm and claw
             right_arm.setPosition(ARM_PICKUP);
             left_arm.setPosition(ARM_PICKUP);
@@ -47,7 +47,7 @@ public class UpTheBossTeleOp extends LinearOpMode {
         });
 
         // MACRO TWO
-        primary.pressed(CIRCLE, (gamepad, reader) -> {
+        primary.pressed(CIRCLE, () -> {
             // Set deposit position for both arm and claw
             right_arm.setPosition(ARM_DEPOSIT);
             left_arm.setPosition(ARM_DEPOSIT);
@@ -55,14 +55,10 @@ public class UpTheBossTeleOp extends LinearOpMode {
         });
 
         // Close Claw
-        primary.pressed(TRIANGLE, (gamepad, reader) -> {
-            claw.setPosition(CLAW_CLOSE);
-        });
+        primary.pressed(TRIANGLE, () -> claw.setPosition(CLAW_CLOSE));
 
         // Open Claw
-        primary.pressed(SQUARE, (gamepad, reader) -> {
-            claw.setPosition(CLAW_OPEN);
-        });
+        primary.pressed(SQUARE, () -> claw.setPosition(CLAW_OPEN));
 
         telemetry.addData("Status", "Initialised HardwareMap");
         telemetry.update();
@@ -77,9 +73,7 @@ public class UpTheBossTeleOp extends LinearOpMode {
     }
 
     private void waitUntil(boolean predicate) {
-        while(!predicate) {
-            continue;
-        }
+        while(!predicate) continue;
     }
 }
 

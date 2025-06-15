@@ -18,7 +18,7 @@ public class ViperSlideTeleOp extends LinearOpMode {
 
         // KEY => RIGHT TRIGGER
         // FUN => Set Viper Slide Motor Powers To 1
-        primary.down(RIGHT_TRIGGER, (gamepad, reader) -> {
+        primary.down(RIGHT_TRIGGER, (gamepad) -> {
             map.RightViperMotor.setVelocity(2000);
             map.LeftViperMotor.setVelocity(2000);
 //            map.RightViperMotor.setPower(1);
@@ -27,7 +27,7 @@ public class ViperSlideTeleOp extends LinearOpMode {
             telemetry.addData("Left Current Power", map.LeftViperMotor.getPower());
         });
 
-        primary.up(RIGHT_TRIGGER, (gamepad, reader) -> {
+        primary.up(RIGHT_TRIGGER, (gamepad) -> {
             if(gamepad.left_trigger > 0) return;
             map.RightViperMotor.setVelocity(0);
             map.LeftViperMotor.setVelocity(0);
@@ -35,14 +35,14 @@ public class ViperSlideTeleOp extends LinearOpMode {
 
         // KEY => LEFT TRIGGER
         // FUN => Set Viper Slide Motor Powers To -1
-        primary.down(LEFT_TRIGGER, (gamepad, reader) -> {
+        primary.down(LEFT_TRIGGER, (gamepad) -> {
             map.RightViperMotor.setPower(-2000);
             map.LeftViperMotor.setPower(-2000);
             telemetry.addData("Right Current Velocity", map.RightViperMotor.getVelocity());
             telemetry.addData("Left Current Velocity", map.LeftViperMotor.getVelocity());
         });
 
-        primary.up(LEFT_TRIGGER, (gamepad, reader) -> {
+        primary.up(LEFT_TRIGGER, (gamepad) -> {
             if(gamepad.right_trigger > 0) return;
             map.RightViperMotor.setVelocity(0);
             map.LeftViperMotor.setVelocity(0);
@@ -50,7 +50,7 @@ public class ViperSlideTeleOp extends LinearOpMode {
 
         // KEY => RIGHT BUMPER
         // FUN => Set Viper Slide Motor Powers To 0.5
-        primary.down(RIGHT_BUMPER, (gamepad, reader) -> {
+        primary.down(RIGHT_BUMPER, () -> {
             map.RightViperMotor.setPower(0.5);
             map.LeftViperMotor.setPower(0.5);
             telemetry.addData("Right Current Power", map.RightViperMotor.getPower());
@@ -60,31 +60,15 @@ public class ViperSlideTeleOp extends LinearOpMode {
 
         // KEY => LEFT BUMPER
         // FUN => Set Viper Slide Motor Powers To -0.5
-        primary.down(LEFT_BUMPER , (gamepad, reader) -> {
+        primary.down(LEFT_BUMPER, () -> {
             map.RightViperMotor.setPower(-0.5);
             map.LeftViperMotor.setPower(-0.5);
             telemetry.addData("Right Current Power", map.RightViperMotor.getPower());
             telemetry.addData("Left Current Power", map.LeftViperMotor.getPower());
         });
 
-        primary.down(Y, (gamepad, reader) -> {
-            map.RightHangServo.setPosition(1);
-        });
-        primary.up(Y, (gamepad, reader) -> {
-            map.RightHangServo.setPosition(0);
-        });
-
-        // KEY => A, CROSS
-        // FUN => Set Hang Servos to max position if A pressed, else minimum position
-//        primary.down(A, (gamepad, reader) -> {
-//            map.RightHangServo.setPosition(1);
-//            map.LeftHangServo.setPosition(1);
-//        });
-//
-//        primary.up(A, (gamepad, reader) -> {
-//            map.RightHangServo.setPosition(0);
-//            map.LeftHangServo.setPosition(0);
-//        });
+        primary.down(Y, () -> map.RightHangServo.setPosition(1));
+        primary.up(Y, () -> map.RightHangServo.setPosition(0));
 
         telemetry.addData("Status", "Initialised HardwareMap");
         telemetry.update();

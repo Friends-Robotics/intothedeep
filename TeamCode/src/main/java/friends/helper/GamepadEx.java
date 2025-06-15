@@ -3,22 +3,22 @@ package friends.helper;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class GamepadEx {
     private static void panic() {
         throw new RuntimeException("PANIC: Multiple Bindings Of One Key");
     }
-    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> downs =
+    private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> downs =
             new EnumMap<>(GamepadButton.class);
-    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> presses =
+    private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> presses =
             new EnumMap<>(GamepadButton.class);
-    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> ups =
+    private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> ups =
             new EnumMap<>(GamepadButton.class);
-    private final Map<GamepadButton, BiConsumer<Gamepad, ButtonReader>> releases =
+    private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> releases =
             new EnumMap<>(GamepadButton.class);
 
     private final Map<GamepadButton, ButtonReader> buttonReaders = new EnumMap<>(GamepadButton.class);
@@ -30,7 +30,7 @@ public class GamepadEx {
     }
 
     /// Runs Continuously Every Update Cycle
-    public void down(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
+    public void down(GamepadButton btn, BiConsumer<ButtonReader, Gamepad> callback) {
         if(downs.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
             ButtonReader reader = new ButtonReader(this, btn);
@@ -38,8 +38,18 @@ public class GamepadEx {
         }
         downs.put(btn, callback);
     }
+
+    public void down(GamepadButton btn, Consumer<Gamepad> callback) {
+        down(btn, (reader, gamepad) -> callback.accept(gamepad));
+    }
+
+    public void down(GamepadButton btn, Runnable callback) {
+        down(btn, (reader, gamepad) -> callback.run());
+    }
+
+
     /// Runs Once When Key Is Pressed
-    public void pressed(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
+    public void pressed(GamepadButton btn, BiConsumer<ButtonReader, Gamepad> callback) {
         if(presses.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
             ButtonReader reader = new ButtonReader(this, btn);
@@ -48,8 +58,16 @@ public class GamepadEx {
         presses.put(btn, callback);
     }
 
+    public void pressed(GamepadButton btn, Consumer<Gamepad> callback) {
+        pressed(btn, (reader, gamepad) -> callback.accept(gamepad));
+    }
+
+    public void pressed(GamepadButton btn, Runnable callback) {
+        pressed(btn, (reader, gamepad) -> callback.run());
+    }
+
     /// Runs Continuously Every Update Cycle
-    public void up(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
+    public void up(GamepadButton btn, BiConsumer<ButtonReader, Gamepad> callback) {
         if(ups.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
             ButtonReader reader = new ButtonReader(this, btn);
@@ -57,14 +75,30 @@ public class GamepadEx {
         }
         ups.put(btn, callback);
     }
+
+    public void up(GamepadButton btn, Consumer<Gamepad> callback) {
+        up(btn, ( reader,gamepad) -> callback.accept(gamepad));
+    }
+
+    public void up(GamepadButton btn, Runnable callback) {
+        up(btn, (reader, gamepad) -> callback.run());
+    }
     /// Runs Once When Key Is Released
-    public void released(GamepadButton btn, BiConsumer<Gamepad, ButtonReader> callback) {
+    public void released(GamepadButton btn, BiConsumer<ButtonReader, Gamepad> callback) {
         if(releases.containsKey(btn)) panic();
         if(!buttonReaders.containsKey(btn)) {
             ButtonReader reader = new ButtonReader(this, btn);
             buttonReaders.put(btn, reader);
         }
         releases.put(btn, callback);
+    }
+
+    public void released(GamepadButton btn, Consumer<Gamepad> callback) {
+        released(btn, (reader, gamepad) -> callback.accept(gamepad));
+    }
+
+    public void released(GamepadButton btn, Runnable callback) {
+        released(btn, (reader, gamepad) -> callback.run());
     }
 
     public void update() {
@@ -75,19 +109,19 @@ public class GamepadEx {
             reader.read();
 
             if(reader.justPressed() && presses.containsKey(btn)) {
-                Objects.requireNonNull(presses.get(btn)).accept(gamepad, reader);
+                Objects.requireNonNull(presses.get(btn)).accept(reader, gamepad);
             }
 
             if(reader.down() && downs.containsKey(btn)) {
-                Objects.requireNonNull(downs.get(btn)).accept(gamepad, reader);
+                Objects.requireNonNull(downs.get(btn)).accept( reader, gamepad);
             }
 
             if(reader.up() && ups.containsKey(btn)) {
-                Objects.requireNonNull(ups.get(btn)).accept(gamepad, reader);
+                Objects.requireNonNull(ups.get(btn)).accept(reader, gamepad);
             }
 
             if(reader.justReleased() && releases.containsKey(btn)) {
-                Objects.requireNonNull(releases.get(btn)).accept(gamepad, reader);
+                Objects.requireNonNull(releases.get(btn)).accept(reader, gamepad);
             }
         }
     }

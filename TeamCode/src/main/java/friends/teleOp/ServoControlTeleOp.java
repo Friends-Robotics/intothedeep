@@ -26,26 +26,25 @@ public class ServoControlTeleOp extends LinearOpMode {
 
         Count pos = new Count();
 
-        primary.pressed(DPAD_DOWN, (gamepad, reader) -> {
+        primary.pressed(DPAD_DOWN, () -> {
             pos.value -= 0.05;
             pos.value = Math.max(0, pos.value);
             servo.setPosition(pos.value);
         }) ;
 
-        primary.pressed(DPAD_UP, (gamepad, reader) -> {
+        primary.pressed(DPAD_UP, () -> {
             pos.value += 0.05;
             pos.value = Math.min(1, pos.value);
             servo.setPosition(pos.value);
         }) ;
 
-
-        primary.pressed(DPAD_LEFT, (gamepad, reader) -> {
+        primary.pressed(DPAD_LEFT, () -> {
             pos.value -= 0.1;
             pos.value = Math.max(0, pos.value);
             servo.setPosition(pos.value);
         }) ;
 
-        primary.pressed(DPAD_RIGHT, (gamepad, reader) -> {
+        primary.pressed(DPAD_RIGHT, () -> {
             pos.value += 0.1;
             pos.value = Math.min(1, pos.value);
             servo.setPosition(pos.value);

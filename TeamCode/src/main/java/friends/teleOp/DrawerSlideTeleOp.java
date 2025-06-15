@@ -27,7 +27,7 @@ public class DrawerSlideTeleOp extends LinearOpMode {
 
         // KEY => A
         // FUN => Changes Motor Mode to RUN_TO_POSITION and waits until arrived
-        primary.pressed(A, (gamepad, reader) -> {
+        primary.pressed(A, () -> {
             // Why is this -1?
             motor.setTargetPosition(-1);
             motor.setMode(RUN_TO_POSITION);
@@ -46,9 +46,8 @@ public class DrawerSlideTeleOp extends LinearOpMode {
 
         // KEY => Left Stick
         // FUN => Sets the power of the motor to the left stick position
-        primary.down(LEFT_STICK, (gamepad, reader) -> {
-            motor.setPower(-gamepad.left_stick_x);
-        });
+        primary.down(LEFT_STICK, (gamepad) ->
+                motor.setPower(-gamepad.left_stick_x));
 
         waitForStart();
 

@@ -15,7 +15,7 @@ import friends.helper.MotorControl.PIDFController;
 
 import static friends.helper.GamepadButton.*;
 
-@TeleOp(name="Cheeky", group="Linear OpMode")
+@TeleOp(name = "Cheeky", group = "Linear OpMode")
 public class CheekyTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -41,13 +41,13 @@ public class CheekyTeleOp extends LinearOpMode {
         GamepadEx primary = new GamepadEx(gamepad1);
         GamepadEx secondary = new GamepadEx(gamepad2);
 
-        telemetry.addData("Status","Initialised GamepadEx");
+        telemetry.addData("Status", "Initialised GamepadEx");
 
         ///  Primary
 
         Check speedCheck = new Check();
 
-        primary.pressed(A, (gamepad, reader) -> {
+        primary.pressed(A, (gamepad) -> {
             speedCheck.value = !speedCheck.value;
             m.PowerMultiplier = speedCheck.value ? 1 : 0.5;
             Colours col = speedCheck.value ? Colours.RED : Colours.BLUE;
@@ -56,7 +56,7 @@ public class CheekyTeleOp extends LinearOpMode {
 
         /// Secondary
 
-        secondary.down(RIGHT_BUMPER, (gamepad, reader) -> {
+        secondary.down(RIGHT_BUMPER, () -> {
             map.LeftViperMotor.setPower(controller.PIDControl(telemetry,
                     map.LeftViperMotor.getCurrentPosition(),
                     2000));
@@ -65,13 +65,13 @@ public class CheekyTeleOp extends LinearOpMode {
                     2000));
         });
 
-        secondary.up(RIGHT_BUMPER, (gamepad, reader) -> {
-            if(gamepad.left_bumper) return;
+        secondary.up(RIGHT_BUMPER, (gamepad) -> {
+            if (gamepad.left_bumper) return;
             map.RightViperMotor.setPower(0);
             map.LeftViperMotor.setPower(0);
         });
 
-        secondary.down(LEFT_BUMPER, (gamepad, reader) -> {
+        secondary.down(LEFT_BUMPER, () -> {
             map.LeftViperMotor.setPower(controller.PIDControl(telemetry,
                     map.LeftViperMotor.getCurrentPosition(),
                     -2000));
@@ -80,18 +80,18 @@ public class CheekyTeleOp extends LinearOpMode {
                     -2000));
         });
 
-        secondary.up(LEFT_BUMPER, (gamepad, reader) -> {
-            if(gamepad.right_bumper) return;
+        secondary.up(LEFT_BUMPER, (gamepad) -> {
+            if (gamepad.right_bumper) return;
             map.RightViperMotor.setPower(0);
             map.LeftViperMotor.setPower(0);
         });
 
-        secondary.down(A, (gamepad, reader) -> {
+        secondary.down(A, () -> {
             map.RightHangServo.setPosition(0);
             map.LeftHangServo.setPosition(0);
         });
 
-        secondary.up(A, (gamepad, reader) -> {
+        secondary.up(A, () -> {
             map.RightHangServo.setPosition(1);
             map.LeftHangServo.setPosition(1);
         });

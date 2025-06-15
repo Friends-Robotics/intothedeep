@@ -27,14 +27,14 @@ public class ColourSensorTeleOp extends LinearOpMode {
 
         // KEY => Touchpad
         // FUN => Cycles the colour
-        primary.pressed(TOUCHPAD, (gamepad, reader) -> {
+        primary.pressed(TOUCHPAD, (gamepad) -> {
             colour[0] = colour[0].next();
             gamepad.setLedColor(colour[0].R(), colour[0].G(), colour[0].B(), LED_DURATION_CONTINUOUS);
         });
 
         // KEY => Right Trigger
         // FUN => Sets the power if colour is found
-        primary.down(RIGHT_TRIGGER, (gamepad, reader) -> {
+        primary.down(RIGHT_TRIGGER, () -> {
             Colours sensor_colour = Colours.fromSensor(map.ColorSensor);
             motor.setPower(sensor_colour == colour[0] ? 0.2 : 0);
         });

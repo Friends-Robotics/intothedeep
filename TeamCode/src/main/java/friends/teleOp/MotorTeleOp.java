@@ -37,23 +37,19 @@ public class MotorTeleOp extends LinearOpMode {
 
         Check check = new Check();
 
-        primary.pressed(TOUCHPAD, (gp, reader) -> {
+        primary.pressed(TOUCHPAD, (gamepad) -> {
             check.value = !check.value;
 
             m.PowerMultiplier = check.value ? 1 : 0.5;
             // Red if power is 1, blue if power is 0.5
-            gamepad1.setLedColor(255 * (check.value ? 1 : 0),
+            gamepad.setLedColor(255 * (check.value ? 1 : 0),
                     0,
                     255 * (check.value ? 0 : 1),
                     -1);
         });
 
-        primary.down(A, (gamepad, reader) -> {
-            map.HorizontalMotor.setPower(1);
-        });
-        primary.up(A, (gamepad, reader) -> {
-            map.HorizontalMotor.setPower(0);
-        });
+        primary.down(A, () -> map.HorizontalMotor.setPower(1));
+        primary.up(A, () -> map.HorizontalMotor.setPower(0));
 
         telemetry.update();
         waitForStart();

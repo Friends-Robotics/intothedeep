@@ -6,7 +6,7 @@ import friends.helper.GamepadButton;
 public class ButtonReader {
     private boolean last;
     private boolean current;
-    private BooleanSupplier state;
+    private final BooleanSupplier state;
 
     public ButtonReader(GamepadEx gamepad, GamepadButton button) {
         state = () -> gamepad.get(button);
