@@ -1,51 +1,58 @@
-//package friends.teleOp;
-//
-//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-//
-//import static friends.helper.GamepadButton.*;
-//import friends.hardwareMap.HardwareMap;
-//import friends.hardwareMap.components.Intake;
-//import friends.helper.GamepadEx;
-//
-//@TeleOp(name = "Intake", group = "Testing")
-//public class IntakeTeleOp extends LinearOpMode {
-//
-//    @Override
-//    public void runOpMode() throws InterruptedException {
-//
-//        HardwareMap map = new HardwareMap(hardwareMap);
-//        Intake intake = new Intake(map.IntakeServo, map.IntakeMotor, map.ColorSensor);
-//
-//        GamepadEx primary = new GamepadEx(gamepad1);
-//
-//        // KEY => Right Bumper
-//        // FUN => Set intake to standby position
-//        primary.down(RIGHT_BUMPER, (gamepad, reader) -> {
-//            intake.StandbyPosition();
-//        });
-//
-//        // KEY => Left Bumper
-//        // FUN => Set intake to the ready position
-//        // Uses gamepad1
-//        primary.down(LEFT_BUMPER, (gamepad, reader) -> {
-//            intake.ReadyPosition(gamepad1);
-//        });
-//
-//        // KEY => Touchpad
-//        // FUN => Cycles the selected colour
-//        // Uses gamepad1
-//        primary.down(TOUCHPAD, (gamepad, reader) -> {
-//            intake.CycleColours(gamepad1);
-//        });
-//
-//        waitForStart();
-//
-//        if (isStopRequested()) return;
-//
-//        while(opModeIsActive()){
-//            primary.update();
-//            telemetry.update();
-//        }
-//    }
-//}
+package friends.teleOp;
+
+import static com.qualcomm.robotcore.hardware.Gamepad.LED_DURATION_CONTINUOUS;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import static friends.helper.Colours.YELLOW;
+import static friends.helper.GamepadButton.*;
+import friends.hardwareMap.HardwareMap;
+import friends.hardwareMap.components.Intake;
+import friends.helper.Colours;
+import friends.helper.GamepadEx;
+
+
+
+
+// Right Bumper     Set Intake Position 0
+// Left Bumper      Set Intake Position 1
+// CROSS            Cycle Colour
+// CIRCLE           Set Motor Power
+
+@TeleOp(name = "Intake", group = "Testing")
+public class IntakeTeleOp extends LinearOpMode {
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        HardwareMap map = new HardwareMap(hardwareMap);
+        DcMotor motor = map.GetTestingMotor();
+
+        GamepadEx primary = new GamepadEx(gamepad1);
+
+        Colours[] colour = {YELLOW};
+
+        primary.down(RIGHT_BUMPER, () -> {});
+        primary.down(LEFT_BUMPER, () -> {});
+
+        primary.pressed(CROSS, (gamepad) -> {
+            colour[0] = colour[0].next();
+            gamepad.setLedColor(colour[0].R(), colour[0].G(), colour[0].B(), LED_DURATION_CONTINUOUS);
+        });
+
+        primary.down(CIRCLE, () -> {
+            Colours sensor_colour = Colours.fromSensor(map.ColorSensor);
+            motor.setPower(sensor_colour == colour[0] ? 0.2 : 0);
+        });
+
+        waitForStart();
+
+        if (isStopRequested()) return;
+
+        while(opModeIsActive()){
+            primary.update();
+            telemetry.update();
+        }
+    }
+}
