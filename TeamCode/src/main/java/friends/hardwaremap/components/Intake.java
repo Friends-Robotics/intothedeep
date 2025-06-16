@@ -14,7 +14,7 @@ import friends.helper.MotorControl.PIDController;
 
 public class Intake {
 
-//    private final Servo intakeServo;
+    private final Servo intakeServo;
     private final DcMotorEx drawerMotor;
     private final DcMotorEx intakeMotor;
     private final ColorSensor colorSensor;
@@ -23,7 +23,7 @@ public class Intake {
     private final PIDController drawerPID = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD);
 
     public Intake(Servo s, DcMotorEx m, ColorSensor c, DcMotorEx dm){
-//        intakeServo = s;
+        intakeServo = s;
         intakeMotor = m;
         colorSensor = c;
         colorSensor.enableLed(true);
@@ -32,20 +32,24 @@ public class Intake {
 
     //NEEDS TO BE LOOPED
     public void StandbyPosition(){
-        //intakeServo.setPosition(1);
+        intakeServo.setPosition(1);
         intakeMotor.setPower(0);
         drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 0));
     }
 
     //NEEDS TO BE LOOPED
     public void ReadyPosition(Gamepad gp){
+        intakeServo.setPosition(0);
 //        drawerMotor.setPower(drawerPID.PIDControl(drawerMotor.getCurrentPosition(), 80));
         if(!pieceHeld) {
-            intakeMotor.setPower(0.5);
+            intakeMotor.setPower(0.7);
             if (DetermineColour(GetHSV()).equals(searchingColor)) {
                 pieceHeld = true;
                 StandbyPosition();
             }
+        }
+        else{
+            gp.rumble(20);
         }
     }
 
@@ -69,7 +73,7 @@ public class Intake {
             return "none";
         }
 
-        if (hue < 20 || hue > 340) {
+        if (hue < 10 || hue > 350) {
             return "red";
         } else if (hue >= 180 && hue <= 250) {
             return "blue";
@@ -98,14 +102,14 @@ public class Intake {
         telemetry.addLine("Colour Sensor")
                 .addData("Piece Held: ", pieceHeld)
                 .addData("Searching Colour: ", searchingColor);
-//        telemetry.addLine("Servo")
-//                .addData("Position: ", intakeServo.getPosition());
+        telemetry.addLine("Servo")
+                .addData("Position: ", intakeServo.getPosition());
         telemetry.addLine("DC Motor")
                 .addData("Power: ", intakeMotor.getPower());
     }
 
-    public void SpinMotor(){
+    public void SpitOut(){
         pieceHeld = false;
-        intakeMotor.setPower(-0.9);
+        intakeMotor.setPower(-0.7);
     }
 }

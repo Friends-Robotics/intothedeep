@@ -37,6 +37,8 @@ public class CtrlAltDefeatHardwareMap {
     public DcMotorEx DrawerSlide;
     public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
+    public Servo LeftArmServo;
+    public Servo RightArmServo;
     public Servo WristServo;
     public Servo ClawServo;
 
@@ -90,10 +92,14 @@ public class CtrlAltDefeatHardwareMap {
         IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         IntakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//        IntakeServo = hardwareMap.get(Servo.class, "IS");
-//        IntakeServo.scaleRange(0.13, 0.5); //CHECK
+        IntakeServo = hardwareMap.get(Servo.class, "IS");
+        IntakeServo.scaleRange(0.35, 0.65);
+        IntakeServo.setPosition(1); //Intake will face horizontal
 
-
+        LeftArmServo = hardwareMap.get(Servo.class, "LAS");
+        LeftArmServo.setPosition(0);
+        RightArmServo = hardwareMap.get(Servo.class, "RAS");
+        RightArmServo.setPosition(1);
 
 
         WristServo = hardwareMap.get(Servo.class, "WR");

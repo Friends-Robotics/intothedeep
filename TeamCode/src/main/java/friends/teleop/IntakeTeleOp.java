@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import friends.hardwaremap.CtrlAltDefeatHardwareMap;
 import friends.hardwaremap.components.Intake;
+import friends.hardwaremap.components.Mecanum;
 import friends.helper.GamepadButton;
 import friends.helper.GamepadEx;
 
@@ -15,28 +16,30 @@ public class IntakeTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         CtrlAltDefeatHardwareMap map = new CtrlAltDefeatHardwareMap(hardwareMap);
         Intake intake = new Intake(map.IntakeServo, map.IntakeMotor, map.ColorSensor, map.DrawerSlide);
-        GamepadEx gp1 = new GamepadEx(gamepad1);
+        GamepadEx gp2 = new GamepadEx(gamepad2);
+        Mecanum mecanum = new Mecanum(map.FrontRightWheel, map.BackRightWheel, map.BackLeftWheel, map.FrontLeftWheel, 0.7, map.RobotIMU);
 
-        gp1.pressed(GamepadButton.TOUCHPAD, (gamepad, buttonReader) -> {
-            intake.CycleColours(gamepad1);
+        gp2.pressed(GamepadButton.TOUCHPAD, (gamepad, buttonReader) -> {
+            intake.CycleColours(gamepad2);
         });
 
         waitForStart();
         while(opModeIsActive()){
 
-            if(gamepad1.right_bumper){
-                intake.ReadyPosition(gamepad1);
+            if(gamepad2.right_bumper){
+                intake.ReadyPosition(gamepad2);
             }
-            else if(gamepad1.left_bumper){
-                intake.SpinMotor();
+            else if(gamepad2.left_bumper){
+                intake.SpitOut();
             }
             else{
                 intake.StandbyPosition();
             }
+            mecanum.Move(gamepad1);
 
             intake.SendTelemetry(telemetry);
             telemetry.update();
-            gp1.update();
+            gp2.update();
         }
     }
 }
