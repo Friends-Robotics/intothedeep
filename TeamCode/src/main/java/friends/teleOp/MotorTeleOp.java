@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import friends.hardwareMap.HardwareMap;
 import friends.helper.Count;
+import friends.helper.MotorControl.OutakePIDFConstants;
 import friends.helper.gamepad.GamepadEx;
 import friends.helper.MotorControl.PIDFController;
 import friends.helper.MotorControl.SlidePIDFConstants;
@@ -24,12 +25,12 @@ public class MotorTeleOp extends LinearOpMode {
         GamepadEx primary = new GamepadEx(gamepad1);
 
         telemetry.addData("Status","Initialised GamepadEx");
-        PIDFController viperpidf = new PIDFController(SlidePIDFConstants.KP, SlidePIDFConstants.KI, SlidePIDFConstants.KD, SlidePIDFConstants.KF);
+        PIDFController viperpidf = new PIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);
 
-        Count viperTarget = new Count();
+        Count viper_target = new Count();
 
-        primary.pressed(A, () -> viperTarget.value = 2000);
-        primary.pressed(B, () -> viperTarget.value = 100);
+        primary.pressed(A, () -> viper_target.value = 2000);
+        primary.pressed(B, () -> viper_target.value = 100);
 
         telemetry.update();
         waitForStart();
@@ -39,9 +40,11 @@ public class MotorTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             primary.update();
 
-            double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viperTarget.value);
+            double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
+
+            telemetry.addData("target", viper_target.value);
 
             telemetry.update();
         }
