@@ -1,27 +1,78 @@
 package friends.autonomous;
 
-// SCORE SPECIMEN
-// SWEEP ONE
-// SWEEP TWO
-// SWEEP THREE
-// PICK UP SPECIMEN
-// SCORE ONE
-// SCORE TWO
-// SCORE THREE
-
 public enum AutoPaths {
-    SCORE_INITIAL(new double[][]{}),
-    SWEEP_ONE(new double[][]{}),
-    SWEEP_TWO(new double[][]{}),
-    SWEEP_THREE(new double[][]{}),
-    SPECIMEN_ONE(new double[][]{}),
-    SCORE_ONE(new double[][]{}),
-    SPECIMEN_TWO(new double[][]{}),
-    SCORE_TWO(new double[][]{}),
-    SPECIMEN_THREE(new double[][]{}),
-    SCORE_THREE(new double[][]{}),
-    PARK(new double[][]{}),
-    FINISH(new double[][]{});
+    SCORE_INITIAL(new double[][]{
+            {9.269, 55.078},
+            {30.180, 54.862},
+            {13.581, 74.156},
+            {38.048, 74.263}
+    }),
+    SWEEP_ONE(new double[][]{
+            {38.048, 74.263},
+            {15.629, 44.623},
+            {47.317, 33.952},
+            {106.707, 43.545},
+            {69.090, 20.048},
+            {92.156, 22.743},
+            {17.030, 22.635}
+    }),
+    SWEEP_TWO(new double[][]{
+            {17.030, 22.635},
+            {119.317, 34.060},
+            {73.509, 8.946},
+            {82.671, 12.611},
+            {13.796, 13.042}
+    }),
+    SWEEP_THREE(new double[][]{
+            {13.796, 13.042},
+            {104.659, 19.940},
+            {90.970, 0.431},
+            {65.641, 8.623},
+            {59.605, 7.653},
+            {12.934, 6.683}
+    }),
+    SPECIMEN_ONE(new double[][]{
+            {13.150, 8.084},
+            {34.922, 19.617},
+            {12.934, 34.491},
+            {32.335, 32.120},
+            {8.407, 32.335}
+    }),
+    SCORE_ONE(new double[][]{
+            {8.407, 32.335},
+            {8.731, 71.569},
+            {38.048, 71.030}
+    }),
+    SPECIMEN_TWO(new double[][]{
+            {38.048, 71.030},
+            {28.671, 30.719},
+            {8.731, 32.012}
+    }),
+    SCORE_TWO(new double[][]{
+            {8.731, 32.012},
+            {12.719, 68.982},
+            {37.940, 67.473}
+    }),
+    SPECIMEN_THREE(new double[][]{
+            {37.940, 67.473},
+            {31.042, 30.180},
+            {8.623, 31.904}
+    }),
+    SCORE_THREE(new double[][]{
+            {8.623, 31.904},
+            {16.168, 66.072},
+            {37.725, 64.132}
+    }),
+    PARK(new double[][]{
+            {37.725, 64.132},
+            {5.066, 59.713},
+            {7.545, 14.120}
+    }),
+    FINISH(new double[][]{
+            {37.725, 64.132},
+            {5.066, 59.713},
+            {7.545, 14.120}
+    });
 
     private final double[][] arr;
 
