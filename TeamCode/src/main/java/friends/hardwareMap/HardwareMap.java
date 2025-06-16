@@ -85,11 +85,11 @@ public class HardwareMap {
 
         RightViperMotor = hardwaremap.get(DcMotorEx.class, "RVM");
         RightViperMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        RightViperMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightViperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         LeftViperMotor = hardwaremap.get(DcMotorEx.class, "LVM");
         LeftViperMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        LeftViperMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftViperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         Mew = hardwaremap.get(IMU.class, "IMU");
 
@@ -119,7 +119,7 @@ ColorSensor = hardwaremap.get(ColorSensor.class, "CS");
 //        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         DrawerSlideMotor = hardwaremap.get(DcMotorEx.class, "DS");
-        DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
         LeftArmServo = hardwaremap.get(Servo.class, "LAS");
