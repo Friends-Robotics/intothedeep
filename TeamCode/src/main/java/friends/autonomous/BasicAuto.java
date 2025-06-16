@@ -51,16 +51,14 @@ public class BasicAuto extends OpMode {
 
     public void buildPaths() {
         for(AutoPaths path : AutoPaths.values()) {
-            double[] points = path.getPoints();
-            if(points.length % 2 != 0) continue;
+            double[][] cords = path.getCords();
+            ArrayList<Point> points = new ArrayList<>();
 
-            ArrayList<Point> path_points = new ArrayList<Point>();
-
-            for(int i = 0; i < points.length; i+=2) {
-                path_points.add(new Point(points[i], points[i+1], Point.CARTESIAN));
+            for(int i = 0; i < cords.length; i++) {
+                points.add(new Point(cords[i][0], cords[i+1][1], Point.CARTESIAN));
             }
 
-            paths.put(path, follower.pathBuilder().addPath(new BezierCurve(path_points)).setTangentHeadingInterpolation().build());
+            paths.put(path, follower.pathBuilder().addPath(new BezierCurve(points)).setTangentHeadingInterpolation().build());
         }
     }
 
@@ -77,6 +75,62 @@ public class BasicAuto extends OpMode {
                 if(!follower.isBusy()) {
                     follower.followPath(paths.get(SWEEP_ONE), true);
                     setPathState(SWEEP_TWO);
+                }
+                break;
+
+            case SWEEP_TWO:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SWEEP_TWO));
+                    setPathState(SWEEP_THREE);
+                }
+                break;
+
+            case SWEEP_THREE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SWEEP_THREE));
+                    setPathState(SPECIMEN_ONE);
+                }
+                break;
+            case SPECIMEN_ONE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SPECIMEN_ONE));
+                    setPathState(SCORE_ONE);
+                }
+                break;
+            case SCORE_ONE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SCORE_ONE));
+                    setPathState(SPECIMEN_TWO);
+                }
+                break;
+            case SPECIMEN_TWO:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SPECIMEN_TWO));
+                    setPathState(SCORE_TWO);
+                }
+                break;
+            case SCORE_TWO:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SCORE_TWO));
+                    setPathState(SPECIMEN_THREE);
+                }
+                break;
+            case SPECIMEN_THREE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SPECIMEN_THREE));
+                    setPathState(SCORE_THREE);
+                }
+                break;
+            case SCORE_THREE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SCORE_THREE));
+                    setPathState(PARK);
+                }
+                break;
+            case PARK:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(PARK));
+                    setPathState(FINISH);
                 }
                 break;
         }
