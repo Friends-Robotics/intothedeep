@@ -34,7 +34,8 @@ public class MotorTeleOp extends LinearOpMode {
         PIDFController viperpidf = new PIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);
 
         Count viper_target = new Count();
-        Count servo_target = new Count();
+        Count right_target = new Count();
+        Count left_target = new Count();
 
         Servo right = map.RightArmServo;
         Servo left = map.LeftArmServo;
@@ -45,10 +46,10 @@ public class MotorTeleOp extends LinearOpMode {
         primary.pressed(X, () -> viper_target.value = 4000);
         primary.pressed(Y, () -> viper_target.value = 0);
 
-        primary.pressed(DPAD_LEFT, () -> servo_target.value += 0.1);
-        primary.pressed(DPAD_RIGHT, () -> servo_target.value -= 0.1);
-        primary.pressed(DPAD_UP, () -> servo_target.value += 0.05);
-        primary.pressed(DPAD_DOWN, () -> servo_target.value -= 0.05);
+        primary.pressed(DPAD_LEFT, () -> right_target.value += 0.1);
+        primary.pressed(DPAD_RIGHT, () -> right_target.value -= 0.1);
+        primary.pressed(DPAD_UP, () -> left_target.value += 0.1);
+        primary.pressed(DPAD_DOWN, () -> left_target.value -= 0.1);
 
         telemetry.update();
         waitForStart();
@@ -61,6 +62,9 @@ public class MotorTeleOp extends LinearOpMode {
             double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
+
+            right.setPosition(right_target.value);
+            left.setPosition(left_target.value);
 
             telemetry.addData("target", viper_target.value);
 

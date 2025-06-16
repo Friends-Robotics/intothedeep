@@ -103,20 +103,7 @@ public class HardwareMap {
         Claw.scaleRange(0.35, 0.7);
         Wrist = hardwaremap.get(Servo.class, "WR");
 
-ColorSensor = hardwaremap.get(ColorSensor.class, "CS");
-
-//        IntakeServo = hardwaremap.get(Servo.class, "iServo");
-//        IntakeServo.scaleRange(0.13, 0.5); //CHECK
-
-//        IntakeMotor = hardwaremap.get(DcMotorEx.class, "iMotor");
-//        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        IntakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-
-//        RightHangServo = hardwaremap.get(ServoImplEx.class, "RHS");
-//        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
-//        LeftHangServo = hardwaremap.get(ServoImplEx.class, "LHS");
-//        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        ColorSensor = hardwaremap.get(ColorSensor.class, "CS");
 
         DrawerSlideMotor = hardwaremap.get(DcMotorEx.class, "DS");
         DrawerSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
