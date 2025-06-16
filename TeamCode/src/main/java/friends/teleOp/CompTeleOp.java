@@ -1,4 +1,4 @@
-package friends.teleOp;
+package friends.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -66,8 +66,12 @@ public class CompTeleOp extends LinearOpMode {
         ///  Touchpad -> Cycles Intake To Next Colour
         ///  Triangle -> Sets arm to scoring position
         ///  Circle -> Sets arm to wall position
+        ///  Square -> Close claw
+        ///  Cross -> Open claw
         secondary.pressed(TRIANGLE, () -> viper_target.value = arm.scoring());
         secondary.pressed(CIRCLE, () -> viper_target.value = arm.wall());
+        secondary.pressed(SQUARE, arm::closeClaw);
+        secondary.pressed(CROSS, arm::openClaw);
 
         secondary.pressed(RIGHT_BUMPER, intake::ready);
         secondary.pressed(LEFT_BUMPER, intake::spit);
