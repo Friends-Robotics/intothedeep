@@ -20,7 +20,7 @@ public class Intake {
     public Intake(HardwareMap map){
         this.servo = map.IntakeServo;
         this.sensor = map.ColorSensor;
-        this.drawerMotor = map.HorizontalMotor;
+        this.drawerMotor = map.DrawerSlideMotor;
         this.intakeMotor = map.IntakeMotor;
         this.sensor.enableLed(true);
         colour = Colours.RED;
@@ -29,7 +29,6 @@ public class Intake {
     public void standby(){
         servo.setPosition(1);
         intakeMotor.setPower(0);
-        drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), 0));
     }
 
     public void ready() {

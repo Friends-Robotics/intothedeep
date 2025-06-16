@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
@@ -60,7 +59,7 @@ public class HardwareMap {
     public ServoImplEx LeftHangServo;
     public Servo RightArmServo;
     public Servo LeftArmServo;
-    public DcMotorEx HorizontalMotor;
+    public DcMotorEx DrawerSlideMotor;
     public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
     public Servo Claw;
@@ -119,8 +118,8 @@ ColorSensor = hardwaremap.get(ColorSensor.class, "CS");
 //        LeftHangServo = hardwaremap.get(ServoImplEx.class, "LHS");
 //        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
-        HorizontalMotor = hardwaremap.get(DcMotorEx.class, "DS");
-        HorizontalMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        DrawerSlideMotor = hardwaremap.get(DcMotorEx.class, "DS");
+        DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
         LeftArmServo = hardwaremap.get(Servo.class, "LAS");
