@@ -26,7 +26,7 @@ public class Arm {
         rightArmServo.setPosition(0.3);
         leftArmServo.setPosition(0.7);
         wristServo.setPosition(0);
-        clawServo.setPosition(0);
+        clawServo.setPosition(1);
         return 800;
     }
 
@@ -38,5 +38,13 @@ public class Arm {
         wristServo.setPosition(1);
         clawServo.setPosition(0);
         return 600;
+    }
+
+    public void openClaw(){
+        clawServo.setPosition(1);
+    }
+
+    public void closeClaw(){
+        clawServo.setPosition(0);
     }
 }
