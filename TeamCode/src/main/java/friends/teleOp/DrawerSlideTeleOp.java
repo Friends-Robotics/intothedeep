@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.*;
 
 import friends.hardwareMap.HardwareMap;
-import friends.helper.GamepadEx;
-import static friends.helper.GamepadButton.*;
+import friends.helper.gamepad.GamepadEx;
+import static friends.helper.gamepad.GamepadButton.*;
 
 @TeleOp(name="Drawer Slide", group="Testing")
 public class DrawerSlideTeleOp extends LinearOpMode {

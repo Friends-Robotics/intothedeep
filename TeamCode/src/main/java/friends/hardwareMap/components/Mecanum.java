@@ -82,9 +82,11 @@ public class Mecanum {
     }
 
     public void HighPower() {
-        PowerMultiplier = 0.7;
+        PowerMultiplier = 1;
     }
-
+    public void MidPower() {
+        PowerMultiplier = 0.5;
+    }
     public void LowPower() {
         PowerMultiplier = 0.3;
     }

@@ -3,19 +3,17 @@ package friends.hardwareMap.components;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import friends.hardwareMap.HardwareMap;
 
 public class Arm {
-    private final DcMotorEx rightViper;
-    private final DcMotorEx leftViper;
     private final Servo rightArmServo;
     private final Servo leftArmServo;
     private final Servo wristServo;
     private final Servo clawServo;
 
     public Arm(HardwareMap map) {
-        rightViper = map.RightViperMotor;
-        leftViper = map.LeftViperMotor;
         rightArmServo = map.RightArmServo;
         leftArmServo = map.LeftArmServo;
         wristServo = map.Wrist;
@@ -29,7 +27,6 @@ public class Arm {
         leftArmServo.setPosition(0.7);
         wristServo.setPosition(0);
         clawServo.setPosition(0);
-
         return 800;
     }
 

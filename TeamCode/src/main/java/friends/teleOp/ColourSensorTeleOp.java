@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import static com.qualcomm.robotcore.hardware.Gamepad.LED_DURATION_CONTINUOUS;
 
-import static friends.helper.GamepadButton.*;
+import static friends.helper.gamepad.GamepadButton.*;
 import static friends.helper.Colours.*;
 import friends.hardwareMap.HardwareMap;
 import friends.helper.Colours;
-import friends.helper.GamepadEx;
+import friends.helper.gamepad.GamepadEx;
 
 @TeleOp(name = "Colour Sensor", group = "Testing")
 public class ColourSensorTeleOp extends LinearOpMode {

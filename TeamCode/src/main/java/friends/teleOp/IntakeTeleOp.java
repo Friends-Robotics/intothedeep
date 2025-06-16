@@ -7,11 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import static friends.helper.Colours.YELLOW;
-import static friends.helper.GamepadButton.*;
+import static friends.helper.gamepad.GamepadButton.*;
 import friends.hardwareMap.HardwareMap;
-import friends.hardwareMap.components.Intake;
 import friends.helper.Colours;
-import friends.helper.GamepadEx;
+import friends.helper.gamepad.GamepadEx;
 
 
 

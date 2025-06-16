@@ -27,8 +27,7 @@ public enum Colours {
     public Colours next() {
         switch(this) {
             case RED: return BLUE;
-            case BLUE: return YELLOW;
-            case YELLOW: return RED;
+            case BLUE: return RED;
         }
         return BLUE;
     }

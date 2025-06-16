@@ -2,17 +2,12 @@ package friends.teleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import friends.hardwareMap.HardwareMap;
-import friends.hardwareMap.components.Mecanum;
-import friends.helper.Check;
 import friends.helper.Count;
-import friends.helper.GamepadEx;
+import friends.helper.gamepad.GamepadEx;
 
-import static friends.helper.GamepadButton.*;
+import static friends.helper.gamepad.GamepadButton.*;
 
 @TeleOp(name="Servo Control", group="Testing")
 public class ServoControlTeleOp extends LinearOpMode {

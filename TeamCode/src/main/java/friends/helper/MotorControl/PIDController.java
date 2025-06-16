@@ -25,10 +25,6 @@ public class PIDController {
         integralSum += (error * timer.seconds());
         lastError = error;
 
-        t.addData("ERROR", error);
-        t.addData("derivative", derivative);
-        t.addData("integralSum", integralSum);
-
         timer.reset();
 
         return (KP * error) + (KI * integralSum) + (KD * derivative);

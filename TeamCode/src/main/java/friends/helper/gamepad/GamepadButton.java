@@ -1,4 +1,4 @@
-package friends.helper;
+package friends.helper.gamepad;
 
 public enum GamepadButton {
     A,

@@ -9,14 +9,13 @@ import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Arm;
 import friends.hardwareMap.components.Intake;
 import friends.hardwareMap.components.Mecanum;
-import friends.helper.Check;
 import friends.helper.Colours;
 import friends.helper.Count;
-import friends.helper.GamepadEx;
-import friends.helper.MotorControl.RightViperPIDFConstants;
+import friends.helper.gamepad.GamepadEx;
 import friends.helper.MotorControl.PIDFController;
+import friends.helper.MotorControl.SlidePIDFConstants;
 
-import static friends.helper.GamepadButton.*;
+import static friends.helper.gamepad.GamepadButton.*;
 
 @TeleOp(name = "Competition", group = "Competition")
 public class CompTeleOp extends LinearOpMode {
@@ -40,7 +39,7 @@ public class CompTeleOp extends LinearOpMode {
 
         telemetry.addData("Status", "Initialised Mecanum");
 
-        PIDFController viperpidf = new PIDFController(RightViperPIDFConstants.KP, RightViperPIDFConstants.KI, RightViperPIDFConstants.KD, RightViperPIDFConstants.KF);
+        PIDFController viperpidf = new PIDFController(SlidePIDFConstants.KP, SlidePIDFConstants.KI, SlidePIDFConstants.KD, SlidePIDFConstants.KF);
 
         telemetry.addData("Status", "Initialised PIDF Controller");
 
@@ -52,11 +51,20 @@ public class CompTeleOp extends LinearOpMode {
         Count viperTarget = new Count();
         viperTarget.value = 0;
 
-        ///  Primary
-        primary.down(LEFT_BUMPER, m::HighPower);
-        primary.up(LEFT_BUMPER, m::LowPower);
+        ///  Primary Controls
+        ///  Right Bumper -> Sets High Power
+        ///  Left Bumper -> Sets Mid Power
+        ///  Left Bumper Hold -> Sets Low Power
+        primary.pressed(RIGHT_BUMPER, m::HighPower);
+        primary.down(LEFT_BUMPER, m::LowPower);
+        primary.up(LEFT_BUMPER, m::MidPower);
 
-        ///  Secondary
+        /// Secondary Controls
+        ///  Right Bumper -> Sets Intake to ready position
+        ///  Left Bumper -> Spits Intake
+        ///  Touchpad -> Cycles Intake To Next Colour
+        ///  Triangle -> Sets arm to scoring position
+        ///  Circle -> Sets arm to wall position
         secondary.pressed(RIGHT_BUMPER, intake::ready);
         secondary.pressed(LEFT_BUMPER, intake::spit);
         secondary.pressed(TOUCHPAD, (gamepad) -> {
@@ -65,8 +73,8 @@ public class CompTeleOp extends LinearOpMode {
             gamepad.setLedColor(col.R(), col.G(), col.B(), Gamepad.LED_DURATION_CONTINUOUS);
         });
 
-        secondary.pressed(TRIANGLE, () ->  viperTarget.value = arm.scoring() );
-        secondary.pressed(CIRCLE, () -> viperTarget.value = arm.wall() );
+        secondary.pressed(TRIANGLE, () -> viperTarget.value = arm.scoring());
+        secondary.pressed(CIRCLE, () -> viperTarget.value = arm.wall());
 
         telemetry.update();
         waitForStart();
@@ -79,9 +87,12 @@ public class CompTeleOp extends LinearOpMode {
 
             m.Move(gamepad1);
 
+            // Set power of viper slides
             double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viperTarget.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
+
+            telemetry.addData("Current Viper Target", viperTarget.value);
 
             telemetry.update();
         }

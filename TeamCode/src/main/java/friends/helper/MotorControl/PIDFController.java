@@ -11,8 +11,8 @@ public class PIDFController extends PIDController {
     }
 
     @Override
-    public double PIDControl(Telemetry telemetry, int state, int max) {
-        return KF + super.PIDControl(telemetry, state, max);
+    public double PIDControl(int state, int max) {
+        return KF + super.PIDControl(state, max);
     }
     public double FeedForwardControl(){
         return KF;

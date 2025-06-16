@@ -1,7 +1,6 @@
-package friends.helper;
+package friends.helper.gamepad;
 
 import java.util.function.BooleanSupplier;
-import friends.helper.GamepadButton;
 
 public class ButtonReader {
     private boolean last;

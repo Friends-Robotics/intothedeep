@@ -1,4 +1,4 @@
-package friends.helper;
+package friends.helper.gamepad;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
