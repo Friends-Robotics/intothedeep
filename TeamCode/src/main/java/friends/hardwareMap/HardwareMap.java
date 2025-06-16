@@ -119,6 +119,7 @@ ColorSensor = hardwaremap.get(ColorSensor.class, "CS");
 //        RightHangServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         DrawerSlideMotor = hardwaremap.get(DcMotorEx.class, "DS");
+        DrawerSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
