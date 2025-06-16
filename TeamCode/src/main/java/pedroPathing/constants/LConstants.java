@@ -14,7 +14,7 @@ public class LConstants {
         OTOSConstants.linearUnit = DistanceUnit.INCH;
         OTOSConstants.angleUnit = AngleUnit.RADIANS;
         OTOSConstants.offset = new SparkFunOTOS.Pose2D(-5.2, -1.4, Math.PI / 2);
-        OTOSConstants.linearScalar = 1.0;
-        OTOSConstants.angularScalar = 1.0;
+        OTOSConstants.linearScalar = 1.2356;
+        OTOSConstants.angularScalar = 0.9701;
     }
 }
