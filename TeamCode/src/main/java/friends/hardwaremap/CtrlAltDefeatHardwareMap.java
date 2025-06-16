@@ -1,5 +1,6 @@
 package friends.hardwaremap;
 
+import com.pedropathing.localization.SparkFunOTOSCorrected;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -41,6 +42,7 @@ public class CtrlAltDefeatHardwareMap {
     public Servo RightArmServo;
     public Servo WristServo;
     public Servo ClawServo;
+//    public SparkFunOTOSCorrected OTOS;
 
     public CtrlAltDefeatHardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
         FrontRightWheel = hardwareMap.get(DcMotorEx.class, "FRW");
@@ -101,6 +103,7 @@ public class CtrlAltDefeatHardwareMap {
         RightArmServo = hardwareMap.get(Servo.class, "RAS");
         RightArmServo.setPosition(1);
 
+//        OTOS = hardwareMap.get(SparkFunOTOSCorrected.class, "OTOS");
 
         WristServo = hardwareMap.get(Servo.class, "WR");
 //

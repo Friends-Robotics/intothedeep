@@ -2,27 +2,19 @@ package pedroPathing.constants;
 
 import com.pedropathing.localization.*;
 import com.pedropathing.localization.constants.*;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class LConstants {
     static {
-        // Multipliers
-        ThreeWheelConstants.forwardTicksToInches = .0009;
-        ThreeWheelConstants.strafeTicksToInches = .001;
-        ThreeWheelConstants.turnTicksToInches = .0009;
-
-        // Odometer offsets
-        ThreeWheelConstants.leftY = 4.143;
-        ThreeWheelConstants.rightY = -4.143;
-        ThreeWheelConstants.strafeX = -5.361;
-
-        // Encoder ports (encoders are attached to motor encoder ports)
-        ThreeWheelConstants.leftEncoder_HardwareMapName = "BRW";
-        ThreeWheelConstants.rightEncoder_HardwareMapName = "FLW";
-        ThreeWheelConstants.strafeEncoder_HardwareMapName = "FRW";
-
-        // Encoder directions
-        ThreeWheelConstants.leftEncoderDirection = Encoder.REVERSE;
-        ThreeWheelConstants.rightEncoderDirection = Encoder.FORWARD;
-        ThreeWheelConstants.strafeEncoderDirection = Encoder.REVERSE;
+        OTOSConstants.useCorrectedOTOSClass = false;
+        OTOSConstants.hardwareMapName = "OTOS";
+        OTOSConstants.linearUnit = DistanceUnit.INCH;
+        OTOSConstants.angleUnit = AngleUnit.RADIANS;
+        OTOSConstants.offset = new SparkFunOTOS.Pose2D(-5.2, -1.4, Math.PI / 2);
+        OTOSConstants.linearScalar = 1.0;
+        OTOSConstants.angularScalar = 1.0;
     }
 }
