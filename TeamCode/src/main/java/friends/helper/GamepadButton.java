@@ -1,4 +1,5 @@
 package friends.helper;
+
 public enum GamepadButton {
     A,
     CROSS,
@@ -20,6 +21,7 @@ public enum GamepadButton {
     RIGHT_STICK,
     TOUCHPAD,
     LEFT_STICK_BUTTON,
-    RIGHT_STICK_BUTTON
+    RIGHT_STICK_BUTTON,
+    PLAYSTATION,
 }
 

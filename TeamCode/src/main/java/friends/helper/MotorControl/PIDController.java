@@ -19,7 +19,7 @@ public class PIDController {
     private double integralSum = 0;
     private int lastError = 0;
 
-    public double PIDControl(Telemetry t, int state, int max) {
+    public double PIDControl(int state, int max) {
         int error = max - state;
         double derivative = (error - lastError) / timer.seconds();
         integralSum += (error * timer.seconds());

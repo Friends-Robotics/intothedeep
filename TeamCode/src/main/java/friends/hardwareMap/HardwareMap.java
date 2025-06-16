@@ -61,6 +61,8 @@ public class HardwareMap {
     public Servo RightArmServo;
     public Servo LeftArmServo;
     public DcMotorEx HorizontalMotor;
+    public Servo IntakeServo;
+    public DcMotorEx IntakeMotor;
     public Servo Claw;
     public Servo Wrist;
 
@@ -82,7 +84,6 @@ public class HardwareMap {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
-        ///  THIS IS THE VIPER SLIDE CODE
         RightViperMotor = hardwaremap.get(DcMotorEx.class, "RVM");
         RightViperMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         RightViperMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -122,6 +123,14 @@ public class HardwareMap {
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
         LeftArmServo = hardwaremap.get(Servo.class, "LAS");
+
+        IntakeMotor = hardwaremap.get(DcMotorEx.class, "IM");
+        IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        IntakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        IntakeServo = hardwaremap.get(Servo.class, "IS");
+        IntakeServo.scaleRange(0.35, 0.65);
+        IntakeServo.setPosition(1);
 
     }
 
