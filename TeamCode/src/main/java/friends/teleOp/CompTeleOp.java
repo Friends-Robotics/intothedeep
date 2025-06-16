@@ -75,7 +75,7 @@ public class CompTeleOp extends LinearOpMode {
         secondary.pressed(TOUCHPAD, (gamepad) -> {
             intake.cycle();
             Colours col = intake.getColour();
-            gamepad.setLedColor(col.R(), col.G(), col.B(), Gamepad.LED_DURATION_CONTINUOUS);
+            secondary.setColour(col);
         });
 
         telemetry.update();
@@ -86,6 +86,7 @@ public class CompTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             // Update both primary and secondary game-pads
             primary.update();
+            primary.setColour(mecanum.PowerGamepadColour());
             secondary.update();
 
             mecanum.Move(gamepad1);

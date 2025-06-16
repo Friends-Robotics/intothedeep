@@ -8,6 +8,7 @@ public enum Colours {
     RED(255, 0, 0),
     BLUE(0, 0, 255),
     YELLOW(255, 255, 0),
+    GREEN(0, 255, 0),
     NONE(0, 0, 0);
 
     Colours(int r, int g, int b) {

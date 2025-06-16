@@ -8,6 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
+import friends.helper.Colours;
+
 public class Mecanum {
     private final DcMotorEx
             frontRightMotor,
@@ -89,6 +91,15 @@ public class Mecanum {
     }
     public void LowPower() {
         PowerMultiplier = 0.3;
+    }
+    public Colours PowerGamepadColour() {
+        if(PowerMultiplier == 1)
+            return Colours.RED;
+        else if(PowerMultiplier == 0.5) {
+            return Colours.YELLOW;
+        }
+
+        return Colours.GREEN;
     }
     public void FieldCentricMove(Gamepad gp){
         double y = -gp.left_stick_y;

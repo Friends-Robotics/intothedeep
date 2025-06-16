@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import friends.helper.Colours;
+
 public class GamepadEx {
     private static void panic() {
         throw new RuntimeException("PANIC: Multiple Bindings Of One Key");
@@ -124,6 +126,12 @@ public class GamepadEx {
                 Objects.requireNonNull(releases.get(btn)).accept(reader, gamepad);
             }
         }
+    }
+
+    public void setColour(Colours colour) {
+        if(gamepad == null) return;
+
+        gamepad.setLedColor(colour.R(), colour.G(), colour.B(), Gamepad.LED_DURATION_CONTINUOUS);
     }
 
     public boolean get(GamepadButton btn) {
