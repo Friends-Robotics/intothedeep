@@ -11,6 +11,7 @@ import friends.hardwareMap.components.Intake;
 import friends.hardwareMap.components.Mecanum;
 import friends.helper.Colours;
 import friends.helper.Count;
+import friends.helper.MotorControl.OutakePIDFConstants;
 import friends.helper.gamepad.GamepadEx;
 import friends.helper.MotorControl.PIDFController;
 import friends.helper.MotorControl.SlidePIDFConstants;
@@ -39,7 +40,7 @@ public class CompTeleOp extends LinearOpMode {
 
         telemetry.addData("Status", "Initialised Mecanum");
 
-        PIDFController viperpidf = new PIDFController(SlidePIDFConstants.KP, SlidePIDFConstants.KI, SlidePIDFConstants.KD, SlidePIDFConstants.KF);
+        PIDFController viperpidf = new PIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);
 
         telemetry.addData("Status", "Initialised PIDF Controller");
 
