@@ -12,15 +12,7 @@ import friends.hardwareMap.HardwareMap;
 import friends.helper.Colours;
 import friends.helper.gamepad.GamepadEx;
 
-
-
-
-// Right Bumper     Set Intake Position 0
-// Left Bumper      Set Intake Position 1
-// CROSS            Cycle Colour
-// CIRCLE           Set Motor Power
-
-@TeleOp(name = "Intake", group = "Testing")
+@TeleOp(name = "Intake Testing", group = "Testing")
 public class IntakeTeleOp extends LinearOpMode {
 
     @Override

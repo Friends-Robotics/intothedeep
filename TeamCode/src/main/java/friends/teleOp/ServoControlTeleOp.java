@@ -9,7 +9,7 @@ import friends.helper.gamepad.GamepadEx;
 
 import static friends.helper.gamepad.GamepadButton.*;
 
-@TeleOp(name="Servo Control", group="Testing")
+@TeleOp(name="Servo Testing", group="Testing")
 public class ServoControlTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {

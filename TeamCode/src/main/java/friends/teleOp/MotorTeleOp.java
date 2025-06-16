@@ -12,7 +12,7 @@ import friends.helper.MotorControl.SlidePIDFConstants;
 
 import static friends.helper.gamepad.GamepadButton.*;
 
-@TeleOp(name="Movement", group="Linear OpMode")
+@TeleOp(name="Viper Testing", group="Testing")
 public class MotorTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {

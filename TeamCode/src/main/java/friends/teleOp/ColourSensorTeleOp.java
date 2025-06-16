@@ -11,7 +11,7 @@ import friends.hardwareMap.HardwareMap;
 import friends.helper.Colours;
 import friends.helper.gamepad.GamepadEx;
 
-@TeleOp(name = "Colour Sensor", group = "Testing")
+@TeleOp(name = "Colour Testing", group = "Testing")
 public class ColourSensorTeleOp extends LinearOpMode {
 
     @Override
@@ -25,15 +25,13 @@ public class ColourSensorTeleOp extends LinearOpMode {
 
         GamepadEx primary = new GamepadEx(gamepad1);
 
-        // KEY => Touchpad
-        // FUN => Cycles the colour
+        // Cycles To Next Colour, Updates Gamepad Led
         primary.pressed(TOUCHPAD, (gamepad) -> {
             colour[0] = colour[0].next();
             gamepad.setLedColor(colour[0].R(), colour[0].G(), colour[0].B(), LED_DURATION_CONTINUOUS);
         });
 
-        // KEY => Right Trigger
-        // FUN => Sets the power if colour is found
+        // Changes Motor State If Colour Is Matching
         primary.down(RIGHT_TRIGGER, () -> {
             Colours sensor_colour = Colours.fromSensor(map.ColorSensor);
             motor.setPower(sensor_colour == colour[0] ? 0.2 : 0);

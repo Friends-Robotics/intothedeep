@@ -10,8 +10,8 @@ import friends.hardwareMap.HardwareMap;
 import friends.helper.gamepad.GamepadEx;
 import static friends.helper.gamepad.GamepadButton.*;
 
-@TeleOp(name="Drawer Slide", group="Testing")
-public class DrawerSlideTeleOp extends LinearOpMode {
+@TeleOp(name="Drawer Testing", group="Testing")
+public class DrawerTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -46,8 +46,7 @@ public class DrawerSlideTeleOp extends LinearOpMode {
 
         // KEY => Left Stick
         // FUN => Sets the power of the motor to the left stick position
-        primary.down(LEFT_STICK, (gamepad) ->
-                motor.setPower(-gamepad.left_stick_x));
+        primary.down(LEFT_STICK, (gamepad) -> motor.setPower(-gamepad.left_stick_x));
 
         waitForStart();
 
