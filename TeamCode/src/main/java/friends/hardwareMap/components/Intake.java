@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import friends.hardwareMap.HardwareMap;
 import friends.helper.Colours;
 import friends.helper.MotorControl.DrawerPIDFConstants;
 import friends.helper.MotorControl.PIDController;
@@ -12,16 +13,15 @@ public class Intake {
     private final Servo servo;
     private final DcMotorEx drawerMotor;
     private final DcMotorEx intakeMotor;
-    private final Colours colour;
+    private Colours colour;
     private final ColorSensor sensor;
     private boolean pieceHeld;
     private final PIDController pid = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD);
-
-    public Intake(Servo servo, DcMotorEx drawer, DcMotorEx intake, ColorSensor sensor){
-        this.servo = servo;
-        this.sensor = sensor;
-        this.drawerMotor = drawer;
-        this.intakeMotor = intake;
+    public Intake(HardwareMap map){
+        this.servo = map.IntakeServo;
+        this.sensor = map.ColorSensor;
+        this.drawerMotor = map.HorizontalMotor;
+        this.intakeMotor = map.IntakeMotor;
         this.sensor.enableLed(true);
         colour = Colours.RED;
     }
@@ -48,6 +48,14 @@ public class Intake {
             pieceHeld = true;
             standby();
         }
+    }
+
+    public void cycle() {
+        colour = colour.next();
+    }
+
+    public Colours getColour() {
+        return colour;
     }
 
     public void spit() {

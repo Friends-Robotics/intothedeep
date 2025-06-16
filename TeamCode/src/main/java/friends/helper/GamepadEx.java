@@ -166,6 +166,8 @@ public class GamepadEx {
                     return gamepad.left_stick_button;
             case RIGHT_STICK_BUTTON:
                 return gamepad.right_stick_button;
+            case PLAYSTATION:
+                return gamepad.ps;
             default:
                 return false;
         }

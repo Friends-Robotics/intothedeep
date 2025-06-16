@@ -81,6 +81,13 @@ public class Mecanum {
         backLeftMotor.setPower(backLeftPower * PowerMultiplier);
     }
 
+    public void HighPower() {
+        PowerMultiplier = 0.7;
+    }
+
+    public void LowPower() {
+        PowerMultiplier = 0.3;
+    }
     public void FieldCentricMove(Gamepad gp){
         double y = -gp.left_stick_y;
         double x = gp.left_stick_x;
