@@ -61,4 +61,17 @@ public class Intake {
         pieceHeld = false;
         intakeMotor.setPower(-0.7);
     }
+
+    public void slideOut(){
+        drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), 80));
+    }
+
+    public void slideIn(){
+        drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), 0));
+    }
+
+    public void slideToPos(int target){
+        target = Math.max(0, Math.min(80, target));
+        drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), target));
+    }
 }
