@@ -63,12 +63,10 @@ public class Arm {
     }
 
     public int wallAction(){
-        if(readyAtWall){return wall();}
-        else{return readyToWall();}
+        return readyAtwall ? wall() : readyToWall();
     }
 
     public int scoreAction(){
-        if(readyAtScoring){return score();}
-        else{return readyToScore();}
+        return readyAtScoring ? score() : readyToScore();
     }
 }

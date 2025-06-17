@@ -59,8 +59,8 @@ public class CompTeleOp extends LinearOpMode {
         primary.pressed(RIGHT_BUMPER, mecanum::HighPower);
         primary.down(LEFT_BUMPER, mecanum::LowPower);
         primary.released(LEFT_BUMPER, mecanum::MidPower);
-        primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
-        primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
+        // CHANG ETHIS primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
+//        primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
@@ -80,8 +80,8 @@ public class CompTeleOp extends LinearOpMode {
         secondary.pressed(RIGHT_BUMPER, intake::ready);
         secondary.pressed(LEFT_BUMPER,  intake::spit);
         secondary.pressed(TOUCHPAD,     intake::cycle);
-        secondary.pressed(DPAD_UP,    intake::slideOut);
-        secondary.pressed(DPAD_DOWN,   intake::slideIn);
+        secondary.pressed(DPAD_UP,      intake::slideOut);
+        secondary.pressed(DPAD_DOWN,    intake::slideIn);
 
         secondary.pressed(PLAYSTATION, () -> {
             if(viper_target.value > 20) return;
