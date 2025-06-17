@@ -16,7 +16,7 @@ import friends.helper.gamepad.GamepadEx;
 public class IntakeTeleOp extends LinearOpMode {
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         HardwareMap map = new HardwareMap(hardwareMap);
         DcMotor motor = map.GetTestingMotor();
 

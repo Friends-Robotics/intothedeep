@@ -82,4 +82,8 @@ public class Intake {
     public void slide() {
         drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), target));
     }
+
+    public int Max() {
+        return MAX_POSITION;
+    }
 }

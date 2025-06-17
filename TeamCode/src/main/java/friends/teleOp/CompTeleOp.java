@@ -37,7 +37,7 @@ public class CompTeleOp extends LinearOpMode {
 
         telemetry.addData("Status", "Initialised Mecanum");
 
-        PIDFController viper_pidf = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
+        PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
 
         telemetry.addData("Status", "Initialised PIDF Controller");
 
@@ -67,18 +67,20 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        secondary.pressed(TRIANGLE, () -> viper_target.value = arm.scoring());
-        secondary.pressed(CIRCLE, () -> viper_target.value = arm.wall());
+        secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.scoring());
+        secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.wall());
+        secondary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
+        secondary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
+
         secondary.pressed(SQUARE,       arm::closeClaw);
         secondary.pressed(CROSS,        arm::openClaw);
-
         secondary.pressed(RIGHT_BUMPER, intake::ready);
         secondary.pressed(LEFT_BUMPER,  intake::spit);
         secondary.pressed(TOUCHPAD,     intake::cycle);
         secondary.pressed(DPAD_LEFT,    intake::slideOut);
         secondary.pressed(DPAD_RIGHT,   intake::slideIn);
 
-        secondary.down(RIGHT_STICK, (gamepad) -> intake.slideToPos((int)((gamepad.right_stick_x + 1) / 2) * 80));
+        secondary.down(RIGHT_STICK, (gamepad) -> intake.slideToPos((int)((gamepad.right_stick_x + 1) / 2) * intake.Max()));
 
         telemetry.update();
         waitForStart();
@@ -94,11 +96,12 @@ public class CompTeleOp extends LinearOpMode {
 
             mecanum.Move(gamepad1);
 
-            // Set power of viper slides to PIDF
-            double power = viper_pidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
+            // PID for viper
+            double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
 
+            // PID for drawer
             intake.slide();
 
             telemetry.addData("Current Viper Target", viper_target.value);
