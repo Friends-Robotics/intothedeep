@@ -35,6 +35,8 @@ public class CompTeleOp extends LinearOpMode {
         Intake intake = new Intake(map);
         Arm arm = new Arm(map);
 
+        Count macro_state = new Count();
+
         telemetry.addData("Status", "Initialised Mecanum");
 
         PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
@@ -81,6 +83,11 @@ public class CompTeleOp extends LinearOpMode {
         secondary.pressed(DPAD_UP,    intake::slideOut);
         secondary.pressed(DPAD_DOWN,   intake::slideIn);
 
+        secondary.pressed(PLAYSTATION, () -> {
+            if(viper_target.value > 20) return;
+            macro_state.value = 1;
+        });
+
         secondary.down(RIGHT_STICK, (gamepad) -> intake.slideToPos((int)((gamepad.right_stick_x + 1) / 2) * intake.Max()));
 
         telemetry.update();
@@ -97,13 +104,32 @@ public class CompTeleOp extends LinearOpMode {
 
             mecanum.Move(gamepad1);
 
+
+            // PID for drawer
+            intake.slide();
+
+            switch((int)macro_state.value) {
+                case 0:
+                    break;
+                case 1:
+                    viper_target.value = 5000;
+                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
+                        macro_state.value = 2;
+                    }
+                    break;
+                case 2:
+                    map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    viper_target.value = 2000;
+                    if(map.RightViperMotor.getCurrentPosition() < 2100) {
+                        macro_state.value = 0;
+                    }
+            }
+
             // PID for viper
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
-
-            // PID for drawer
-            intake.slide();
 
             telemetry.addData("Current Viper Target", viper_target.value);
 

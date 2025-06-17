@@ -38,8 +38,8 @@ public class MotorTeleOp extends LinearOpMode {
         Servo right = map.RightArmServo;
         Servo left = map.LeftArmServo;
 
-        primary.pressed(A, () -> viper_target.value += 200);
-        primary.pressed(B, () -> viper_target.value -= 200);
+        primary.pressed(CROSS, () -> viper_target.value += 200);
+        primary.pressed(CIRCLE, () -> viper_target.value -= 200);
 
         primary.pressed(X, () -> viper_target.value = 4000);
         primary.pressed(Y, () -> viper_target.value = 0);
