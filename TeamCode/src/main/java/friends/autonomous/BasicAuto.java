@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Optional;
 
 import static friends.autonomous.AutoPaths.*;
 import friends.hardwareMap.HardwareMap;
@@ -35,7 +36,7 @@ public class BasicAuto extends OpMode {
         follower.setStartingPose(startPose);
         buildPaths();
         map = new HardwareMap(hardwareMap);
-        arm = new Arm(map);
+        arm = new Arm(map, Optional.empty());
     }
 
     private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);

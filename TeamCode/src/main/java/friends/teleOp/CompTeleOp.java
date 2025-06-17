@@ -15,6 +15,8 @@ import friends.helper.MotorControl.PIDFController;
 
 import static friends.helper.gamepad.GamepadButton.*;
 
+import java.util.Optional;
+
 @TeleOp(name = "Competition", group = "Competition")
 public class CompTeleOp extends LinearOpMode {
     @Override
@@ -33,7 +35,8 @@ public class CompTeleOp extends LinearOpMode {
                 map.Mew);
 
         Intake intake = new Intake(map);
-        Arm arm = new Arm(map);
+        Count viper_target = new Count();
+        Arm arm = new Arm(map, Optional.of(viper_target));
 
         Count macro_state = new Count();
 
@@ -48,7 +51,6 @@ public class CompTeleOp extends LinearOpMode {
 
         telemetry.addData("Status", "Initialised GamepadEx");
 
-        Count viper_target = new Count();
 
         ///  Primary Controls
         ///  Right Bumper -> Sets High Power
@@ -56,11 +58,11 @@ public class CompTeleOp extends LinearOpMode {
         ///  Left Bumper Hold -> Sets Low Power
         ///  DPad up -> Sets vipers to max
         ///  DPad down -> Sets vipers to 0
-        primary.pressed(RIGHT_BUMPER, mecanum::HighPower);
-        primary.down(LEFT_BUMPER, mecanum::LowPower);
-        primary.released(LEFT_BUMPER, mecanum::MidPower);
-        // CHANG ETHIS primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
-//        primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
+        primary.down(RIGHT_BUMPER, mecanum::HighPower);
+        primary.up(RIGHT_BUMPER, mecanum::MidPower);
+
+        primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
+        primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
@@ -73,8 +75,8 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.readyToScore());
-        secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.readyToWall());
+//        secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.readyToScore());
+//        secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.readyToWall());
         secondary.pressed(SQUARE,       arm::closeClaw);
         secondary.pressed(CROSS,        arm::openClaw);
         secondary.pressed(RIGHT_BUMPER, intake::ready);

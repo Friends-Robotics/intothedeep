@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import static friends.helper.Colours.YELLOW;
 import static friends.helper.gamepad.GamepadButton.*;
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Intake;
@@ -41,6 +40,11 @@ public class IntakeTeleOp extends LinearOpMode {
 
         while(opModeIsActive()){
             primary.update();
+            primary.setColour(intake.getColour());
+
+            telemetry.addData("Currently Viewed Colour", Colours.fromSensor(map.ColorSensor).toString());
+            telemetry.addData("Currently Selected Colour", intake.getColour().toString());
+
 
             intake.slide();
 

@@ -21,7 +21,7 @@ public class ColourSensorTeleOp extends LinearOpMode {
         DcMotorEx motor = (DcMotorEx)map.GetTestingMotor();
 
         // Must be an array for cheeky ref type
-        Colours[] colour = {YELLOW};
+        Colours[] colour = {RED};
 
         GamepadEx primary = new GamepadEx(gamepad1);
 

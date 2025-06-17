@@ -2,58 +2,56 @@ package friends.hardwareMap.components;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.Optional;
+
 import friends.hardwareMap.HardwareMap;
+import friends.helper.Count;
 
 public class Arm {
     private final Servo rightArmServo;
     private final Servo leftArmServo;
     private final Servo wristServo;
     private final Servo clawServo;
-    private Boolean readyAtWall;
-    private Boolean readyAtScoring;
+    private final Count target;
 
-    public Arm(HardwareMap map) {
+    public Arm(HardwareMap map, Optional<Count> t) {
         rightArmServo = map.RightArmServo;
         leftArmServo = map.LeftArmServo;
         wristServo = map.Wrist;
         clawServo = map.Claw;
+        target = t.orElse(new Count());
     }
 
     /// Scoring Position
     /// Returns New Viper Position
-    public int readyToScore() {
-        rightArmServo.setPosition(0.3);
-        leftArmServo.setPosition(0.7);
+    public void readyToScore() {
+        rightArmServo.setPosition(0.5);
+        leftArmServo.setPosition(0.5);
         wristServo.setPosition(0);
-        clawServo.setPosition(1);
-        readyAtScoring = true;
-        readyAtWall = false;
-        return 0;
+        target.value = 0;
     }
 
-    public int score(){
-        rightArmServo.setPosition(0.25);
-        leftArmServo.setPosition(0.75);
-        readyAtScoring = false;
-        return 0; // some number
+    public void score(){
+        rightArmServo.setPosition(0.15);
+        leftArmServo.setPosition(0.85);
+//        openClaw();
+        target.value = 0;
     }
 
     /// Wall Position
     /// Returns new viper position
-    public int readyToWall() {
+    public void readyToWall() {
         rightArmServo.setPosition(0.95);
         leftArmServo.setPosition(0.05);
         wristServo.setPosition(1);
-        clawServo.setPosition(0);
-        readyAtWall = true;
-        readyAtScoring = false;
-        return 600;
+        target.value = 500;
     }
 
-    public int wall(){
-        readyAtWall = false;
-        return 1000; //Some number
+    public void wall() {
+//        closeClaw();
+        target.value = 900;
     }
+
     public void openClaw(){
         clawServo.setPosition(1);
     }
@@ -62,11 +60,10 @@ public class Arm {
         clawServo.setPosition(0);
     }
 
-    public int wallAction(){
-        return readyAtwall ? wall() : readyToWall();
+    public void scoreWrist() {
+        wristServo.setPosition(0);
     }
-
-    public int scoreAction(){
-        return readyAtScoring ? score() : readyToScore();
+    public void wallWrist() {
+        wristServo.setPosition(1);
     }
 }

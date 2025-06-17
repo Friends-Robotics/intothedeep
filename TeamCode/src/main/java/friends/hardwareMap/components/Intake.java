@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import friends.hardwareMap.HardwareMap;
 import friends.helper.Colours;
 import friends.helper.MotorControl.DrawerPIDFConstants;
@@ -20,7 +22,7 @@ public class Intake {
 
     private int target = 0;
 
-    private final int MAX_POSITION = 224;
+    private final int MAX_POSITION = 200;
 
     public Intake(HardwareMap map){
         this.servo = map.IntakeServo;
@@ -40,17 +42,18 @@ public class Intake {
         // Set to default
         servo.setPosition(0);
 
-        if(pieceHeld) return;
-
-        intakeMotor.setPower(0.7);
-
         // Get current colour from sensor
         Colours viewing_colour = Colours.fromSensor(sensor);
 
-        if(viewing_colour != colour) return;
+        if(viewing_colour == colour) {
+            pieceHeld = true;
+            standby();
+            return;
+        } else {
+            pieceHeld = false;
+        }
 
-        // If piece held set servos to correct position
-        pieceHeld = true;
+        intakeMotor.setPower(0.7);
     }
 
     public void cycle() {
@@ -63,7 +66,7 @@ public class Intake {
 
     public void spit() {
         pieceHeld = false;
-        intakeMotor.setPower(-0.7);
+        intakeMotor.setPower(-1);
     }
 
     public void slideOut(){

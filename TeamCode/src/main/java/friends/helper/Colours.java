@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public enum Colours {
     RED(255, 0, 0),
     BLUE(0, 0, 255),
-    YELLOW(255, 255, 0),
     GREEN(0, 255, 0),
     NONE(0, 0, 0);
 
@@ -56,7 +55,7 @@ public enum Colours {
         if(hue < 30 || hue > 330) {
             return RED;
         } else if(hue >= 30 && hue <= 70) {
-            return YELLOW;
+            return NONE;
         } else if(hue >= 180 && hue <= 250) {
             return BLUE;
         }

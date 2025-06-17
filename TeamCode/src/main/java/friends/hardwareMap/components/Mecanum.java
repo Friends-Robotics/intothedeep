@@ -93,10 +93,6 @@ public class Mecanum {
     public Colours getColour() {
         if(PowerMultiplier == 1)
             return Colours.RED;
-        else if(PowerMultiplier == 0.5) {
-            return Colours.YELLOW;
-        }
-
         return Colours.GREEN;
     }
     public void FieldCentricMove(Gamepad gp){
