@@ -19,8 +19,6 @@ public class IntakeTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
         HardwareMap map = new HardwareMap(hardwareMap);
-        DcMotor motor = map.GetTestingMotor();
-
         Intake intake = new Intake(map);
 
         GamepadEx primary = new GamepadEx(gamepad1);

@@ -47,11 +47,10 @@ public class Intake {
         // Get current colour from sensor
         Colours viewing_colour = Colours.fromSensor(sensor);
 
+        if(viewing_colour != colour) return;
+
         // If piece held set servos to correct position
-        if(viewing_colour == colour) {
-            pieceHeld = true;
-            standby();
-        }
+        pieceHeld = true;
     }
 
     public void cycle() {
