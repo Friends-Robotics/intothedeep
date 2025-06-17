@@ -17,6 +17,11 @@ public class Intake {
     private final ColorSensor sensor;
     private boolean pieceHeld;
     private final PIDController pid = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD);
+
+    private int target = 0;
+
+    private final int MAX_POSITION = 224;
+
     public Intake(HardwareMap map){
         this.servo = map.IntakeServo;
         this.sensor = map.ColorSensor;
@@ -63,15 +68,18 @@ public class Intake {
     }
 
     public void slideOut(){
-        drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), 80));
+        target = MAX_POSITION;
     }
 
     public void slideIn(){
-        drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), 0));
+        target = 0;
     }
 
-    public void slideToPos(int target){
-        target = Math.max(0, Math.min(80, target));
+    public void slideToPos(int t){
+        target = Math.max(Math.min(224, t), 0);
+    }
+
+    public void slide() {
         drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), target));
     }
 }

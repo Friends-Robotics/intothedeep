@@ -92,7 +92,7 @@ public class Mecanum {
     public void LowPower() {
         PowerMultiplier = 0.3;
     }
-    public Colours PowerGamepadColour() {
+    public Colours getColour() {
         if(PowerMultiplier == 1)
             return Colours.RED;
         else if(PowerMultiplier == 0.5) {

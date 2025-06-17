@@ -30,8 +30,6 @@ public class Arm {
         return 800;
     }
 
-    /// TODO PRE WALL POS NEEDED
-
     /// Wall Position
     /// Returns new viper position
     public int wall() {

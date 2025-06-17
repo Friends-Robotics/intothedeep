@@ -36,8 +36,10 @@ public class PIDFTuner extends LinearOpMode {
             primary.update();
 
             map.DrawerSlideMotor.setPower(pid.PIDControl(map.DrawerSlideMotor.getCurrentPosition(), (int)target.value));
+
             TelemetryPacket packet = new TelemetryPacket();
             packet.put("State", map.DrawerSlideMotor.getCurrentPosition());
+
             dashboard.sendTelemetryPacket(packet);
 
             telemetry.addData("DS motor port", map.DrawerSlideMotor.getPortNumber());

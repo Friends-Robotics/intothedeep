@@ -6,12 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import friends.hardwareMap.HardwareMap;
-import friends.hardwareMap.components.Arm;
 import friends.helper.Count;
-import friends.helper.MotorControl.OutakePIDFConstants;
+import friends.helper.MotorControl.ViperPIDFConstants;
 import friends.helper.gamepad.GamepadEx;
 import friends.helper.MotorControl.PIDFController;
-import friends.helper.MotorControl.SlidePIDFConstants;
 
 import static friends.helper.gamepad.GamepadButton.*;
 
@@ -31,7 +29,7 @@ public class MotorTeleOp extends LinearOpMode {
         GamepadEx primary = new GamepadEx(gamepad1);
 
         telemetry.addData("Status","Initialised GamepadEx");
-        PIDFController viperpidf = new PIDFController(OutakePIDFConstants.KP, OutakePIDFConstants.KI, OutakePIDFConstants.KD, OutakePIDFConstants.KF);
+        PIDFController viperpidf = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
 
         Count viper_target = new Count();
         Count right_target = new Count();
