@@ -23,7 +23,9 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
     -----------------------------------------------------------------------
     | LVM               | Left Viper Motor      | Expansion Hub Motor 1   |
     -----------------------------------------------------------------------
-    | HM                | Horizontal Motor      | Expansion Hub Motor X   |
+    | IM                | Intake Motor          | Expansion Hub Motor 2   |
+    -----------------------------------------------------------------------
+    | DS                | Horizontal Motor      | Expansion Hub Motor 3   |
     -----------------------------------------------------------------------
     | RHS               | Right Hang Servo      | Control Hub Servo 0     |
     -----------------------------------------------------------------------
@@ -33,13 +35,17 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
     -----------------------------------------------------------------------
     | LAS               | Left Arm Servo        | Control Hub Servo 0     |
     -----------------------------------------------------------------------
-    | CL                | Claw Servo            | Control Hub Servo 1     |
+    | IS                | Intake Servo          | Expansion Hub Servo 0   |
     -----------------------------------------------------------------------
-    | WR                | Wrist Servo           | Control Hub Servo 2     |
+    | CL                | Claw Servo            | Expansion Hub Servo 1   |
     -----------------------------------------------------------------------
-    | OTOS              | OTOS                  | I2C Bus 1               |
+    | WR                | Wrist Servo           | Expansion b Servo 2     |
     -----------------------------------------------------------------------
-    | IMU               | IMU                   | I2C Bus 2               |
+    | IMU               | IMU                   | I2C Bus 0               |
+    -----------------------------------------------------------------------
+    | CS                | Colour Sensor         | I2C Bus 1               |
+    -----------------------------------------------------------------------
+    | OTOS              | OTOS                  | I2C Bus 2               |
     -----------------------------------------------------------------------
  */
 

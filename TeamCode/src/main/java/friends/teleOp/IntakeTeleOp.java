@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import static friends.helper.Colours.YELLOW;
 import static friends.helper.gamepad.GamepadButton.*;
 import friends.hardwareMap.HardwareMap;
+import friends.hardwareMap.components.Intake;
 import friends.helper.Colours;
 import friends.helper.gamepad.GamepadEx;
 
@@ -20,12 +21,17 @@ public class IntakeTeleOp extends LinearOpMode {
         HardwareMap map = new HardwareMap(hardwareMap);
         DcMotor motor = map.GetTestingMotor();
 
+        Intake intake = new Intake(map);
+
         GamepadEx primary = new GamepadEx(gamepad1);
 
         Colours[] colour = {YELLOW};
 
-        primary.down(RIGHT_BUMPER, () -> {});
-        primary.down(LEFT_BUMPER, () -> {});
+        primary.pressed(RIGHT_BUMPER, intake::slideOut);
+        primary.pressed(LEFT_BUMPER, intake::slideIn);
+
+        primary.pressed(CROSS, intake::cycle);
+        primary.down(CIRCLE, intake::ready);
 
         primary.pressed(CROSS, (gamepad) -> {
             colour[0] = colour[0].next();
@@ -43,6 +49,9 @@ public class IntakeTeleOp extends LinearOpMode {
 
         while(opModeIsActive()){
             primary.update();
+
+            intake.slide();
+
             telemetry.update();
         }
     }
