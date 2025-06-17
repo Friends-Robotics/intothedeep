@@ -83,9 +83,7 @@ public class Mecanum {
         backLeftMotor.setPower(backLeftPower * PowerMultiplier);
     }
 
-    public void HighPower() {
-        PowerMultiplier = 1;
-    }
+    public void HighPower() { PowerMultiplier = 1; }
     public void MidPower() {
         PowerMultiplier = 0.5;
     }

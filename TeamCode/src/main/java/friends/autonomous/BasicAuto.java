@@ -15,6 +15,7 @@ import java.util.EnumMap;
 
 import static friends.autonomous.AutoPaths.*;
 import friends.hardwareMap.HardwareMap;
+import friends.hardwareMap.components.Arm;
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
 
@@ -24,6 +25,7 @@ public class BasicAuto extends OpMode {
     private HardwareMap map;
     private Timer pathTimer, actionTimer, opmodeTimer;
     private Follower follower;
+    private Arm arm;
 
     @Override
     public void init() {
@@ -32,8 +34,8 @@ public class BasicAuto extends OpMode {
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(startPose);
         buildPaths();
-
         map = new HardwareMap(hardwareMap);
+        arm = new Arm(map);
     }
 
     private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);
@@ -79,7 +81,7 @@ public class BasicAuto extends OpMode {
                 break;
 
             case SWEEP_TWO:
-                if(!follower.isBusy()) {
+                if(!follower.isBusy() ) {
                     follower.followPath(paths.get(SWEEP_TWO));
                     setPathState(SWEEP_THREE);
                 }

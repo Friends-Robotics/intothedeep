@@ -54,6 +54,7 @@ public class GamepadEx {
     /// Runs Once When Key Is Pressed
     public void pressed(GamepadButton btn, BiConsumer<ButtonReader, Gamepad> callback) {
         if(presses.containsKey(btn)) panic();
+
         if(!buttonReaders.containsKey(btn)) {
             ButtonReader reader = new ButtonReader(this, btn);
             buttonReaders.put(btn, reader);

@@ -54,7 +54,7 @@ public class CompTeleOp extends LinearOpMode {
         ///  Left Bumper Hold -> Sets Low Power
         primary.pressed(RIGHT_BUMPER, mecanum::HighPower);
         primary.down(LEFT_BUMPER, mecanum::LowPower);
-        primary.up(LEFT_BUMPER, mecanum::MidPower);
+        primary.released(LEFT_BUMPER, mecanum::MidPower);
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position

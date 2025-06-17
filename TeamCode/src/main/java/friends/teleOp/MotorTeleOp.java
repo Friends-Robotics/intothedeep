@@ -66,6 +66,9 @@ public class MotorTeleOp extends LinearOpMode {
 
             telemetry.addData("target", viper_target.value);
 
+            telemetry.addData("ticks", map.RightViperMotor.getCurrentPosition());
+            telemetry.addData("ticks left", map.LeftViperMotor.getCurrentPosition());
+
             telemetry.update();
         }
     }

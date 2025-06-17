@@ -29,13 +29,13 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
     -----------------------------------------------------------------------
     | LHS               | Left Hang Servo       | Control Hub Servo 1     |
     -----------------------------------------------------------------------
-    | RAS               | Right Arm Servo       | Control Hub Servo X     |
+    | RAS               | Right Arm Servo       | Control Hub Servo 1     |
     -----------------------------------------------------------------------
-    | LAS               | Left Arm Servo        | Control Hub Servo X     |
+    | LAS               | Left Arm Servo        | Control Hub Servo 0     |
     -----------------------------------------------------------------------
-    | CL                | Claw Servo            | Control Hub Servo X     |
+    | CL                | Claw Servo            | Control Hub Servo 1     |
     -----------------------------------------------------------------------
-    | WR                | Wrist Servo           | Control Hub Servo X     |
+    | WR                | Wrist Servo           | Control Hub Servo 2     |
     -----------------------------------------------------------------------
     | OTOS              | OTOS                  | I2C Bus 1               |
     -----------------------------------------------------------------------
@@ -119,7 +119,6 @@ public class HardwareMap {
         IntakeServo = hardwaremap.get(Servo.class, "IS");
         IntakeServo.scaleRange(0.35, 0.65);
         IntakeServo.setPosition(1);
-
     }
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap) {
