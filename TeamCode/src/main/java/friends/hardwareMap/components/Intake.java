@@ -2,6 +2,7 @@ package friends.hardwareMap.components;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -88,5 +89,10 @@ public class Intake {
 
     public int Max() {
         return MAX_POSITION;
+    }
+
+    //Use this to test eventually
+    public void slideOutWithSetPower(Gamepad gamepad){
+        drawerMotor.setPower(-gamepad.right_stick_y);
     }
 }

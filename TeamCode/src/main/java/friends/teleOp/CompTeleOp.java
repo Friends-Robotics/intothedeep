@@ -90,7 +90,8 @@ public class CompTeleOp extends LinearOpMode {
             macro_state.value = 1;
         });
 
-        secondary.down(RIGHT_STICK, (gamepad) -> intake.slideToPos((int)((gamepad.right_stick_x + 1) / 2) * intake.Max()));
+        //IS THIS RIGHT???
+        secondary.pressed(RIGHT_STICK, ((buttonReader, gamepad) -> intake.slideOutWithSetPower(gamepad)));
 
         telemetry.update();
         waitForStart();
