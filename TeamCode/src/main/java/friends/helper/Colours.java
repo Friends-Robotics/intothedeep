@@ -52,13 +52,12 @@ public enum Colours {
             return NONE;
         }
 
-        if(hue < 30 || hue > 330) {
+        if ((hue >= 0 && hue < 30) || (hue > 330 && hue <= 360)) {
             return RED;
-        }
-        else if(hue >= 180 || hue <= 270) {
+        } else if (hue >= 180 && hue <= 270) {
             return BLUE;
+        } else {
+            return NONE;
         }
-
-        return NONE;
     }
 }
