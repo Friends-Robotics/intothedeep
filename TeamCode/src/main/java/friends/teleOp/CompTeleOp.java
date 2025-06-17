@@ -52,15 +52,19 @@ public class CompTeleOp extends LinearOpMode {
         ///  Right Bumper -> Sets High Power
         ///  Left Bumper -> Sets Mid Power
         ///  Left Bumper Hold -> Sets Low Power
+        ///  DPad up -> Sets vipers to max
+        ///  DPad down -> Sets vipers to 0
         primary.pressed(RIGHT_BUMPER, mecanum::HighPower);
         primary.down(LEFT_BUMPER, mecanum::LowPower);
         primary.released(LEFT_BUMPER, mecanum::MidPower);
+        primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
+        primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
         ///  Left Bumper -> Spits Intake
-        ///  Dpad Left -> Slide Intake Out
-        ///  Dpad Right -> Slide Intake In
+        ///  Dpad Up -> Slide Intake Out
+        ///  Dpad Down -> Slide Intake In
         ///  Touchpad -> Cycles Intake To Next Colour
         ///  Triangle -> Sets arm to scoring position
         ///  Circle -> Sets arm to wall position
@@ -69,16 +73,13 @@ public class CompTeleOp extends LinearOpMode {
         ///  Right Stick -> Move intake position
         secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.scoring());
         secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.wall());
-        secondary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
-        secondary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
-
         secondary.pressed(SQUARE,       arm::closeClaw);
         secondary.pressed(CROSS,        arm::openClaw);
         secondary.pressed(RIGHT_BUMPER, intake::ready);
         secondary.pressed(LEFT_BUMPER,  intake::spit);
         secondary.pressed(TOUCHPAD,     intake::cycle);
-        secondary.pressed(DPAD_LEFT,    intake::slideOut);
-        secondary.pressed(DPAD_RIGHT,   intake::slideIn);
+        secondary.pressed(DPAD_UP,    intake::slideOut);
+        secondary.pressed(DPAD_DOWN,   intake::slideIn);
 
         secondary.down(RIGHT_STICK, (gamepad) -> intake.slideToPos((int)((gamepad.right_stick_x + 1) / 2) * intake.Max()));
 
