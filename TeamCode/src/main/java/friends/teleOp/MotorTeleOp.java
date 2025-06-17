@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import friends.hardwareMap.HardwareMap;
+import friends.hardwareMap.components.Arm;
 import friends.helper.Count;
 import friends.helper.MotorControl.ViperPIDFConstants;
 import friends.helper.gamepad.GamepadEx;
@@ -24,6 +25,7 @@ public class MotorTeleOp extends LinearOpMode {
         map.RightViperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         map.LeftViperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        Arm arm = new Arm(map);
         telemetry.addData("Status", "Initialised HardwareMap");
 
         GamepadEx primary = new GamepadEx(gamepad1);
@@ -33,21 +35,29 @@ public class MotorTeleOp extends LinearOpMode {
 
         Count viper_target = new Count();
         Count right_target = new Count();
+        right_target.value = 0.5;
         Count left_target = new Count();
+        left_target.value = 0.5;
 
         Servo right = map.RightArmServo;
         Servo left = map.LeftArmServo;
 
-        primary.pressed(CROSS, () -> viper_target.value += 200);
-        primary.pressed(CIRCLE, () -> viper_target.value -= 200);
+        primary.pressed(CROSS, () -> viper_target.value += 50);
+        primary.pressed(CIRCLE, () -> viper_target.value -= 50);
+
+        primary.pressed(SQUARE, arm::score);
+        primary.pressed(TRIANGLE, arm::wall);
+
+        primary.pressed(RIGHT_BUMPER, arm::closeClaw);
+
 
         primary.pressed(X, () -> viper_target.value = 4000);
         primary.pressed(Y, () -> viper_target.value = 0);
 
-        primary.pressed(DPAD_LEFT, () -> right_target.value += 0.1);
-        primary.pressed(DPAD_RIGHT, () -> right_target.value -= 0.1);
-        primary.pressed(DPAD_UP, () -> left_target.value += 0.1);
-        primary.pressed(DPAD_DOWN, () -> left_target.value -= 0.1);
+        primary.pressed(DPAD_LEFT, () -> right_target.value += 0.05);
+        primary.pressed(DPAD_RIGHT, () -> right_target.value -= 0.05);
+        primary.pressed(DPAD_UP, () -> left_target.value += 0.05);
+        primary.pressed(DPAD_DOWN, () -> left_target.value -= 0.05);
 
         telemetry.update();
         waitForStart();
@@ -61,13 +71,16 @@ public class MotorTeleOp extends LinearOpMode {
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
 
-            right.setPosition(right_target.value);
+            right.setPosition(1 - right_target.value);
             left.setPosition(left_target.value);
 
             telemetry.addData("target", viper_target.value);
 
             telemetry.addData("ticks", map.RightViperMotor.getCurrentPosition());
             telemetry.addData("ticks left", map.LeftViperMotor.getCurrentPosition());
+
+            telemetry.addData("right servo", map.RightArmServo.getPosition());
+            telemetry.addData("left servo", map.LeftArmServo.getPosition());
 
             telemetry.update();
         }

@@ -28,20 +28,21 @@ public class Arm {
         clawServo.setPosition(1);
         readyAtScoring = true;
         readyAtWall = false;
-        return 800;
+        return 0;
     }
 
     public int score(){
-        //SCORING POS
+        rightArmServo.setPosition(0.25);
+        leftArmServo.setPosition(0.75);
         readyAtScoring = false;
-        return 100000; // some number
+        return 0; // some number
     }
 
     /// Wall Position
     /// Returns new viper position
     public int readyToWall() {
-        rightArmServo.setPosition(1);
-        leftArmServo.setPosition(0);
+        rightArmServo.setPosition(0.95);
+        leftArmServo.setPosition(0.05);
         wristServo.setPosition(1);
         clawServo.setPosition(0);
         readyAtWall = true;
@@ -50,10 +51,8 @@ public class Arm {
     }
 
     public int wall(){
-        //WALL PICKUP POS (prob just moving vipers up but I'll check)
-
         readyAtWall = false;
-        return 100000; //Some number
+        return 1000; //Some number
     }
     public void openClaw(){
         clawServo.setPosition(1);

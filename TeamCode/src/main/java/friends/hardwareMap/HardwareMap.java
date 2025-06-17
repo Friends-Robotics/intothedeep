@@ -116,7 +116,9 @@ public class HardwareMap {
         DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
+        RightArmServo.setPosition(0.5);
         LeftArmServo = hardwaremap.get(Servo.class, "LAS");
+        LeftArmServo.setPosition(0.5);
 
         IntakeMotor = hardwaremap.get(DcMotorEx.class, "IM");
         IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
