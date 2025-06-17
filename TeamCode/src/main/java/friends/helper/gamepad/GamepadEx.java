@@ -14,6 +14,7 @@ public class GamepadEx {
     private static void panic() {
         throw new RuntimeException("PANIC: Multiple Bindings Of One Key");
     }
+
     private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> downs =
             new EnumMap<>(GamepadButton.class);
     private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> presses =
