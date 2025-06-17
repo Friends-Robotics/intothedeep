@@ -32,9 +32,7 @@ public class Arm {
     }
 
     public int score(){
-
         //SCORING POS
-
         readyAtScoring = false;
         return 100000; // some number
     }
@@ -52,7 +50,6 @@ public class Arm {
     }
 
     public int wall(){
-
         //WALL PICKUP POS (prob just moving vipers up but I'll check)
 
         readyAtWall = false;

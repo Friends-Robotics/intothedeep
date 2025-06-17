@@ -27,9 +27,15 @@ public class IntakeTeleOp extends LinearOpMode {
 
         primary.pressed(RIGHT_BUMPER, intake::slideOut);
         primary.pressed(LEFT_BUMPER, intake::slideIn);
-
         primary.pressed(CROSS, intake::cycle);
+
         primary.down(CIRCLE, intake::ready);
+        primary.down(TOUCHPAD, intake::spit);
+
+        primary.up(CIRCLE, (gamepad) -> {
+            if(gamepad.touchpad) return;
+            intake.standby();
+        });
 
         waitForStart();
 

@@ -79,6 +79,7 @@ public class Intake {
         target = Math.max(Math.min(224, t), 0);
     }
 
+    /// NEED TO CALL THIS IN THE LOOP
     public void slide() {
         drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), target));
     }
