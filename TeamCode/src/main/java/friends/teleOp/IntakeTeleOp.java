@@ -25,23 +25,11 @@ public class IntakeTeleOp extends LinearOpMode {
 
         GamepadEx primary = new GamepadEx(gamepad1);
 
-        Colours[] colour = {YELLOW};
-
         primary.pressed(RIGHT_BUMPER, intake::slideOut);
         primary.pressed(LEFT_BUMPER, intake::slideIn);
 
         primary.pressed(CROSS, intake::cycle);
         primary.down(CIRCLE, intake::ready);
-
-        primary.pressed(CROSS, (gamepad) -> {
-            colour[0] = colour[0].next();
-            gamepad.setLedColor(colour[0].R(), colour[0].G(), colour[0].B(), LED_DURATION_CONTINUOUS);
-        });
-
-        primary.down(CIRCLE, () -> {
-            Colours sensor_colour = Colours.fromSensor(map.ColorSensor);
-            motor.setPower(sensor_colour == colour[0] ? 0.2 : 0);
-        });
 
         waitForStart();
 
