@@ -71,8 +71,8 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.scoring());
-        secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.wall());
+        secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.readyToScore());
+        secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.readyToWall());
         secondary.pressed(SQUARE,       arm::closeClaw);
         secondary.pressed(CROSS,        arm::openClaw);
         secondary.pressed(RIGHT_BUMPER, intake::ready);
