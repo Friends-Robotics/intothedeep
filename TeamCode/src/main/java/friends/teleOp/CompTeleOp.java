@@ -90,9 +90,6 @@ public class CompTeleOp extends LinearOpMode {
             macro_state.value = 1;
         });
 
-        //IS THIS RIGHT???
-        secondary.pressed(RIGHT_STICK, ((buttonReader, gamepad) -> intake.slideOutWithSetPower(gamepad)));
-
         telemetry.update();
         waitForStart();
 
@@ -109,7 +106,7 @@ public class CompTeleOp extends LinearOpMode {
 
 
             // PID for drawer
-            intake.slide();
+//            intake.slide();
 
             switch((int)macro_state.value) {
                 case 0:
@@ -128,6 +125,8 @@ public class CompTeleOp extends LinearOpMode {
                         macro_state.value = 0;
                     }
             }
+
+            intake.slideOutWithSetPower(gamepad2);
 
             // PID for viper
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
