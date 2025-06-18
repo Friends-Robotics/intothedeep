@@ -72,7 +72,7 @@ public class ForwardVelocityTuner extends OpMode {
      */
     @Override
     public void init() {
-Constants.setConstants(FConstants.class, LConstants.class);
+        Constants.setConstants(FConstants.class, LConstants.class);
         poseUpdater = new PoseUpdater(hardwareMap, FConstants.class, LConstants.class);
 
         leftFront = hardwareMap.get(DcMotorEx.class, leftFrontMotorName);
@@ -107,7 +107,6 @@ Constants.setConstants(FConstants.class, LConstants.class);
         telemetryA.addLine("Press CROSS or A on game pad 1 to stop.");
         telemetryA.addData("pose", poseUpdater.getPose());
         telemetryA.update();
-
     }
 
     /**
