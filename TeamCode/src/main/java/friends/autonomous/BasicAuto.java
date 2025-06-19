@@ -130,7 +130,7 @@ public class BasicAuto extends OpMode {
             case SWEEP_TWO:
                 if(!follower.isBusy() ) {
                     follower.followPath(paths.get(SWEEP_TWO), true);
-                    setPathState(SETUP_SWEEP_THREE);
+                    setPathState(SPECIMEN_ONE);
                 }
                 break;
 
@@ -157,10 +157,12 @@ public class BasicAuto extends OpMode {
                     setPathState(SCORE_ONE);
                 }
                 break;
+
             case SCORE_ONE:
-                if(!follower.isBusy()) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4) {
                     follower.followPath(paths.get(SCORE_ONE));
-                    setPathState(SPECIMEN_TWO);
+                    stopped = true;
+                    return;
                 }
                 break;
             case SPECIMEN_TWO:
