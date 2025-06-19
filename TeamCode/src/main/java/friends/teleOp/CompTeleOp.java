@@ -75,15 +75,23 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-//        secondary.pressed(TRIANGLE, ()  -> viper_target.value = arm.readyToScore());
-//        secondary.pressed(CIRCLE, ()    -> viper_target.value = arm.readyToWall());
-        secondary.pressed(SQUARE,       arm::closeClaw);
-        secondary.pressed(CROSS,        arm::openClaw);
-        secondary.pressed(RIGHT_BUMPER, intake::ready);
-        secondary.pressed(LEFT_BUMPER,  intake::spit);
-        secondary.pressed(TOUCHPAD,     intake::cycle);
-        secondary.pressed(DPAD_UP,      intake::slideOut);
-        secondary.pressed(DPAD_DOWN,    intake::slideIn);
+        primary.down(TRIANGLE, (gamepad) -> {
+            if(gamepad.circle) return;
+            arm.readyToScore();
+        });
+        primary.released(TRIANGLE, arm::score);
+
+        primary.down(CIRCLE, (gamepad) -> {
+            if(gamepad.triangle) return;
+            arm.readyToWall();
+        });
+        primary.released(CIRCLE, arm::wall);
+
+        primary.pressed(CROSS, arm::closeClaw);
+        primary.pressed(SQUARE, arm::openClaw);
+        secondary.down(RIGHT_BUMPER, intake::ready);
+        secondary.down(LEFT_BUMPER, intake::spit);
+        secondary.pressed(TOUCHPAD, intake::cycle);
 
         secondary.pressed(PLAYSTATION, () -> {
             if(viper_target.value > 20) return;
@@ -104,10 +112,6 @@ public class CompTeleOp extends LinearOpMode {
 
             mecanum.Move(gamepad1);
 
-
-            // PID for drawer
-//            intake.slide();
-
             switch((int)macro_state.value) {
                 case 0:
                     break;
@@ -126,7 +130,7 @@ public class CompTeleOp extends LinearOpMode {
                     }
             }
 
-            intake.slideOutWithSetPower(gamepad2);
+            intake.slideOutWithSetPower(-gamepad2.right_stick_y);
 
             // PID for viper
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);

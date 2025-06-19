@@ -92,7 +92,7 @@ public class Intake {
     }
 
     //Use this to test eventually
-    public void slideOutWithSetPower(Gamepad gamepad){
-        drawerMotor.setPower(-gamepad.right_stick_y);
+    public void slideOutWithSetPower(double powerFromStick){
+        drawerMotor.setPower(powerFromStick * 0.6);
     }
 }
