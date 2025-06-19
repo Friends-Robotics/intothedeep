@@ -13,6 +13,7 @@ import com.pedropathing.util.DashboardPoseTracker;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -44,6 +45,8 @@ public class BasicAuto extends OpMode {
         dash = FtcDashboard.getInstance();
         map = new HardwareMap(hardwareMap);
         arm = new Arm(map, Optional.empty());
+        map.DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        map.DrawerSlideMotor.setPower(0.1);
     }
 
     private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);
@@ -68,6 +71,9 @@ public class BasicAuto extends OpMode {
         );
 
         dash.sendTelemetryPacket(packet);
+
+        map.DrawerSlideMotor.setTargetPosition(0);
+
         telemetry.addData("Path State", currentPath.toString());
         telemetry.addData("Position", follower.getPose().toString());
         telemetry.update();
