@@ -57,7 +57,7 @@ public class BasicAuto extends OpMode {
             double[][] cords = path.getCords();
             ArrayList<Point> points = new ArrayList<>();
 
-            for(int i = 0; i < cords.length; i++) {
+            for(int i = 0; i < cords.length - 1; i++) {
                 points.add(new Point(cords[i][0], cords[i+1][1], Point.CARTESIAN));
             }
 
