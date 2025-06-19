@@ -1,11 +1,15 @@
 package friends.autonomous;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.canvas.Canvas;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.Constants;
+import com.pedropathing.util.DashboardPoseTracker;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -22,11 +26,13 @@ import pedroPathing.constants.LConstants;
 
 @Autonomous(name = "Autobots", group = "Competition")
 public class BasicAuto extends OpMode {
-    private final Pose startPose = new Pose(9.52894729958441, 111.08571428571429, Math.toRadians(0));  // Starting position
+    private final Pose startPose = new Pose(8.7, 65.12562814070351, Math.toRadians(0));  // Starting position
     private HardwareMap map;
     private Timer pathTimer, actionTimer, opmodeTimer;
     private Follower follower;
     private Arm arm;
+    private FtcDashboard dash;
+
 
     @Override
     public void init() {
@@ -35,17 +41,33 @@ public class BasicAuto extends OpMode {
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(startPose);
         buildPaths();
+        dash = FtcDashboard.getInstance();
         map = new HardwareMap(hardwareMap);
         arm = new Arm(map, Optional.empty());
     }
 
     private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);
     private AutoPaths currentPath = AutoPaths.SCORE_INITIAL;
+    private boolean stopped = false;
 
     @Override
     public void loop() {
         follower.update();
         autonomousPathUpdate();
+        Pose pose = follower.getPose();
+
+        TelemetryPacket packet = new TelemetryPacket();
+        Canvas canvas = packet.fieldOverlay();
+        canvas.setStrokeWidth(2);
+        canvas.setStroke("#00FF00");
+        canvas.strokeCircle(pose.getX(), pose.getY(), 4);
+        canvas.strokeLine(
+                pose.getX(), pose.getY(),
+                pose.getX() + Math.cos(pose.getHeading()) * 10,
+                pose.getY() + Math.sin(pose.getHeading()) * 10
+        );
+
+        dash.sendTelemetryPacket(packet);
         telemetry.addData("Path State", currentPath.toString());
         telemetry.addData("Position", follower.getPose().toString());
         telemetry.update();
@@ -57,43 +79,72 @@ public class BasicAuto extends OpMode {
             double[][] cords = path.getCords();
             ArrayList<Point> points = new ArrayList<>();
 
-            for(int i = 0; i < cords.length - 1; i++) {
-                points.add(new Point(cords[i][0], cords[i+1][1], Point.CARTESIAN));
+            for (double[] cord : cords) {
+                points.add(new Point(cord[0], cord[1], Point.CARTESIAN));
+                telemetry.addData("Added new point", cord[0]);
+                telemetry.addData("Added new point", cord[1]);
             }
 
-            paths.put(path, follower.pathBuilder().addPath(new BezierCurve(points)).setTangentHeadingInterpolation().build());
+            paths.put(path, follower.pathBuilder().addPath(new BezierCurve(points)).setTangentHeadingInterpolation().setReversed(path.getReverse()).build());
+            telemetry.update();
         }
     }
 
     public void autonomousPathUpdate() {
+        if(stopped) return;
         switch (currentPath) {
             case SCORE_INITIAL:
                 if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SCORE_INITIAL));
-                    setPathState(SWEEP_ONE);
+                    follower.followPath(paths.get(SCORE_INITIAL), true);
+                    setPathState(SETUP_SWEEP_ONE);
                 }
                 break;
+
+            case SETUP_SWEEP_ONE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SETUP_SWEEP_ONE), true);
+                    setPathState(SWEEP_ONE);
+                }
 
             case SWEEP_ONE:
                 if(!follower.isBusy()) {
                     follower.followPath(paths.get(SWEEP_ONE), true);
+                    setPathState(SETUP_SWEEP_TWO);
+                }
+                break;
+
+            case SETUP_SWEEP_TWO:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SETUP_SWEEP_TWO), true);
                     setPathState(SWEEP_TWO);
                 }
                 break;
 
+
             case SWEEP_TWO:
                 if(!follower.isBusy() ) {
-                    follower.followPath(paths.get(SWEEP_TWO));
+                    follower.followPath(paths.get(SWEEP_TWO), true);
+                    setPathState(SETUP_SWEEP_THREE);
+                }
+                break;
+
+            case SETUP_SWEEP_THREE:
+                if(!follower.isBusy()) {
+                    follower.followPath(paths.get(SETUP_SWEEP_THREE), true);
                     setPathState(SWEEP_THREE);
                 }
                 break;
 
+
             case SWEEP_THREE:
                 if(!follower.isBusy()) {
                     follower.followPath(paths.get(SWEEP_THREE));
-                    setPathState(SPECIMEN_ONE);
+                    stopped = true;
+                    return;
+//                    setPathState(SPECIMEN_ONE);
                 }
                 break;
+
             case SPECIMEN_ONE:
                 if(!follower.isBusy()) {
                     follower.followPath(paths.get(SPECIMEN_ONE));

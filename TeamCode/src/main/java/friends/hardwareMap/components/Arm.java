@@ -62,9 +62,9 @@ public class Arm {
     }
 
     public void scoreWrist() {
-        wristServo.setPosition(0);
+        wristServo.setPosition(1);
     }
     public void wallWrist() {
-        wristServo.setPosition(1);
+        wristServo.setPosition(0);
     }
 }
