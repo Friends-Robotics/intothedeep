@@ -75,22 +75,28 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        primary.down(TRIANGLE, (gamepad) -> {
+
+        /// This is wrong
+        primary.down(CROSS, (gamepad) -> {
             if(gamepad.circle) return;
             arm.readyToScore();
         });
-        primary.released(TRIANGLE, arm::score);
+        primary.released(CROSS, arm::score);
 
         primary.down(CIRCLE, (gamepad) -> {
-            if(gamepad.triangle) return;
+            if(gamepad.cross) return;
             arm.readyToWall();
         });
-        primary.released(CIRCLE, arm::wall);
+        secondary.released(CIRCLE, arm::wall);
 
-        primary.pressed(CROSS, arm::closeClaw);
-        primary.pressed(SQUARE, arm::openClaw);
+        secondary.pressed(DPAD_LEFT, arm::closeClaw);
+        secondary.pressed(DPAD_RIGHT, arm::openClaw);
+
         secondary.down(RIGHT_BUMPER, intake::ready);
+        secondary.up(RIGHT_BUMPER, intake::standby);
         secondary.down(LEFT_BUMPER, intake::spit);
+        secondary.up(LEFT_BUMPER, intake::standby);
+
         secondary.pressed(TOUCHPAD, intake::cycle);
 
         secondary.pressed(PLAYSTATION, () -> {

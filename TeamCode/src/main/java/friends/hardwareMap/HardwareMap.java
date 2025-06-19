@@ -106,7 +106,7 @@ public class HardwareMap {
         Mew.initialize(new IMU.Parameters(orientation));
 
         Claw = hardwaremap.get(Servo.class, "CL");
-        Claw.scaleRange(0.35, 0.7);
+        Claw.scaleRange(0.17, 0.65);
         Wrist = hardwaremap.get(Servo.class, "WR");
 
         ColorSensor = hardwaremap.get(ColorSensor.class, "CS");
@@ -116,9 +116,7 @@ public class HardwareMap {
         DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
-        RightArmServo.setPosition(0.5);
         LeftArmServo = hardwaremap.get(Servo.class, "LAS");
-        LeftArmServo.setPosition(0.5);
 
         IntakeMotor = hardwaremap.get(DcMotorEx.class, "IM");
         IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

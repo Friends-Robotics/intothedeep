@@ -25,15 +25,16 @@ public class Arm {
     /// Scoring Position
     /// Returns New Viper Position
     public void readyToScore() {
-        rightArmServo.setPosition(0.5);
-        leftArmServo.setPosition(0.5);
-        wristServo.setPosition(0);
+        rightArmServo.setPosition(0.4);
+        leftArmServo.setPosition(0.6);
+        scoreWrist();
+//        closeClaw();
         target.value = 0;
     }
 
     public void score(){
-        rightArmServo.setPosition(0.15);
-        leftArmServo.setPosition(0.85);
+        rightArmServo.setPosition(0.10);
+        leftArmServo.setPosition(0.90);
 //        openClaw();
         target.value = 0;
     }
@@ -43,12 +44,12 @@ public class Arm {
     public void readyToWall() {
         rightArmServo.setPosition(0.95);
         leftArmServo.setPosition(0.05);
-        wristServo.setPosition(1);
+        wallWrist();
+//        openClaw();
         target.value = 500;
     }
 
     public void wall() {
-//        closeClaw();
         target.value = 900;
     }
 
