@@ -41,8 +41,8 @@ public enum AutoPaths {
         {17.000, 32.000},
     }, true),
     SCORE_ONE(new double[][]{
-        {14.472, 25.688},
-        {8.141, 67.839},
+        {17.000, 32.000},
+        {12.482, 66.573},
         {36.000, 68.000},
     }, false),
     SPECIMEN_TWO(new double[][]{

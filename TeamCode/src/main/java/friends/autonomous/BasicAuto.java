@@ -22,6 +22,9 @@ import java.util.Optional;
 import static friends.autonomous.AutoPaths.*;
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Arm;
+import friends.helper.Count;
+import friends.helper.MotorControl.PIDFController;
+import friends.helper.MotorControl.ViperPIDFConstants;
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
 
@@ -34,6 +37,8 @@ public class BasicAuto extends OpMode {
     private Arm arm;
     private FtcDashboard dash;
 
+    private PIDFController viperpidf = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
+    private Count target = new Count();
 
     @Override
     public void init() {
@@ -44,11 +49,11 @@ public class BasicAuto extends OpMode {
         buildPaths();
         dash = FtcDashboard.getInstance();
         map = new HardwareMap(hardwareMap);
-        arm = new Arm(map, Optional.empty());
+        arm = new Arm(map, Optional.of(target));
         map.DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         map.DrawerSlideMotor.setPower(0.1);
-        map.RightArmServo.setPosition(0.5);
-        map.LeftHangServo.setPosition(0.5);
+        arm.readyToScore();
+        arm.closeClaw();
     }
 
     private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);
@@ -59,26 +64,12 @@ public class BasicAuto extends OpMode {
     public void loop() {
         follower.update();
         autonomousPathUpdate();
-        Pose pose = follower.getPose();
 
-        TelemetryPacket packet = new TelemetryPacket();
-        Canvas canvas = packet.fieldOverlay();
-        canvas.setStrokeWidth(2);
-        canvas.setStroke("#00FF00");
-        canvas.strokeCircle(pose.getX(), pose.getY(), 4);
-        canvas.strokeLine(
-                pose.getX(), pose.getY(),
-                pose.getX() + Math.cos(pose.getHeading()) * 10,
-                pose.getY() + Math.sin(pose.getHeading()) * 10
-        );
-
-        dash.sendTelemetryPacket(packet);
+        double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)target.value);
+        map.LeftViperMotor.setPower(power);
+        map.RightViperMotor.setPower(power);
 
         map.DrawerSlideMotor.setTargetPosition(0);
-
-        telemetry.addData("Path State", currentPath.toString());
-        telemetry.addData("Position", follower.getPose().toString());
-        telemetry.update();
     }
 
 
@@ -98,13 +89,34 @@ public class BasicAuto extends OpMode {
         }
     }
 
+    private boolean isScoring = false;
+    private boolean startScoring = false;
+
     public void autonomousPathUpdate() {
         if(stopped) return;
         switch (currentPath) {
             case SCORE_INITIAL:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SCORE_INITIAL), true);
-                    setPathState(SETUP_SWEEP_ONE);
+                if(!follower.isBusy() && !startScoring) {
+                    pathTimer.resetTimer();
+                    follower.followPath(paths.get(SCORE_INITIAL), 1, true);
+                    telemetry.addLine("Currently Following");
+                    telemetry.update();
+                    startScoring = true;
+                    // setPathState(SETUP_SWEEP_ONE);
+                }
+                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
+                    arm.score();
+                    telemetry.addLine("Currently Scoring");
+                    telemetry.update();
+                    isScoring = true;
+                }
+                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
+                    arm.openClaw();
+                    isScoring = false;
+                    telemetry.addLine("Currently Currently Opening Claw");
+                    telemetry.update();
+                    setPathState(SPECIMEN_TWO);
+                    stopped = true;
                 }
                 break;
 
@@ -161,15 +173,19 @@ public class BasicAuto extends OpMode {
                 break;
 
             case SCORE_ONE:
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 10) {
-                    follower.followPath(paths.get(SCORE_ONE));
-
-
+                if(!follower.isBusy()) {
                     arm.readyToScore();
-
-                    if(pathTimer.getElapsedTimeSeconds() < 20) break;
+                    follower.followPath(paths.get(SCORE_ONE), true);
+                }
+                if(pathTimer.getElapsedTimeSeconds() > 7 && !isScoring) {
+                    arm.score();
+                    isScoring = true;
+                }
+                if(pathTimer.getElapsedTimeSeconds() > 9 && isScoring) {
+                    arm.openClaw();
+                    isScoring = false;
+                    setPathState(SPECIMEN_TWO);
                     stopped = true;
-                    return;
                 }
                 break;
 
