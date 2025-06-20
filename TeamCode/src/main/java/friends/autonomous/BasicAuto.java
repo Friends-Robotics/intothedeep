@@ -69,7 +69,6 @@ public class BasicAuto extends OpMode {
         map.DrawerSlideMotor.setTargetPosition(0);
     }
 
-
     private boolean isScoring = false;
     private boolean startScoring = false;
 
@@ -78,22 +77,79 @@ public class BasicAuto extends OpMode {
         switch (currentPath) {
             case SCORE_INITIAL:
 
-                if(!follower.isBusy() && !startScoring) {
+//                if(!follower.isBusy() && !startScoring) {
+//                    pathTimer.resetTimer();
+//                    follower.followPath(currentPath.getPathChain(), 1, true);
+//
+//                }
+
+                if(!follower.isBusy() ) {
                     pathTimer.resetTimer();
                     follower.followPath(currentPath.getPathChain(), 1, true);
-                    startScoring = true;
+                    setPathState(SETUP_SWEEP_ONE);
                 }
 
-                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
-                    arm.score();
-                    isScoring = true;
-                }
 
-                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
-                    arm.openClaw();
-                    isScoring = false;
+//                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
+//                    arm.score();
+//                    isScoring = true;
+//                }
+//
+//                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
+//                    arm.openClaw();
+//                    isScoring = false;
+//                    setPathState(FINISH);
+//                    stopped = true;
+//                }
+                break;
+
+            case SETUP_SWEEP_ONE:
+                if(!follower.isBusy() ) {
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
+                    setPathState(SWEEP_ONE);
+                }
+                break;
+
+            case SWEEP_ONE:
+                if(!follower.isBusy() ) {
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
+                    setPathState(SETUP_SWEEP_TWO);
+                }
+                break;
+
+            case SETUP_SWEEP_TWO:
+                if(!follower.isBusy() ) {
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
+                    setPathState(SWEEP_TWO);
+                }
+                break;
+
+            case SWEEP_TWO:
+                if(!follower.isBusy() ) {
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
+                    setPathState(SPECIMEN_ONE);
+                }
+                break;
+
+            case SPECIMEN_ONE:
+                if(!follower.isBusy() ) {
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
+                    setPathState(SCORE_ONE);
+                }
+                break;
+
+            case SCORE_ONE:
+                if(!follower.isBusy() ) {
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
                     setPathState(FINISH);
                     stopped = true;
+                    return;
                 }
                 break;
 

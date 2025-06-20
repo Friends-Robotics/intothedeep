@@ -15,15 +15,15 @@ public enum AutoPaths {
 
     SWEEP_TWO(Optional.of(GeneratedPaths.line5)),
 
-    SETUP_SWEEP_THREE(Optional.of(GeneratedPaths.line6)),
+//    SETUP_SWEEP_THREE(Optional.of(GeneratedPaths.line6)),
+//
+//    SWEEP_THREE(Optional.of(GeneratedPaths.line7)),
 
-    SWEEP_THREE(Optional.of(GeneratedPaths.line7)),
+    SPECIMEN_ONE(Optional.of(GeneratedPaths.line6)),
 
-    SPECIMEN_ONE(Optional.of(GeneratedPaths.line5)),
+    SCORE_ONE(Optional.of(GeneratedPaths.line7)),
 
-    SCORE_ONE(Optional.of(GeneratedPaths.line6)),
-
-    SPECIMEN_TWO(Optional.of(GeneratedPaths.line6)),
+    // SPECIMEN_TWO(Optional.of(GeneratedPaths.line6)),
 //
 //    SCORE_TWO(GeneratedPaths.line6),
 //
