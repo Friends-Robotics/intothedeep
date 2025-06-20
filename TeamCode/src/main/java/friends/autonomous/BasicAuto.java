@@ -47,6 +47,8 @@ public class BasicAuto extends OpMode {
         arm = new Arm(map, Optional.empty());
         map.DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         map.DrawerSlideMotor.setPower(0.1);
+        map.RightArmServo.setPosition(0.5);
+        map.LeftHangServo.setPosition(0.5);
     }
 
     private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);
@@ -159,12 +161,18 @@ public class BasicAuto extends OpMode {
                 break;
 
             case SCORE_ONE:
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 10) {
                     follower.followPath(paths.get(SCORE_ONE));
+
+
+                    arm.readyToScore();
+
+                    if(pathTimer.getElapsedTimeSeconds() < 20) break;
                     stopped = true;
                     return;
                 }
                 break;
+
             case SPECIMEN_TWO:
                 if(!follower.isBusy()) {
                     follower.followPath(paths.get(SPECIMEN_TWO));
