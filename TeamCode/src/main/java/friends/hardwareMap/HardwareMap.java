@@ -27,9 +27,9 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
     -----------------------------------------------------------------------
     | DS                | Horizontal Motor      | Expansion Hub Motor 3   |
     -----------------------------------------------------------------------
-    | RHS               | Right Hang Servo      | Control Hub Servo 0     |
+    | RHS               | Right Hang Servo      | Control Hub Servo 2     |
     -----------------------------------------------------------------------
-    | LHS               | Left Hang Servo       | Control Hub Servo 1     |
+    | LHS               | Left Hang Servo       | Control Hub Servo 3     |
     -----------------------------------------------------------------------
     | RAS               | Right Arm Servo       | Control Hub Servo 1     |
     -----------------------------------------------------------------------
@@ -61,13 +61,13 @@ public class HardwareMap {
 
     public IMU Mew;
     public ColorSensor ColorSensor;
-    public ServoImplEx RightHangServo;
-    public ServoImplEx LeftHangServo;
+    public Servo RightHangServo;
+    public Servo LeftHangServo;
     public Servo RightArmServo;
     public Servo LeftArmServo;
     public DcMotorEx DrawerSlideMotor;
-    public Servo IntakeServo;
     public DcMotorEx IntakeMotor;
+    public Servo IntakeServo;
     public Servo Claw;
     public Servo Wrist;
 
@@ -117,6 +117,9 @@ public class HardwareMap {
 
         RightArmServo = hardwaremap.get(Servo.class, "RAS");
         LeftArmServo = hardwaremap.get(Servo.class, "LAS");
+
+        RightHangServo = hardwaremap.get(Servo.class, "RHS");
+        LeftHangServo = hardwaremap.get(Servo.class, "LHS");
 
         IntakeMotor = hardwaremap.get(DcMotorEx.class, "IM");
         IntakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
