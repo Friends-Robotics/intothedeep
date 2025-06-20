@@ -58,8 +58,8 @@ public class CompTeleOp extends LinearOpMode {
         ///  Left Bumper Hold -> Sets Low Power
         ///  DPad up -> Sets vipers to max
         ///  DPad down -> Sets vipers to 0
-        primary.down(RIGHT_BUMPER, mecanum::HighPower);
-        primary.up(RIGHT_BUMPER, mecanum::MidPower);
+        primary.pressed(RIGHT_BUMPER, mecanum::HighPower);
+        primary.pressed(RIGHT_BUMPER, mecanum::MidPower);
 
         primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
         primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
