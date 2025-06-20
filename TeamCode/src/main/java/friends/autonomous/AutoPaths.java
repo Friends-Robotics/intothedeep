@@ -7,10 +7,10 @@ import java.util.Optional;
 public enum AutoPaths {
     SCORE_INITIAL(Optional.of(GeneratedPaths.line1)),
 
-//    SETUP_SWEEP_ONE(GeneratedPaths.line2),
-//
-//    SWEEP_ONE(GeneratedPaths.line3),
-//
+    SETUP_SWEEP_ONE(Optional.of(GeneratedPaths.line2)),
+
+    SWEEP_ONE(Optional.of(GeneratedPaths.line3)),
+
 //    SETUP_SWEEP_TWO(GeneratedPaths.line4),
 //
 //    SWEEP_TWO(GeneratedPaths.line5),

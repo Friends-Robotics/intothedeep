@@ -104,7 +104,6 @@ public class BasicAuto extends OpMode {
 
             case FINISH:
                 break;
-
         }
     }
 
