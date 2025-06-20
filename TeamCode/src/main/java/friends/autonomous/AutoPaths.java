@@ -8,9 +8,9 @@ public enum AutoPaths {
         {36.000, 70.000},
     }, false),
     SETUP_SWEEP_ONE(new double[][]{
-        {37.500, 72.000},
+        {36.000, 70.000},
         {26.231, 37.990},
-        {52.462, 35.638},
+        {42.513, 35.819},
         {63.497, 23.337},
     }, false),
     SWEEP_ONE(new double[][]{
@@ -19,9 +19,8 @@ public enum AutoPaths {
     }, true),
     SETUP_SWEEP_TWO(new double[][]{
         {22.070, 22.794},
-        {91.176, 28.402},
-        {51.015, 10.131},
-        {74.171, 26.593},
+        {71.276, 28.040},
+        {54.995, 15.015},
         {69.648, 12.844},
     }, false),
     SWEEP_TWO(new double[][]{
@@ -38,8 +37,8 @@ public enum AutoPaths {
     }, true),
     SPECIMEN_ONE(new double[][]{
         {21.889, 12.302},
-        {51.015, 25.869},
-        {14.472, 25.688},
+        {57.709, 32.020},
+        {17.000, 32.000},
     }, true),
     SCORE_ONE(new double[][]{
         {14.472, 25.688},
