@@ -54,12 +54,9 @@ public class Arm {
         target.value = 900;
     }
 
+    public void closeClaw(){ clawServo.setPosition(0); }
     public void openClaw(){
         clawServo.setPosition(1);
-    }
-
-    public void closeClaw(){
-        clawServo.setPosition(0);
     }
 
     public void wallWrist() {

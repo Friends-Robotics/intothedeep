@@ -1,15 +1,13 @@
 package friends.autonomous;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.canvas.Canvas;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
+import com.pedropathing.pathgen.PathBuilder;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.Constants;
-import com.pedropathing.util.DashboardPoseTracker;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -20,6 +18,8 @@ import java.util.EnumMap;
 import java.util.Optional;
 
 import static friends.autonomous.AutoPaths.*;
+import static friends.autonomous.PathType.*;
+
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Arm;
 import friends.helper.Count;
@@ -42,12 +42,10 @@ public class BasicAuto extends OpMode {
 
     @Override
     public void init() {
-        pathTimer = new Timer();
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(startPose);
-        buildPaths();
-        dash = FtcDashboard.getInstance();
+
         map = new HardwareMap(hardwareMap);
         arm = new Arm(map, Optional.of(target));
         map.DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -56,9 +54,13 @@ public class BasicAuto extends OpMode {
         arm.closeClaw();
     }
 
-    private final EnumMap<AutoPaths, PathChain> paths = new EnumMap<>(AutoPaths.class);
-    private AutoPaths currentPath = AutoPaths.SCORE_INITIAL;
+    private AutoPaths currentPath;
     private boolean stopped = false;
+
+    @Override
+    public void start() {
+        setPathState(SCORE_INITIAL);
+    }
 
     @Override
     public void loop() {
@@ -69,6 +71,7 @@ public class BasicAuto extends OpMode {
         map.LeftViperMotor.setPower(power);
         map.RightViperMotor.setPower(power);
 
+        // Hold in the intake
         map.DrawerSlideMotor.setTargetPosition(0);
     }
 
@@ -98,11 +101,32 @@ public class BasicAuto extends OpMode {
             case SCORE_INITIAL:
                 if(!follower.isBusy() && !startScoring) {
                     pathTimer.resetTimer();
+<<<<<<< HEAD
                     follower.followPath(paths.get(SCORE_INITIAL), 1, true);
+=======
+                    follower.followPath(SCORE_INITIAL.getPathChain(), true);
+>>>>>>> refs/remotes/origin/comp
                     telemetry.addLine("Currently Following");
                     telemetry.update();
                     startScoring = true;
                     // setPathState(SETUP_SWEEP_ONE);
+<<<<<<< HEAD
+                }
+                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
+                    arm.score();
+                    telemetry.addLine("Currently Scoring");
+                    telemetry.update();
+                    isScoring = true;
+                }
+                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
+                    arm.openClaw();
+                    isScoring = false;
+                    telemetry.addLine("Currently Currently Opening Claw");
+                    telemetry.update();
+                    setPathState(SPECIMEN_TWO);
+                    stopped = true;
+=======
+>>>>>>> refs/remotes/origin/comp
                 }
                 if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
                     arm.score();
@@ -119,51 +143,7 @@ public class BasicAuto extends OpMode {
                     stopped = true;
                 }
                 break;
-
-            case SETUP_SWEEP_ONE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SETUP_SWEEP_ONE), true);
-                    setPathState(SWEEP_ONE);
-                }
-
-            case SWEEP_ONE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SWEEP_ONE), true);
-                    setPathState(SETUP_SWEEP_TWO);
-                }
-                break;
-
-            case SETUP_SWEEP_TWO:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SETUP_SWEEP_TWO), true);
-                    setPathState(SWEEP_TWO);
-                }
-                break;
-
-
-            case SWEEP_TWO:
-                if(!follower.isBusy() ) {
-                    follower.followPath(paths.get(SWEEP_TWO), true);
-                    setPathState(SPECIMEN_ONE);
-                }
-                break;
-
-            case SETUP_SWEEP_THREE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SETUP_SWEEP_THREE), true);
-                    setPathState(SWEEP_THREE);
-                }
-                break;
-
-
-            case SWEEP_THREE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SWEEP_THREE));
-                    stopped = true;
-                    return;
-//                    setPathState(SPECIMEN_ONE);
-                }
-                break;
+<<<<<<< HEAD
 
             case SPECIMEN_ONE:
                 if(!follower.isBusy()) {
@@ -216,6 +196,8 @@ public class BasicAuto extends OpMode {
             case PARK:
                 if(!follower.isBusy()) {
                     follower.followPath(paths.get(PARK));
+=======
+>>>>>>> refs/remotes/origin/comp
                     setPathState(FINISH);
                 }
                 break;
