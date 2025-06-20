@@ -3,18 +3,12 @@ package friends.autonomous;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.BezierCurve;
-import com.pedropathing.pathgen.PathBuilder;
-import com.pedropathing.pathgen.PathChain;
-import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.Constants;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Optional;
 
 import static friends.autonomous.AutoPaths.*;
@@ -82,14 +76,35 @@ public class BasicAuto extends OpMode {
         if(stopped) return;
         switch (currentPath) {
             case SCORE_INITIAL:
+
                 if(!follower.isBusy() && !startScoring) {
-                    follower.followPath(SCORE_INITIAL.getPathChain(), true);
+                    pathTimer.resetTimer();
+                    follower.followPath(currentPath.getPathChain(), 1, true);
                     telemetry.addLine("Currently Following");
                     telemetry.update();
                     startScoring = true;
+                }
+
+                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
+                    arm.score();
+                    telemetry.addLine("Currently Scoring");
+                    telemetry.update();
+                    isScoring = true;
+                }
+
+                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
+                    arm.openClaw();
+                    isScoring = false;
+                    telemetry.addLine("Currently Currently Opening Claw");
+                    telemetry.update();
                     setPathState(FINISH);
+                    stopped = true;
                 }
                 break;
+
+            case FINISH:
+                break;
+
         }
     }
 

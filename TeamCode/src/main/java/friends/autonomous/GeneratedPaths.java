@@ -14,11 +14,12 @@ public class GeneratedPaths {
             .addPath(
                     new BezierCurve(
                             new Point(8.700, 65.126, Point.CARTESIAN),
-                            new Point(17.300, 72.000, Point.CARTESIAN),
-                            new Point(12.000, 70.000, Point.CARTESIAN),
+                            new Point(17.367, 72.000, Point.CARTESIAN),
+                            new Point(12.844, 70.191, Point.CARTESIAN),
                             new Point(36.000, 70.000, Point.CARTESIAN)
                     )
             )
-            .setConstantHeadingInterpolation(Math.toRadians(0))
+            .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
             .build();
+
 }
