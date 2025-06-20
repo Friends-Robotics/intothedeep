@@ -18,7 +18,6 @@ import java.util.EnumMap;
 import java.util.Optional;
 
 import static friends.autonomous.AutoPaths.*;
-import static friends.autonomous.PathType.*;
 
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Arm;
@@ -76,22 +75,6 @@ public class BasicAuto extends OpMode {
     }
 
 
-    public void buildPaths() {
-        for(AutoPaths path : AutoPaths.values()) {
-            double[][] cords = path.getCords();
-            ArrayList<Point> points = new ArrayList<>();
-
-            for (double[] cord : cords) {
-                points.add(new Point(cord[0], cord[1], Point.CARTESIAN));
-                telemetry.addData("Added new point", cord[0]);
-                telemetry.addData("Added new point", cord[1]);
-            }
-
-            paths.put(path, follower.pathBuilder().addPath(new BezierCurve(points)).setTangentHeadingInterpolation().setReversed(path.getReverse()).build());
-            telemetry.update();
-        }
-    }
-
     private boolean isScoring = false;
     private boolean startScoring = false;
 
@@ -100,104 +83,10 @@ public class BasicAuto extends OpMode {
         switch (currentPath) {
             case SCORE_INITIAL:
                 if(!follower.isBusy() && !startScoring) {
-                    pathTimer.resetTimer();
-<<<<<<< HEAD
-                    follower.followPath(paths.get(SCORE_INITIAL), 1, true);
-=======
                     follower.followPath(SCORE_INITIAL.getPathChain(), true);
->>>>>>> refs/remotes/origin/comp
                     telemetry.addLine("Currently Following");
                     telemetry.update();
                     startScoring = true;
-                    // setPathState(SETUP_SWEEP_ONE);
-<<<<<<< HEAD
-                }
-                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
-                    arm.score();
-                    telemetry.addLine("Currently Scoring");
-                    telemetry.update();
-                    isScoring = true;
-                }
-                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
-                    arm.openClaw();
-                    isScoring = false;
-                    telemetry.addLine("Currently Currently Opening Claw");
-                    telemetry.update();
-                    setPathState(SPECIMEN_TWO);
-                    stopped = true;
-=======
->>>>>>> refs/remotes/origin/comp
-                }
-                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
-                    arm.score();
-                    telemetry.addLine("Currently Scoring");
-                    telemetry.update();
-                    isScoring = true;
-                }
-                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
-                    arm.openClaw();
-                    isScoring = false;
-                    telemetry.addLine("Currently Currently Opening Claw");
-                    telemetry.update();
-                    setPathState(SPECIMEN_TWO);
-                    stopped = true;
-                }
-                break;
-<<<<<<< HEAD
-
-            case SPECIMEN_ONE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SPECIMEN_ONE));
-                    setPathState(SCORE_ONE);
-                }
-                break;
-
-            case SCORE_ONE:
-                if(!follower.isBusy()) {
-                    arm.readyToScore();
-                    follower.followPath(paths.get(SCORE_ONE), true);
-                }
-                if(pathTimer.getElapsedTimeSeconds() > 7 && !isScoring) {
-                    arm.score();
-                    isScoring = true;
-                }
-                if(pathTimer.getElapsedTimeSeconds() > 9 && isScoring) {
-                    arm.openClaw();
-                    isScoring = false;
-                    setPathState(SPECIMEN_TWO);
-                    stopped = true;
-                }
-                break;
-
-            case SPECIMEN_TWO:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SPECIMEN_TWO));
-                    setPathState(SCORE_TWO);
-                }
-                break;
-            case SCORE_TWO:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SCORE_TWO));
-                    setPathState(SPECIMEN_THREE);
-                }
-                break;
-            case SPECIMEN_THREE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SPECIMEN_THREE));
-                    setPathState(SCORE_THREE);
-                }
-                break;
-            case SCORE_THREE:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(SCORE_THREE));
-                    setPathState(PARK);
-                }
-                break;
-            case PARK:
-                if(!follower.isBusy()) {
-                    follower.followPath(paths.get(PARK));
-=======
->>>>>>> refs/remotes/origin/comp
                     setPathState(FINISH);
                 }
                 break;
