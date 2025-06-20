@@ -25,7 +25,7 @@ import pedroPathing.constants.LConstants;
 public class BasicAuto extends OpMode {
     private final Pose startPose = new Pose(8.7, 65.12562814070351, Math.toRadians(0));  // Starting position
     private HardwareMap map;
-    private Timer pathTimer, actionTimer, opmodeTimer;
+    private Timer pathTimer;
     private Follower follower;
     private Arm arm;
     private FtcDashboard dash;
@@ -38,6 +38,7 @@ public class BasicAuto extends OpMode {
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(startPose);
+        pathTimer = new Timer();
 
         map = new HardwareMap(hardwareMap);
         arm = new Arm(map, Optional.of(target));
@@ -80,23 +81,17 @@ public class BasicAuto extends OpMode {
                 if(!follower.isBusy() && !startScoring) {
                     pathTimer.resetTimer();
                     follower.followPath(currentPath.getPathChain(), 1, true);
-                    telemetry.addLine("Currently Following");
-                    telemetry.update();
                     startScoring = true;
                 }
 
                 if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
                     arm.score();
-                    telemetry.addLine("Currently Scoring");
-                    telemetry.update();
                     isScoring = true;
                 }
 
                 if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
                     arm.openClaw();
                     isScoring = false;
-                    telemetry.addLine("Currently Currently Opening Claw");
-                    telemetry.update();
                     setPathState(FINISH);
                     stopped = true;
                 }
