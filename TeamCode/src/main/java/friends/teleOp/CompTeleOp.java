@@ -77,7 +77,7 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        secondary.released(CIRCLE, arm::wall);
+        secondary.released(CIRCLE, () -> arm.wall(this));
         secondary.down(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
             arm.readyToWall();
@@ -143,6 +143,10 @@ public class CompTeleOp extends LinearOpMode {
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
+
+            if(map.RightViperMotor.getCurrentPosition() > 865){
+                arm.closeClaw();
+            }
 
             telemetry.addData("Current Viper Target", viper_target.value);
 
