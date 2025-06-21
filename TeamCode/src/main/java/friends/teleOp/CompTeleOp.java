@@ -53,6 +53,8 @@ public class CompTeleOp extends LinearOpMode {
         GamepadEx secondary = new GamepadEx(gamepad2);
         telemetry.addData("Status", "Initialised GamepadEx");
 
+        primary.down(RIGHT_BUMPER, mecanum::lowPower);
+        primary.up(RIGHT_BUMPER, mecanum::highPower);
         ///  Primary Controls
         /// Touchpad -> Unlatch Level 2 Hooks
         primary.pressed(TOUCHPAD, () -> {
@@ -82,14 +84,14 @@ public class CompTeleOp extends LinearOpMode {
             arm.readyToWall();
         });
 
-        secondary.pressed(TRIANGLE, (gamepad) -> {
+        secondary.down(TRIANGLE, (gamepad) -> {
             if(gamepad.circle) return;
             arm.readyToScore();
         });
-        secondary.pressed(SQUARE, arm::score);
+        secondary.released(TRIANGLE, arm::score);
 
-        secondary.pressed(DPAD_LEFT, arm::closeClaw);
         secondary.pressed(DPAD_RIGHT, arm::openClaw);
+        secondary.pressed(DPAD_LEFT, arm::closeClaw);
 
         secondary.down(RIGHT_BUMPER, intake::ready);
         secondary.up(RIGHT_BUMPER, intake::standby);

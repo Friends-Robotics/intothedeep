@@ -38,7 +38,6 @@ public class Intake {
 
     public void ready() {
         // Set to default
-        servo.setPosition(0);
 
         // Get current colour from sensor
         Colours viewing_colour = Colours.fromSensor(sensor);
@@ -49,6 +48,7 @@ public class Intake {
             return;
         } else {
             pieceHeld = false;
+            servo.setPosition(0);
         }
 
         intakeMotor.setPower(0.7);
