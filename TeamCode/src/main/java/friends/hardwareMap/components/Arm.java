@@ -47,9 +47,8 @@ public class Arm {
         target.value = 200;
     }
 
-    public void wall(LinearOpMode opMode) {
+    public void wall() {
         closeClaw();
-        opMode.sleep(100);
         target.value = 700;
     }
 
