@@ -83,12 +83,11 @@ public class BasicAuto extends OpMode {
 //
 //                }
 
-                if(!follower.isBusy() ) {
+                if(!follower.isBusy()) {
                     pathTimer.resetTimer();
                     follower.followPath(currentPath.getPathChain(), 1, true);
                     setPathState(SETUP_SWEEP_ONE);
                 }
-
 
                 if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
                     arm.score();

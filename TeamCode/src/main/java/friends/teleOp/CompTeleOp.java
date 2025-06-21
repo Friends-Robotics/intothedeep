@@ -43,7 +43,6 @@ public class CompTeleOp extends LinearOpMode {
 
         Timer hangTimer = new Timer();
         Count hangState = new Count();
-
         Timer scoreTimer = new Timer();
 
         PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
@@ -116,20 +115,27 @@ public class CompTeleOp extends LinearOpMode {
 
             switch((int)macro_state.value) {
                 case 0:
+                    viper_target.value = 40;
+                    if (map.RightViperMotor.getCurrentPosition() < 45) macro_state.value = 1;
                     break;
                 case 1:
-                    viper_target.value = 5000;
-                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
-                        macro_state.value = 2;
-                    }
+                    hang.setLatch();
+                    macro_state.value = 2;
                     break;
                 case 2:
+                    viper_target.value = 5000;
+                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
+                        macro_state.value = 3;
+                    }
+                    break;
+                case 3:
                     map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                     map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                     viper_target.value = 2000;
                     if(map.RightViperMotor.getCurrentPosition() < 2100) {
                         macro_state.value = 0;
                     }
+                    break;
             }
 
             intake.slideOutWithSetPower(-gamepad2.right_stick_y);

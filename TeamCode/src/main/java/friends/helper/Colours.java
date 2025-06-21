@@ -20,9 +20,9 @@ public enum Colours {
     private final int g;
     private final int b;
 
-    public int R()  { return r;}
-    public int G()  { return g;}
-    public int B()  { return b;}
+    public int R()  { return r; }
+    public int G()  { return g; }
+    public int B()  { return b; }
 
     public Colours next() {
         switch(this) {
