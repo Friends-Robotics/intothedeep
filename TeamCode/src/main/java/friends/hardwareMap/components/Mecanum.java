@@ -101,7 +101,7 @@ public class Mecanum {
 
     public void highPower() { powerMultiplier = 1; }
     public void midPower() { powerMultiplier = 0.5; }
-    public void lowPower() { powerMultiplier = 0.3; }
+    public void lowPower() { powerMultiplier = 0.5; }
 
     public Colours getColour() {
         if(powerMultiplier == 1)
