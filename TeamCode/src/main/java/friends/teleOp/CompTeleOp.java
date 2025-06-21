@@ -144,8 +144,8 @@ public class CompTeleOp extends LinearOpMode {
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
 
-            if(map.RightViperMotor.getCurrentPosition() > 855){
-                arm.closeClaw();
+            if(map.RightViperMotor.getCurrentPosition() > 860){
+                arm.openClaw();
             }
 
             telemetry.addData("Current Viper Target", viper_target.value);
