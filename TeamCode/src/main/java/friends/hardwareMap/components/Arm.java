@@ -41,13 +41,13 @@ public class Arm {
     /// Wall Position
     /// Returns new viper position
     public void readyToWall() {
-        rightArmServo.setPosition(0.16);
-        leftArmServo.setPosition(0.84);
-        target.value = 400;
+        rightArmServo.setPosition(0.18);
+        leftArmServo.setPosition(0.82);
+        target.value = 300;
     }
 
     public void wall() {
-        target.value = 800;
+        target.value = 700;
     }
 
     public void closeClaw(){ clawServo.setPosition(0); }
