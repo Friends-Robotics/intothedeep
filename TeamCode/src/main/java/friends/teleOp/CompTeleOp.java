@@ -134,7 +134,7 @@ public class CompTeleOp extends LinearOpMode {
                     }
             }
 
-            intake.slideOutWithSetPower(-gamepad2.right_stick_y);
+            intake.slideOutWithSetPower(-gamepad1.right_stick_y);
 
             // PID for viper
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
