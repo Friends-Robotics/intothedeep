@@ -18,6 +18,7 @@ import static friends.helper.gamepad.GamepadButton.*;
 
 import java.util.Optional;
 import java.util.Timer;
+import java.util.TimerTask;
 
 @TeleOp(name = "Competition", group = "Competition")
 public class CompTeleOp extends LinearOpMode {
@@ -152,7 +153,6 @@ public class CompTeleOp extends LinearOpMode {
             }
 
             telemetry.addData("Current Viper Target", viper_target.value);
-
             telemetry.update();
         }
     }

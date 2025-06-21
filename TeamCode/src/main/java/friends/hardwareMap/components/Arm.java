@@ -53,7 +53,7 @@ public class Arm {
         target.value = 700;
     }
 
-    public void closeClaw(){ clawServo.setPosition(0); }
+    public void closeClaw(){ clawServo.setPosition(0.65); }
     public void openClaw(){
         clawServo.setPosition(1);
     }
