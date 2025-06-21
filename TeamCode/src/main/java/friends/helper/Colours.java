@@ -59,7 +59,7 @@ public enum Colours {
             return NONE;
         }
 
-        if ((hue >= 0 && hue < 40) || (hue >= 320 && hue < 360)) {
+        if ((hue >= 0 && hue < 20) || (hue >= 320 && hue < 360)) {
             return RED;
         } else if (hue >= 140 && hue <= 220) {
             return BLUE;

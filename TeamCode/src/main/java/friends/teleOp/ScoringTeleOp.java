@@ -53,7 +53,7 @@ public class ScoringTeleOp extends LinearOpMode {
             if(gamepad.cross) return;
             arm.readyToWall();
         });
-        primary.released(CIRCLE, arm::wall);
+//        primary.released(CIRCLE, arm::wall);
 
         primary.pressed(LEFT_BUMPER, arm::closeClaw);
         primary.pressed(RIGHT_BUMPER, arm::openClaw);

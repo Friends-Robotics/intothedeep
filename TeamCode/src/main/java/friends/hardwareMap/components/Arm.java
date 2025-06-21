@@ -1,5 +1,6 @@
 package friends.hardwareMap.components;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Optional;
@@ -43,10 +44,12 @@ public class Arm {
     public void readyToWall() {
         rightArmServo.setPosition(0.18);
         leftArmServo.setPosition(0.82);
-        target.value = 300;
+        target.value = 200;
     }
 
-    public void wall() {
+    public void wall(LinearOpMode opMode) {
+        closeClaw();
+        opMode.sleep(100);
         target.value = 700;
     }
 
