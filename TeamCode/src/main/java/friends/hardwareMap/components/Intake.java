@@ -2,10 +2,7 @@ package friends.hardwareMap.components;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import friends.hardwareMap.HardwareMap;
 import friends.helper.Colours;
@@ -19,11 +16,11 @@ public class Intake {
     private Colours colour;
     private final ColorSensor sensor;
     private boolean pieceHeld;
-    private final PIDController pid = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD);
+    private final PIDController pid = new PIDController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD, DrawerPIDFConstants.tolerance);
 
     private int target = 0;
 
-    private final int MAX_POSITION = 200;
+    private final int MAX_POSITION = 224;
 
     public Intake(HardwareMap map){
         this.servo = map.IntakeServo;
@@ -78,18 +75,14 @@ public class Intake {
         target = 0;
     }
 
-    public void slideToPos(int t){
-        target = Math.max(Math.min(224, t), 0);
-    }
+    public void slideToPos(int t){ target = Math.max(Math.min(224, t), 0); }
 
     /// NEED TO CALL THIS IN THE LOOP
-    public void slide() {
+    public void runSlidePID() {
         drawerMotor.setPower(pid.PIDControl(drawerMotor.getCurrentPosition(), target));
     }
 
-    public int Max() {
-        return MAX_POSITION;
-    }
+    public int getMax() { return MAX_POSITION; }
 
     //Use this to test eventually
     public void slideOutWithSetPower(double powerFromStick){

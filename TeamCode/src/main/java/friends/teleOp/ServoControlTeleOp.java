@@ -15,36 +15,16 @@ public class ServoControlTeleOp extends LinearOpMode {
     public void runOpMode() {
         // CLOSE 0.35
         // OPEN 0.7
-        String NAME = "CL";
+        String NAME = "LHS";
         Servo servo = hardwareMap.get(Servo.class, NAME);
         GamepadEx primary = new GamepadEx(gamepad1);
 
         Count pos = new Count();
 
-        primary.pressed(DPAD_DOWN, () -> {
-            pos.value -= 0.05;
-            pos.value = Math.max(0, pos.value);
-            servo.setPosition(pos.value);
-        }) ;
-
-        primary.pressed(DPAD_UP, () -> {
-            pos.value += 0.05;
-            pos.value = Math.min(1, pos.value);
-            servo.setPosition(pos.value);
-        }) ;
-
-        primary.pressed(DPAD_LEFT, () -> {
-            pos.value -= 0.1;
-            pos.value = Math.max(0, pos.value);
-            servo.setPosition(pos.value);
-        }) ;
-
-        primary.pressed(DPAD_RIGHT, () -> {
-            pos.value += 0.1;
-            pos.value = Math.min(1, pos.value);
-            servo.setPosition(pos.value);
-        }) ;
-
+        primary.pressed(DPAD_DOWN, () -> pos.value -= 0.05);
+        primary.pressed(DPAD_UP, () -> pos.value += 0.05);
+        primary.pressed(DPAD_LEFT, () -> pos.value -= 0.1);
+        primary.pressed(DPAD_RIGHT, () -> pos.value += 0.1);
 
         telemetry.update();
         waitForStart();
@@ -53,6 +33,10 @@ public class ServoControlTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             primary.update();
+
+            pos.value = Math.min(1, pos.value);
+            pos.value = Math.max(0, pos.value);
+            servo.setPosition(pos.value);
 
             telemetry.addLine("DPAD UP -> + 0.05");
             telemetry.addLine("DPAD DOWN -> - 0.05");

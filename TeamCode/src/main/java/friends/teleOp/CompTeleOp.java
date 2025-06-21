@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Arm;
+import friends.hardwareMap.components.Hang;
 import friends.hardwareMap.components.Intake;
 import friends.hardwareMap.components.Mecanum;
 import friends.helper.Count;
@@ -22,50 +23,41 @@ import java.util.Timer;
 public class CompTeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
-        // Create hardware map
         HardwareMap map = new HardwareMap(hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
         telemetry.addData("Status", "Initialised HardwareMap");
 
-        // Create mecanum drive
         Mecanum mecanum = new Mecanum(map.FrontRightMotor,
                 map.BackRightMotor,
                 map.BackLeftMotor,
                 map.FrontLeftMotor,
-                1,
-                map.Mew);
+                1);
+        telemetry.addData("Status", "Initialised Mecanum");
 
         Intake intake = new Intake(map);
         Count viper_target = new Count();
         Arm arm = new Arm(map, Optional.of(viper_target));
+        Hang hang = new Hang(map);
+        telemetry.addData("Status", "Initialised Components");
 
         Count macro_state = new Count();
-
-        telemetry.addData("Status", "Initialised Mecanum");
-
-        PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
 
         Timer hangTimer = new Timer();
         Count hangState = new Count();
 
+        PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
         telemetry.addData("Status", "Initialised PIDF Controller");
 
         GamepadEx primary = new GamepadEx(gamepad1);
         GamepadEx secondary = new GamepadEx(gamepad2);
-
         telemetry.addData("Status", "Initialised GamepadEx");
 
         ///  Primary Controls
-        ///  Right Bumper -> Sets High Power
-        ///  Left Bumper -> Sets Mid Power
+        ///  Right Bumper ->
+        ///  Left Bumper ->
         ///  Left Bumper Hold -> Sets Low Power
-        ///  DPad up -> Sets vipers to max
-        ///  DPad down -> Sets vipers to 0
-//        primary.pressed(RIGHT_BUMPER, mecanum::HighPower);
-//        primary.pressed(RIGHT_BUMPER, mecanum::MidPower);
-//
-//        primary.pressed(DPAD_UP, ()   -> viper_target.value = 5000);
-//        primary.pressed(DPAD_DOWN, () -> viper_target.value = 0);
+        primary.pressed(TOUCHPAD, hang::setUnlatch);
+        primary.pressed(LEFT_BUMPER, intake::slideOut);
+        primary.pressed(RIGHT_BUMPER, intake::slideIn);
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
@@ -85,23 +77,24 @@ public class CompTeleOp extends LinearOpMode {
 //            arm.readyToScore();
 //        });
 //        primary.released(CROSS, arm::score);
-//
-//        primary.down(CIRCLE, (gamepad) -> {
-//            if(gamepad.cross) return;
-//            arm.readyToWall();
-//        });
-//        secondary.released(CIRCLE, arm::wall);
-//
-//        secondary.pressed(DPAD_LEFT, arm::closeClaw);
-//        secondary.pressed(DPAD_RIGHT, arm::openClaw);
-//
-//        secondary.down(RIGHT_BUMPER, intake::ready);
-//        secondary.up(RIGHT_BUMPER, intake::standby);
-//        secondary.down(LEFT_BUMPER, intake::spit);
-//        secondary.up(LEFT_BUMPER, intake::standby);
-//
-//        secondary.pressed(TOUCHPAD, intake::cycle);
-//
+
+        primary.down(CIRCLE, (gamepad) -> {
+            if(gamepad.cross) return;
+            arm.readyToWall();
+        });
+
+        secondary.released(CIRCLE, arm::wall);
+
+        secondary.pressed(DPAD_LEFT, arm::closeClaw);
+        secondary.pressed(DPAD_RIGHT, arm::openClaw);
+
+        secondary.down(RIGHT_BUMPER, intake::ready);
+        secondary.up(RIGHT_BUMPER, intake::standby);
+        secondary.down(LEFT_BUMPER, intake::spit);
+        secondary.up(LEFT_BUMPER, intake::standby);
+
+        secondary.pressed(TOUCHPAD, intake::cycle);
+
 //        secondary.pressed(PLAYSTATION, () -> {
 //            if(viper_target.value > 20) return;
 //            macro_state.value = 1;
@@ -111,16 +104,6 @@ public class CompTeleOp extends LinearOpMode {
         // UNLATCH
         // BRING VIPER DOWN
         // LATCH
-
-        primary.pressed(CROSS, () -> {
-            map.LeftHangServo.setPosition(1);
-            map.RightHangServo.setPosition(0);
-        });
-
-        primary.pressed(CIRCLE, () -> {
-            map.LeftHangServo.setPosition(0);
-            map.RightHangServo.setPosition(1);
-        });
 
         telemetry.update();
         waitForStart();
@@ -134,7 +117,7 @@ public class CompTeleOp extends LinearOpMode {
             secondary.update();
             secondary.setColour(intake.getColour());
 
-            mecanum.Move(gamepad1);
+            mecanum.move(gamepad1);
 
             switch((int)macro_state.value) {
                 case 0:
@@ -157,9 +140,11 @@ public class CompTeleOp extends LinearOpMode {
 //            intake.slideOutWithSetPower(-gamepad2.right_stick_y);
 
             // PID for viper
-//            double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
-//            map.LeftViperMotor.setPower(power);
-//            map.RightViperMotor.setPower(power);
+            double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
+            map.LeftViperMotor.setPower(power);
+            map.RightViperMotor.setPower(power);
+
+            intake.runSlidePID();
 
             telemetry.addData("Current Viper Target", viper_target.value);
 

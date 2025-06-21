@@ -66,7 +66,7 @@ public class ScoringTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             primary.update();
 
-            mecanum.Move(gamepad1);
+            mecanum.move(gamepad1);
 
             double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)target.value);
             map.LeftViperMotor.setPower(power);

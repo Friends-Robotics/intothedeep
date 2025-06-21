@@ -1,10 +1,7 @@
 package friends.teleOp;
 
-import static com.qualcomm.robotcore.hardware.Gamepad.LED_DURATION_CONTINUOUS;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import static friends.helper.gamepad.GamepadButton.*;
 import friends.hardwareMap.HardwareMap;
@@ -46,7 +43,7 @@ public class IntakeTeleOp extends LinearOpMode {
             telemetry.addData("Currently Selected Colour", intake.getColour().toString());
 
 
-            intake.slide();
+            intake.runSlidePID();
 
             telemetry.update();
         }

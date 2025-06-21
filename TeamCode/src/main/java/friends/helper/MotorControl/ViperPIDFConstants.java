@@ -8,4 +8,5 @@ public class ViperPIDFConstants {
     public static double KI = 0;
     public static double KD = 0.00015;
     public static double KF = 0;
+    public static double tolerance = 5;
 }

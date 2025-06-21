@@ -17,9 +17,9 @@ public class Mecanum {
             backRightMotor,
             backLeftMotor;
 
-    private final IMU robotIMU;
+    private IMU robotIMU;
 
-    public double PowerMultiplier = 1;
+    public double powerMultiplier = 1;
 
     /**
      * Creates the Mecanum object. Sets private fields and configures motor directions.
@@ -28,16 +28,32 @@ public class Mecanum {
      * @param backRightMotor Back Right Motor Object
      * @param backLeftMotor Back Left Motor Object
      */
+    public Mecanum(DcMotorEx frontRightMotor, DcMotorEx backRightMotor, DcMotorEx backLeftMotor, DcMotorEx frontLeftMotor, double powerMultiplier){
+        this.frontRightMotor = frontRightMotor;
+        this.backRightMotor = backRightMotor;
+        this.backLeftMotor = backLeftMotor;
+        this.frontLeftMotor = frontLeftMotor;
+        this.powerMultiplier = powerMultiplier;
+    }
+
+    /**
+     * Creates the Mecanum object. Sets private fields and configures motor directions.
+     * @param frontRightMotor Front Right Motor Object
+     * @param frontLeftMotor Front Left Motor Object
+     * @param backRightMotor Back Right Motor Object
+     * @param backLeftMotor Back Left Motor Object
+     * @param robotIMU The robot imu for field centric movement
+     */
     public Mecanum(DcMotorEx frontRightMotor, DcMotorEx backRightMotor, DcMotorEx backLeftMotor, DcMotorEx frontLeftMotor, double powerMultiplier, IMU robotIMU){
         this.frontRightMotor = frontRightMotor;
         this.backRightMotor = backRightMotor;
         this.backLeftMotor = backLeftMotor;
         this.frontLeftMotor = frontLeftMotor;
-        this.PowerMultiplier = powerMultiplier;
+        this.powerMultiplier = powerMultiplier;
         this.robotIMU = robotIMU;
     }
 
-    public void SendMecanumTelemetry(Telemetry telemetry){
+    public void sendMecanumTelemetry(Telemetry telemetry){
         telemetry.addLine("FR")
                 .addData("Power", frontRightMotor.getPower())
                         .addData("Current", frontRightMotor.getCurrent(CurrentUnit.AMPS));
@@ -59,9 +75,9 @@ public class Mecanum {
      * Analyses gamepad and sets power of motors appropriately
      * @param gp Gamepad object
      */
-    public void Move(Gamepad gp) {
+    public void move(Gamepad gp) {
         // If invalid power multiplier is provided then clamp to either 0 or 1
-        PowerMultiplier = Math.max(0, Math.min(1, PowerMultiplier));
+        powerMultiplier = Math.max(0, Math.min(1, powerMultiplier));
 
         // Y values need to be inverted
         double y = -gp.left_stick_y;
@@ -77,24 +93,22 @@ public class Mecanum {
         double backRightPower = (y + x - rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
 
-        frontRightMotor.setPower(frontRightPower * PowerMultiplier);
-        frontLeftMotor.setPower(frontLeftPower * PowerMultiplier);
-        backRightMotor.setPower(backRightPower * PowerMultiplier);
-        backLeftMotor.setPower(backLeftPower * PowerMultiplier);
+        frontRightMotor.setPower(frontRightPower * powerMultiplier);
+        frontLeftMotor.setPower(frontLeftPower * powerMultiplier);
+        backRightMotor.setPower(backRightPower * powerMultiplier);
+        backLeftMotor.setPower(backLeftPower * powerMultiplier);
     }
 
-    public void HighPower() { PowerMultiplier = 1; }
-    public void MidPower() {
-        PowerMultiplier = 0.5;
-    }
-    public void LowPower() {
-        PowerMultiplier = 0.3;
-    }
+    public void highPower() { powerMultiplier = 1; }
+    public void midPower() { powerMultiplier = 0.5; }
+    public void lowPower() { powerMultiplier = 0.3; }
+
     public Colours getColour() {
-        if(PowerMultiplier == 1)
+        if(powerMultiplier == 1)
             return Colours.RED;
         return Colours.GREEN;
     }
+
     public void FieldCentricMove(Gamepad gp){
         double y = -gp.left_stick_y;
         double x = gp.left_stick_x;

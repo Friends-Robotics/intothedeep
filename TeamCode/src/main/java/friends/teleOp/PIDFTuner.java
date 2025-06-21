@@ -23,12 +23,13 @@ public class PIDFTuner extends LinearOpMode {
         Count target = new Count();
         GamepadEx primary = new GamepadEx(gamepad1);
 
-        PIDFController pid = new PIDFController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD, DrawerPIDFConstants.KF);
+        PIDFController pid = new PIDFController(DrawerPIDFConstants.KP, DrawerPIDFConstants.KI, DrawerPIDFConstants.KD, DrawerPIDFConstants.KF, DrawerPIDFConstants.tolerance);
 
         primary.pressed(GamepadButton.CROSS, () -> target.value = 224);
         primary.pressed(GamepadButton.CIRCLE, () -> target.value = 70);
         primary.pressed(GamepadButton.SQUARE, () -> target.value = 50);
         primary.pressed(GamepadButton.TRIANGLE, () -> target.value = 40);
+        primary.pressed(GamepadButton.TOUCHPAD, () -> target.value = 0);
 
         waitForStart();
         while(opModeIsActive()) {
