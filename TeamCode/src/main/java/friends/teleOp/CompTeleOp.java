@@ -21,6 +21,13 @@ import java.util.Timer;
 
 @TeleOp(name = "Competition", group = "Competition")
 public class CompTeleOp extends LinearOpMode {
+    // Components
+    Intake intake;
+    Arm arm;
+    Hang hang;
+    Count macro_state = new Count();
+    Count viper_target = new Count();
+
     @Override
     public void runOpMode() {
         HardwareMap map = new HardwareMap(hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -33,17 +40,10 @@ public class CompTeleOp extends LinearOpMode {
                 1);
         telemetry.addData("Status", "Initialised Mecanum");
 
-        Intake intake = new Intake(map);
-        Count viper_target = new Count();
-        Arm arm = new Arm(map, Optional.of(viper_target));
-        Hang hang = new Hang(map);
+        intake = new Intake(map);
+        arm = new Arm(map, Optional.of(viper_target));
+        hang = new Hang(map);
         telemetry.addData("Status", "Initialised Components");
-
-        Count macro_state = new Count();
-
-        Timer hangTimer = new Timer();
-        Count hangState = new Count();
-        Timer scoreTimer = new Timer();
 
         PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
         telemetry.addData("Status", "Initialised PIDF Controller");
@@ -63,7 +63,7 @@ public class CompTeleOp extends LinearOpMode {
 
         primary.pressed(PLAYSTATION, () -> {
             if(viper_target.value > 20) return;
-            macro_state.value = 1;
+            macro_state.value = 0;
         });
 
         /// Secondary Controls
@@ -108,37 +108,9 @@ public class CompTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Update both primary and secondary game-pads
-            primary.update();
-            primary.setColour(mecanum.getColour());
-            secondary.update();
-            secondary.setColour(intake.getColour());
-
+            primary.update(); primary.setColour(mecanum.getColour());
+            secondary.update(); secondary.setColour(intake.getColour());
             mecanum.move(gamepad1);
-
-            switch((int)macro_state.value) {
-                case 0:
-                    viper_target.value = 40;
-                    if (map.RightViperMotor.getCurrentPosition() < 45) macro_state.value = 1;
-                    break;
-                case 1:
-                    hang.setLatch();
-                    macro_state.value = 2;
-                    break;
-                case 2:
-                    viper_target.value = 5000;
-                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
-                        macro_state.value = 3;
-                    }
-                    break;
-                case 3:
-                    map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    viper_target.value = 2000;
-                    if(map.RightViperMotor.getCurrentPosition() < 2100) {
-                        macro_state.value = 0;
-                    }
-                    break;
-            }
 
             intake.slideOutWithSetPower(-gamepad1.right_stick_y);
 
@@ -147,9 +119,39 @@ public class CompTeleOp extends LinearOpMode {
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
 
+//            runHangMacro(map);
+
             telemetry.addData("Current Viper Target", viper_target.value);
 
             telemetry.update();
         }
     }
+
+    private void runHangMacro(HardwareMap map) {
+        switch((int)macro_state.value) {
+            case 0:
+                viper_target.value = 45;
+                if (map.RightViperMotor.getCurrentPosition() < 50) macro_state.value = 1;
+                break;
+            case 1:
+                hang.setLatch();
+                macro_state.value = 2;
+                break;
+            case 2:
+                viper_target.value = 5000;
+                if(map.RightViperMotor.getCurrentPosition() > 4950) {
+                    macro_state.value = 3;
+                }
+                break;
+            case 3:
+                map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                viper_target.value = 0;
+                if(map.RightViperMotor.getCurrentPosition() < 20) {
+                    macro_state.value = 0;
+                }
+                break;
+        }
+    }
 }
+
