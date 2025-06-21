@@ -90,17 +90,17 @@ public class BasicAuto extends OpMode {
                 }
 
 
-//                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
-//                    arm.score();
-//                    isScoring = true;
-//                }
-//
-//                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
-//                    arm.openClaw();
-//                    isScoring = false;
-//                    setPathState(FINISH);
-//                    stopped = true;
-//                }
+                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
+                    arm.score();
+                    isScoring = true;
+                }
+
+                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
+                    arm.openClaw();
+                    isScoring = false;
+                    setPathState(FINISH);
+                    stopped = true;
+                }
                 break;
 
             case SETUP_SWEEP_ONE:

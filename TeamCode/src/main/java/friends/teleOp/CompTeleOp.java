@@ -44,6 +44,8 @@ public class CompTeleOp extends LinearOpMode {
         Timer hangTimer = new Timer();
         Count hangState = new Count();
 
+        Timer scoreTimer = new Timer();
+
         PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
         telemetry.addData("Status", "Initialised PIDF Controller");
 
@@ -52,12 +54,16 @@ public class CompTeleOp extends LinearOpMode {
         telemetry.addData("Status", "Initialised GamepadEx");
 
         ///  Primary Controls
-        ///  Right Bumper ->
-        ///  Left Bumper ->
-        ///  Left Bumper Hold -> Sets Low Power
-        primary.pressed(TOUCHPAD, hang::setUnlatch);
-        primary.pressed(LEFT_BUMPER, intake::slideOut);
-        primary.pressed(RIGHT_BUMPER, intake::slideIn);
+        /// Touchpad -> Unlatch Level 2 Hooks
+        primary.pressed(TOUCHPAD, () -> {
+            hang.setUnlatch();
+            viper_target.value = 900;
+        });
+
+        primary.pressed(PLAYSTATION, () -> {
+            if(viper_target.value > 20) return;
+            macro_state.value = 1;
+        });
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
@@ -70,20 +76,17 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-
-        /// This is wrong
-//        primary.down(CROSS, (gamepad) -> {
-//            if(gamepad.circle) return;
-//            arm.readyToScore();
-//        });
-//        primary.released(CROSS, arm::score);
-
-        primary.down(CIRCLE, (gamepad) -> {
+        secondary.released(CIRCLE, arm::wall);
+        secondary.down(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
             arm.readyToWall();
         });
 
-        secondary.released(CIRCLE, arm::wall);
+        secondary.pressed(TRIANGLE, (gamepad) -> {
+            if(gamepad.circle) return;
+            arm.readyToScore();
+        });
+        secondary.pressed(SQUARE, arm::score);
 
         secondary.pressed(DPAD_LEFT, arm::closeClaw);
         secondary.pressed(DPAD_RIGHT, arm::openClaw);
@@ -91,21 +94,13 @@ public class CompTeleOp extends LinearOpMode {
         secondary.down(RIGHT_BUMPER, intake::ready);
         secondary.up(RIGHT_BUMPER, intake::standby);
         secondary.down(LEFT_BUMPER, intake::spit);
-        secondary.up(LEFT_BUMPER, intake::standby);
 
         secondary.pressed(TOUCHPAD, intake::cycle);
 
-//        secondary.pressed(PLAYSTATION, () -> {
-//            if(viper_target.value > 20) return;
-//            macro_state.value = 1;
-//        });
-
-        // BRING VIPER UP
-        // UNLATCH
-        // BRING VIPER DOWN
-        // LATCH
-
         telemetry.update();
+
+        arm.openClaw();
+
         waitForStart();
 
         if (isStopRequested()) return;
@@ -137,14 +132,12 @@ public class CompTeleOp extends LinearOpMode {
                     }
             }
 
-//            intake.slideOutWithSetPower(-gamepad2.right_stick_y);
+            intake.slideOutWithSetPower(-gamepad2.right_stick_y);
 
             // PID for viper
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
-
-            intake.runSlidePID();
 
             telemetry.addData("Current Viper Target", viper_target.value);
 

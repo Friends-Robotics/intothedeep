@@ -20,6 +20,8 @@ public class Arm {
         wristServo = map.Wrist;
         clawServo = map.Claw;
         target = t.orElse(new Count());
+
+        scoreWrist();
     }
 
     /// Scoring Position
@@ -41,11 +43,11 @@ public class Arm {
     public void readyToWall() {
         rightArmServo.setPosition(0.16);
         leftArmServo.setPosition(0.84);
-        target.value = 500;
+        target.value = 400;
     }
 
     public void wall() {
-        target.value = 900;
+        target.value = 800;
     }
 
     public void closeClaw(){ clawServo.setPosition(0); }

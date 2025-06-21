@@ -15,7 +15,7 @@ public class ServoControlTeleOp extends LinearOpMode {
     public void runOpMode() {
         // CLOSE 0.35
         // OPEN 0.7
-        String NAME = "LHS";
+        String NAME = "WR";
         Servo servo = hardwareMap.get(Servo.class, NAME);
         GamepadEx primary = new GamepadEx(gamepad1);
 
