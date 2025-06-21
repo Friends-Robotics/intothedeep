@@ -34,10 +34,17 @@ public enum Colours {
 
     public static Colours fromSensor(ColorSensor sensor) {
         float[] hsv = new float[3];
+
+        //This is normalising the values :)
+        double scalingFactor = 255.0f / sensor.alpha();
+        int red = (int)((double)sensor.red() * scalingFactor);
+        int green = (int)((double)sensor.green() * scalingFactor);
+        int blue = (int)((double)sensor.blue() * scalingFactor);
+
         Color.RGBToHSV(
-                sensor.red(),
-                sensor.blue(),
-                sensor.green(),
+                red,
+                green,
+                blue,
                 hsv
         );
         return fromHsv(hsv);
@@ -52,9 +59,9 @@ public enum Colours {
             return NONE;
         }
 
-        if ((hue >= 0 && hue < 30) || (hue >= 330 && hue < 360)) {
+        if ((hue >= 0 && hue < 40) || (hue >= 320 && hue < 360)) {
             return RED;
-        } else if (hue >= 180 && hue <= 270) {
+        } else if (hue >= 140 && hue <= 220) {
             return BLUE;
         } else {
             return NONE;
