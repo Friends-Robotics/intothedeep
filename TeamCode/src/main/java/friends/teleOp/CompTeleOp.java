@@ -72,7 +72,7 @@ public class CompTeleOp extends LinearOpMode {
 
         primary.pressed(PLAYSTATION, () -> {
             if(viper_target.value > 20) return;
-            hang_macro_state.value = 0;
+            hang_macro_state.value = 1;
         });
 
         /// Secondary Controls
@@ -125,23 +125,23 @@ public class CompTeleOp extends LinearOpMode {
             secondary.setColour(intake.getTargetColour());
 
             switch((int) hang_macro_state.value) {
+                case 0:
+                    break;
                 case 1:
+                    viper_target.value = 40;
+                    if (map.RightViperMotor.getCurrentPosition() < 45) hang_macro_state.value = 2;
                     break;
                 case 2:
-                    viper_target.value = 40;
-                    if (map.RightViperMotor.getCurrentPosition() < 45) hang_macro_state.value = 1;
+                    hang.setLatch();
+                    hang_macro_state.value = 3;
                     break;
                 case 3:
-                    hang.setLatch();
-                    hang_macro_state.value = 2;
-                    break;
-                case 4:
                     viper_target.value = 5000;
                     if(map.RightViperMotor.getCurrentPosition() > 4900) {
-                        hang_macro_state.value = 3;
+                        hang_macro_state.value = 4;
                     }
                     break;
-                case 5:
+                case 4:
                     map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                     map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
