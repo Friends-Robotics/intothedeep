@@ -1,5 +1,6 @@
 package friends.teleOp;
 
+import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,6 +26,7 @@ public class CompTeleOp extends LinearOpMode {
     Intake intake;
     Arm arm;
     Hang hang;
+    Timer hang_timer = new Timer();
 
     Count hang_macro_state = new Count();
     PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
@@ -71,7 +73,6 @@ public class CompTeleOp extends LinearOpMode {
         });
 
         primary.pressed(PLAYSTATION, () -> {
-            if(viper_target.value > 20) return;
             hang_macro_state.value = 1;
         });
 
@@ -129,11 +130,16 @@ public class CompTeleOp extends LinearOpMode {
                     break;
                 case 1:
                     viper_target.value = 40;
-                    if (map.RightViperMotor.getCurrentPosition() < 45) hang_macro_state.value = 2;
+                    if (map.RightViperMotor.getCurrentPosition() < 45) {
+                        hang_macro_state.value = 2;
+                        hang_timer.resetTimer();
+                    }
                     break;
                 case 2:
                     hang.setLatch();
-                    hang_macro_state.value = 3;
+                    if (hang_timer.getElapsedTimeSeconds() > 1.5) {
+                        hang_macro_state.value = 3;
+                    }
                     break;
                 case 3:
                     viper_target.value = 5000;
@@ -152,7 +158,7 @@ public class CompTeleOp extends LinearOpMode {
                     break;
             }
 
-            // Open viper slide if above value
+            // Open claw if the viper slides are above a value
             if(map.RightViperMotor.getCurrentPosition() > 865){
                 arm.openClaw();
             }
