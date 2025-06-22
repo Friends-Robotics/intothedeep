@@ -161,7 +161,6 @@ public class CompTeleOp extends LinearOpMode {
             // Open claw if the viper slides are above a value
             if(map.RightViperMotor.getCurrentPosition() > 865){
                 arm.openClaw();
-//                dsa
             }
 
             telemetry.addData("Currently Viewed Colour: ", intake.getViewedColour());
