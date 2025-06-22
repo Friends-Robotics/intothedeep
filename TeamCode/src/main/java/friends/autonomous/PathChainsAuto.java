@@ -167,14 +167,14 @@ public class PathChainsAuto extends OpMode {
                 new Point(38.85, 75.000, Point.CARTESIAN),
                 new Point(8.141, 82.131, Point.CARTESIAN),
                 new Point(3.618, 76.161, Point.CARTESIAN),
-                new Point(7.600, 31.000, Point.CARTESIAN)
+                new Point(7.500, 31.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
-                new Point(7.700, 31.000, Point.CARTESIAN),
+                new Point(7.500, 31.000, Point.CARTESIAN),
                 new Point(8.503, 81.588, Point.CARTESIAN),
                 new Point(3.799, 75.437, Point.CARTESIAN),
-                new Point(38.75, 74.000, Point.CARTESIAN)
+                new Point(38.95, 74.000, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
     }
