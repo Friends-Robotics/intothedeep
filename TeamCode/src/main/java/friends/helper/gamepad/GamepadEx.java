@@ -23,8 +23,7 @@ public class GamepadEx {
             new EnumMap<>(GamepadButton.class);
     private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> releases =
             new EnumMap<>(GamepadButton.class);
-    private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> always =
-            new EnumMap<>(GamepadButton.class);
+    private BiConsumer<ButtonReader, Gamepad> always;
 
     private final Map<GamepadButton, ButtonReader> buttonReaders = new EnumMap<>(GamepadButton.class);
 
@@ -109,10 +108,13 @@ public class GamepadEx {
     }
 
     /// Runs Always
+//    public void always(BiConsumer<> callback) {
+//
+//    }
 //    public void always(Consumer<Gamepad> callback) {
 //    }
 //
-//    public void always(Consumer<Gamepad> callback) {
+//    public void always(Runnable<Gamepad> callback) {
 //
 //    }
 

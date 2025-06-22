@@ -49,7 +49,7 @@ public class Intake {
     }
 
     public void spit() {
-        intakeMotor.setPower(-1);
+        intakeMotor.setPower(-0.7);
     }
 
     public void cycle() {

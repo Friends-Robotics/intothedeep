@@ -32,7 +32,7 @@ public class CompTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        HardwareMap map = new HardwareMap(hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        HardwareMap map = new HardwareMap(hardwareMap);
         telemetry.addData("Status", "Initialised HardwareMap");
 
         mecanum = new Mecanum(map.FrontRightMotor,
@@ -163,7 +163,6 @@ public class CompTeleOp extends LinearOpMode {
             }
 
             telemetry.addData("Currently Viewed Colour: ", intake.getViewedColour());
-
             telemetry.update();
         }
     }

@@ -11,13 +11,13 @@ public class Arm {
     private final Servo rightArmServo;
     private final Servo leftArmServo;
     private final Servo clawServo;
-    private final Count target;
+    private final Count viper_target;
 
     public Arm(HardwareMap map, Optional<Count> t) {
         rightArmServo = map.RightArmServo;
         leftArmServo = map.LeftArmServo;
         clawServo = map.Claw;
-        target = t.orElse(new Count());
+        viper_target = t.orElse(new Count());
         map.Wrist.setPosition(1);
     }
 
@@ -29,13 +29,13 @@ public class Arm {
 
         looseClaw();
 
-        target.value = 0;
+        viper_target.value = 0;
     }
 
     public void score(){
         rightArmServo.setPosition(0.8);
         leftArmServo.setPosition(0.2);
-        target.value = 1000;
+        viper_target.value = 1000;
     }
 
     /// Wall Position
@@ -43,11 +43,11 @@ public class Arm {
     public void readyToWall() {
         rightArmServo.setPosition(0.18);
         leftArmServo.setPosition(0.82);
-        target.value = 200;
+        viper_target.value = 200;
     }
 
     public void fromWall() {
-        target.value = 700;
+        viper_target.value = 700;
     }
 
     public void closeClaw(){

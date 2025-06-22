@@ -99,16 +99,6 @@ public class Mecanum {
         backLeftMotor.setPower(backLeftPower * powerMultiplier);
     }
 
-    public void highPower() { powerMultiplier = 1; }
-    public void midPower() { powerMultiplier = 0.5; }
-    public void lowPower() { powerMultiplier = 0.5; }
-
-    public Colours getColour() {
-        if(powerMultiplier == 1)
-            return Colours.RED;
-        return Colours.GREEN;
-    }
-
     public void FieldCentricMove(Gamepad gp){
         double y = -gp.left_stick_y;
         double x = gp.left_stick_x;
@@ -133,5 +123,15 @@ public class Mecanum {
         backLeftMotor.setPower(backLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backRightMotor.setPower(backRightPower);
+    }
+
+    public void highPower() { powerMultiplier = 1; }
+    public void midPower() { powerMultiplier = 0.5; }
+    public void lowPower() { powerMultiplier = 0.5; }
+
+    public Colours getColour() {
+        if(powerMultiplier == 1)
+            return Colours.RED;
+        return Colours.GREEN;
     }
 }
