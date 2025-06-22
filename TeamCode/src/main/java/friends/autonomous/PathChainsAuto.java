@@ -134,33 +134,33 @@ public class PathChainsAuto extends OpMode {
                 new BezierCurve(
                         new Point(22.000, 9.800, Point.CARTESIAN),
                         new Point(16.931, 31.130, Point.CARTESIAN),
-                        new Point(7.700, 31.000, Point.CARTESIAN)
+                        new Point(8.000, 31.000, Point.CARTESIAN)
                 )
         ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0));
 
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-                new Point(7.700, 31.000, Point.CARTESIAN),
+                new Point(8.000, 31.000, Point.CARTESIAN),
                 new Point(38.75, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
                 new Point(38.75, 72.000, Point.CARTESIAN),
-                new Point(7.600, 31.000, Point.CARTESIAN)
+                new Point(7.800, 31.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
-                new Point(7.600, 31.000, Point.CARTESIAN),
+                new Point(7.800, 31.000, Point.CARTESIAN),
                 new Point(38.850, 71.000, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
                 new Point(38.850, 71.000, Point.CARTESIAN),
-                new Point(7.5000, 31.000, Point.CARTESIAN)
+                new Point(7.8000, 31.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
@@ -198,15 +198,13 @@ public class PathChainsAuto extends OpMode {
                 }
                 break;
             case 3:
-                if (pathTimer.getElapsedTimeSeconds() > 0.1) {
-                    arm.closeClaw();
-                }
+                arm.closeClaw();
 
-                if (pathTimer.getElapsedTimeSeconds() > 0.3){
+                if (pathTimer.getElapsedTimeSeconds() > 0.2){
                     arm.fromWall();
                 }
 
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 0.4) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 0.3) {
                     follower.followPath(scoreOne, true);
                     arm.readyToScore();
                     arm.looseClaw();
@@ -215,11 +213,11 @@ public class PathChainsAuto extends OpMode {
                 break;
 
             case 4:
-                if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() < 2.5) {
+                if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() < 2.2) {
                     arm.closeClaw();
                 }
 
-                if(pathTimer.getElapsedTimeSeconds() > 2.5) {
+                if(pathTimer.getElapsedTimeSeconds() > 2.2) {
                     arm.score();
                 }
 
@@ -230,13 +228,13 @@ public class PathChainsAuto extends OpMode {
                 break;
 
             case 5:
-                if(pathTimer.getElapsedTimeSeconds() < 1.5) {
+                if(pathTimer.getElapsedTimeSeconds() < 1) {
                     arm.readyToWall();
                 }
-                if(pathTimer.getElapsedTimeSeconds() > 2) {
+                if(pathTimer.getElapsedTimeSeconds() > 1.3) {
                     arm.closeClaw();
                 }
-                if(pathTimer.getElapsedTimeSeconds() > 2.5) {
+                if(pathTimer.getElapsedTimeSeconds() > 1.7) {
                     arm.fromWall();
                 }
 
