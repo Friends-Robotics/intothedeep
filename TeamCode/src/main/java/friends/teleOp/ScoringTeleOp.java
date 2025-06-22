@@ -2,6 +2,7 @@ package friends.teleOp;
 
 import static friends.helper.gamepad.GamepadButton.*;
 
+import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -44,6 +45,7 @@ public class ScoringTeleOp extends LinearOpMode {
         Count target = new Count();
         Arm arm = new Arm(map, Optional.of(target));
         hang = new Hang(map);
+        Timer timer = new Timer();
 
         telemetry.addData("Status","Initialised GamepadEx");
 
@@ -52,7 +54,10 @@ public class ScoringTeleOp extends LinearOpMode {
             arm.looseClaw();
             arm.readyToScore();
         });
-        primary.released(CROSS, () -> { arm.closeClaw(); arm.score(); });
+        primary.released(CROSS, () -> {
+            arm.closeClaw();
+            arm.score();
+        });
 
         primary.down(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
@@ -66,7 +71,6 @@ public class ScoringTeleOp extends LinearOpMode {
         });
 
         primary.pressed(PLAYSTATION, () -> {
-            if(target.value > 20) return;
             hang_macro_state.value = 1;
         });
 
@@ -90,24 +94,29 @@ public class ScoringTeleOp extends LinearOpMode {
                 arm.openClaw();
             }
 
-            switch((int) hang_macro_state.value) {
+            switch((int)hang_macro_state.value) {
+                case 0:
+                   break;
                 case 1:
+                    target.value = 30;
+                    if (map.RightViperMotor.getCurrentPosition() < 35) {
+                        hang_macro_state.value = 2;
+                        timer.resetTimer();
+                    }
                     break;
                 case 2:
-                    target.value = 40;
-                    if (map.RightViperMotor.getCurrentPosition() < 45) hang_macro_state.value = 1;
-                    break;
-                case 3:
                     hang.setLatch();
-                    hang_macro_state.value = 2;
-                    break;
-                case 4:
-                    target.value = 5000;
-                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
+                    if(timer.getElapsedTimeSeconds() > 1.5) {
                         hang_macro_state.value = 3;
                     }
                     break;
-                case 5:
+                case 3:
+                    target.value = 5000;
+                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
+                        hang_macro_state.value = 4;
+                    }
+                    break;
+                case 4:
                     map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                     map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -121,6 +130,8 @@ public class ScoringTeleOp extends LinearOpMode {
             double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
+
+            telemetry.addData("TARGET VALUE", target.value);
 
             telemetry.addData("ticks", map.RightViperMotor.getCurrentPosition());
             telemetry.addData("ticks left", map.LeftViperMotor.getCurrentPosition());
