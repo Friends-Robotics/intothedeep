@@ -106,7 +106,6 @@ public class HardwareMap {
         Mew.initialize(new IMU.Parameters(orientation));
 
         Claw = hardwaremap.get(Servo.class, "CL");
-        Claw.scaleRange(0.17, 0.70);
         Wrist = hardwaremap.get(Servo.class, "WR");
 
         ColorSensor = hardwaremap.get(ColorSensor.class, "CS");

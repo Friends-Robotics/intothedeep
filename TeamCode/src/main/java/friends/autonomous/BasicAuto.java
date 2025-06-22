@@ -23,7 +23,7 @@ import pedroPathing.constants.LConstants;
 
 @Autonomous(name = "Autobots", group = "Competition")
 public class BasicAuto extends OpMode {
-    private final Pose startPose = new Pose(8.7, 65.12562814070351, Math.toRadians(0));  // Starting position
+    private final Pose startPose = new Pose(8.7, 65.1, Math.toRadians(0));  // Starting position
     private HardwareMap map;
     private Timer pathTimer;
     private Follower follower;
@@ -42,6 +42,7 @@ public class BasicAuto extends OpMode {
 
         map = new HardwareMap(hardwareMap);
         arm = new Arm(map, Optional.of(target));
+        map.DrawerSlideMotor.setTargetPosition(0);
         map.DrawerSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         map.DrawerSlideMotor.setPower(0.1);
         arm.readyToScore();
@@ -76,30 +77,24 @@ public class BasicAuto extends OpMode {
         if(stopped) return;
         switch (currentPath) {
             case SCORE_INITIAL:
-
-//                if(!follower.isBusy() && !startScoring) {
-//                    pathTimer.resetTimer();
-//                    follower.followPath(currentPath.getPathChain(), 1, true);
-//
-//                }
-
                 if(!follower.isBusy()) {
                     pathTimer.resetTimer();
                     follower.followPath(currentPath.getPathChain(), 1, true);
                     setPathState(SETUP_SWEEP_ONE);
                 }
 
-                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
-                    arm.score();
-                    isScoring = true;
-                }
 
-                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
-                    arm.openClaw();
-                    isScoring = false;
-                    setPathState(FINISH);
-                    stopped = true;
-                }
+//                if(pathTimer.getElapsedTimeSeconds() > 1.5 && startScoring) {
+//                    arm.score();
+//                    isScoring = true;
+//                }
+//
+//                if(pathTimer.getElapsedTimeSeconds() > 1.8 && isScoring) {
+//                    arm.openClaw();
+//                    isScoring = false;
+//                    setPathState(FINISH);
+//                    stopped = true;
+//                }
                 break;
 
             case SETUP_SWEEP_ONE:
@@ -148,7 +143,6 @@ public class BasicAuto extends OpMode {
                     follower.followPath(currentPath.getPathChain(), 1, true);
                     setPathState(FINISH);
                     stopped = true;
-                    return;
                 }
                 break;
 

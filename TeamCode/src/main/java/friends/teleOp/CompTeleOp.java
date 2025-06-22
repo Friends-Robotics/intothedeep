@@ -18,7 +18,6 @@ import static friends.helper.gamepad.GamepadButton.*;
 
 import java.util.Optional;
 import java.util.Timer;
-import java.util.TimerTask;
 
 @TeleOp(name = "Competition", group = "Competition")
 public class CompTeleOp extends LinearOpMode {
@@ -46,6 +45,8 @@ public class CompTeleOp extends LinearOpMode {
         arm = new Arm(map, Optional.of(viper_target));
         hang = new Hang(map);
         telemetry.addData("Status", "Initialised Components");
+
+        arm.openClaw();
 
         PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
         telemetry.addData("Status", "Initialised PIDF Controller");
@@ -79,7 +80,7 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        secondary.released(CIRCLE, () -> arm.wall(this));
+        secondary.released(CIRCLE,  arm::wall);
         secondary.down(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
             arm.readyToWall();
@@ -110,8 +111,11 @@ public class CompTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Update both primary and secondary game-pads
-            primary.update(); primary.setColour(mecanum.getColour());
-            secondary.update(); secondary.setColour(intake.getColour());
+            primary.update();
+            primary.setColour(mecanum.getColour());
+
+            secondary.update();
+            secondary.setColour(intake.getColour());
             mecanum.move(gamepad1);
 
             switch((int)macro_state.value) {
@@ -141,6 +145,7 @@ public class CompTeleOp extends LinearOpMode {
                     break;
             }
 
+            // Who cares
             intake.slideOutWithSetPower(-gamepad2.left_stick_y);
 
             // PID for viper

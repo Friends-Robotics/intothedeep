@@ -11,18 +11,15 @@ import friends.helper.Count;
 public class Arm {
     private final Servo rightArmServo;
     private final Servo leftArmServo;
-    private final Servo wristServo;
     private final Servo clawServo;
     private final Count target;
 
     public Arm(HardwareMap map, Optional<Count> t) {
         rightArmServo = map.RightArmServo;
         leftArmServo = map.LeftArmServo;
-        wristServo = map.Wrist;
         clawServo = map.Claw;
         target = t.orElse(new Count());
-
-        scoreWrist();
+        map.Wrist.setPosition(1);
     }
 
     /// Scoring Position
@@ -48,19 +45,14 @@ public class Arm {
     }
 
     public void wall() {
-        closeClaw();
         target.value = 700;
     }
 
-    public void closeClaw(){ clawServo.setPosition(0.65); }
-    public void openClaw(){
-        clawServo.setPosition(1);
+    public void closeClaw(){
+        clawServo.setPosition(0.65);
     }
 
-    public void wallWrist() {
-        wristServo.setPosition(0);
-    }
-    public void scoreWrist() {
-        wristServo.setPosition(1);
+    public void openClaw(){
+        clawServo.setPosition(1);
     }
 }
