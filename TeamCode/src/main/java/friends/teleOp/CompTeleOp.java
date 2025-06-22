@@ -117,7 +117,7 @@ public class CompTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            // Update both primary and secondary game-pads
+
             primary.update();
             primary.setColour(mecanum.getColour());
 
@@ -152,11 +152,6 @@ public class CompTeleOp extends LinearOpMode {
                     break;
             }
 
-            // PID for viper
-            double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
-            map.LeftViperMotor.setPower(power);
-            map.RightViperMotor.setPower(power);
-
             // Open viper slide if above value
             if(map.RightViperMotor.getCurrentPosition() > 865){
                 arm.openClaw();
@@ -167,4 +162,3 @@ public class CompTeleOp extends LinearOpMode {
         }
     }
 }
-
