@@ -90,7 +90,7 @@ public class CompTeleOp extends LinearOpMode {
             if(gamepad.cross) return;
             arm.readyToWall();
         });
-        secondary.released(CIRCLE,  arm::wall);
+        secondary.released(CIRCLE,  arm::fromWall);
 
         secondary.pressed(TRIANGLE, (gamepad) -> {
             if(gamepad.circle) return;
@@ -100,7 +100,7 @@ public class CompTeleOp extends LinearOpMode {
 
         secondary.pressed(DPAD_RIGHT, arm::openClaw);
         secondary.pressed(DPAD_LEFT, arm::closeClaw);
-        secondary.pressed(DPAD_UP, arm::slideClaw);
+        secondary.pressed(DPAD_UP, arm::looseClaw);
 
         secondary.down(RIGHT_BUMPER, intake::ready);
         secondary.up(RIGHT_BUMPER, intake::standby);

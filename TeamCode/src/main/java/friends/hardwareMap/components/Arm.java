@@ -1,6 +1,5 @@
 package friends.hardwareMap.components;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Optional;
@@ -27,13 +26,16 @@ public class Arm {
     public void readyToScore() {
         rightArmServo.setPosition(0.8);
         leftArmServo.setPosition(0.2);
+
+        looseClaw();
+
         target.value = 0;
     }
 
     public void score(){
         rightArmServo.setPosition(0.8);
         leftArmServo.setPosition(0.2);
-        target.value = 900;
+        target.value = 1000;
     }
 
     /// Wall Position
@@ -44,7 +46,7 @@ public class Arm {
         target.value = 200;
     }
 
-    public void wall() {
+    public void fromWall() {
         target.value = 700;
     }
 
@@ -52,7 +54,7 @@ public class Arm {
         clawServo.setPosition(0.37);
     }
 
-    public void slideClaw() {
+    public void looseClaw() {
         clawServo.setPosition(0.32);
     }
 
