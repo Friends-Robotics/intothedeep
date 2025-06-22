@@ -71,7 +71,7 @@ public class PathChainsAuto extends OpMode {
         scoreInitial = new Path(
                 new BezierLine(
                         new Point(8.503, 64.040, Point.CARTESIAN),
-                        new Point(38.50, 77.000, Point.CARTESIAN)
+                        new Point(38.50, 73.000, Point.CARTESIAN)
                 )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
@@ -80,17 +80,17 @@ public class PathChainsAuto extends OpMode {
 
         builder.addPath(
                         new BezierCurve(
-                                new Point(38.50, 78.000, Point.CARTESIAN),
+                                new Point(38.50, 73.000, Point.CARTESIAN),
                                 new Point(4.161, 19.538, Point.CARTESIAN),
                                 new Point(62.774, 42.513, Point.CARTESIAN),
-                                new Point(58.348, 27.125, Point.CARTESIAN)
+                                new Point(57.348, 27.125, Point.CARTESIAN)
                         )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
                         new BezierLine(
-                                new Point(58.348, 27.125, Point.CARTESIAN),
+                                new Point(57.348, 27.125, Point.CARTESIAN),
                                 new Point(21.528, 26.412, Point.CARTESIAN)
                         )
                 )
@@ -99,7 +99,7 @@ public class PathChainsAuto extends OpMode {
         builder.addPath(
                         new BezierCurve(
                                 new Point(21.528, 26.412, Point.CARTESIAN),
-                                new Point(72.181, 30.573, Point.CARTESIAN),
+                                new Point(68.450, 30.584, Point.CARTESIAN),
                                 new Point(53.797, 14.382, Point.CARTESIAN)
                         )
                 )
@@ -117,14 +117,14 @@ public class PathChainsAuto extends OpMode {
                         new BezierCurve(
                                 new Point(22.000, 14.111, Point.CARTESIAN),
                                 new Point(66.935, 17.910, Point.CARTESIAN),
-                                new Point(55.799, 9.831, Point.CARTESIAN)
+                                new Point(54.399, 9.831, Point.CARTESIAN)
                         )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
                         new BezierLine(
-                                new Point(55.799, 9.831, Point.CARTESIAN),
+                                new Point(54.399, 9.831, Point.CARTESIAN),
                                 new Point(22.000, 9.800, Point.CARTESIAN)
                         )
                 )
@@ -142,30 +142,30 @@ public class PathChainsAuto extends OpMode {
 
         scoreOne = new Path(new BezierCurve(
                 new Point(7.700, 31.000, Point.CARTESIAN),
-                new Point(38.750, 77.188, Point.CARTESIAN)
+                new Point(38.75, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
-                new Point(38.750, 77.188, Point.CARTESIAN),
+                new Point(38.75, 72.000, Point.CARTESIAN),
                 new Point(7.600, 31.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
                 new Point(7.600, 31.000, Point.CARTESIAN),
-                new Point(38.850, 76.000, Point.CARTESIAN)
+                new Point(38.850, 71.000, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
-                new Point(38.850, 76.000, Point.CARTESIAN),
-                new Point(7.500, 31.000, Point.CARTESIAN)
+                new Point(38.850, 71.000, Point.CARTESIAN),
+                new Point(7.5000, 31.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
                 new Point(7.500, 31.000, Point.CARTESIAN),
-                new Point(38.950, 75.000, Point.CARTESIAN)
+                new Point(38.950, 70.000, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
     }
