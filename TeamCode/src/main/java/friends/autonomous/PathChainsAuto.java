@@ -71,7 +71,7 @@ public class PathChainsAuto extends OpMode {
         scoreInitial = new Path(
                 new BezierLine(
                         new Point(8.503, 64.040, Point.CARTESIAN),
-                        new Point(38.50, 73.000, Point.CARTESIAN)
+                        new Point(38.20, 73.000, Point.CARTESIAN)
                 )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
@@ -80,7 +80,7 @@ public class PathChainsAuto extends OpMode {
 
         builder.addPath(
                         new BezierCurve(
-                                new Point(38.50, 73.000, Point.CARTESIAN),
+                                new Point(38.20, 73.000, Point.CARTESIAN),
                                 new Point(4.161, 19.538, Point.CARTESIAN),
                                 new Point(62.774, 42.513, Point.CARTESIAN),
                                 new Point(57.348, 27.125, Point.CARTESIAN)
@@ -134,21 +134,21 @@ public class PathChainsAuto extends OpMode {
                 new BezierCurve(
                         new Point(22.000, 9.800, Point.CARTESIAN),
                         new Point(16.931, 31.130, Point.CARTESIAN),
-                        new Point(8.000, 31.000, Point.CARTESIAN)
+                        new Point(7.900, 31.000, Point.CARTESIAN)
                 )
         ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0));
 
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-                new Point(8.000, 31.000, Point.CARTESIAN),
+                new Point(7.900, 31.000, Point.CARTESIAN),
                 new Point(38.75, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
                 new Point(38.75, 72.000, Point.CARTESIAN),
-                new Point(7.800, 31.000, Point.CARTESIAN)
+                new Point(7.700, 31.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
@@ -160,7 +160,7 @@ public class PathChainsAuto extends OpMode {
 
         pickupThree = new Path(new BezierCurve(
                 new Point(38.850, 71.000, Point.CARTESIAN),
-                new Point(7.8000, 31.000, Point.CARTESIAN)
+                new Point(7.7000, 31.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
@@ -181,11 +181,11 @@ public class PathChainsAuto extends OpMode {
                 setPathState(1);
                 break;
             case 1:
-                if (pathTimer.getElapsedTimeSeconds() > 1.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 1.4) {
                     arm.score();
                 }
 
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.0) {
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.8) {
                     follower.followPath(sweeps, true);
                     arm.readyToWall();
                     setPathState(2);
@@ -221,20 +221,20 @@ public class PathChainsAuto extends OpMode {
                     arm.score();
                 }
 
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3.0) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.7) {
                     follower.followPath(pickupTwo);
                     setPathState(5);
                 }
                 break;
 
             case 5:
-                if(pathTimer.getElapsedTimeSeconds() < 1) {
+                if(pathTimer.getElapsedTimeSeconds() < 1.5) {
                     arm.readyToWall();
                 }
-                if(pathTimer.getElapsedTimeSeconds() > 1.3) {
+                if(pathTimer.getElapsedTimeSeconds() > 1.9) {
                     arm.closeClaw();
                 }
-                if(pathTimer.getElapsedTimeSeconds() > 1.7) {
+                if(pathTimer.getElapsedTimeSeconds() > 2.2) {
                     arm.fromWall();
                 }
 
