@@ -1,11 +1,7 @@
 package friends.autonomous;
 
-import android.telephony.mbms.MbmsErrors;
-
-import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
 
-import java.util.Optional;
 
 public enum AutoPaths {
     SCORE_INITIAL(GeneratedPaths.line1),

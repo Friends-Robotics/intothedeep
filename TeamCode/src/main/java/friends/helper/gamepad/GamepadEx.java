@@ -23,6 +23,8 @@ public class GamepadEx {
             new EnumMap<>(GamepadButton.class);
     private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> releases =
             new EnumMap<>(GamepadButton.class);
+    private final Map<GamepadButton, BiConsumer<ButtonReader, Gamepad>> always =
+            new EnumMap<>(GamepadButton.class);
 
     private final Map<GamepadButton, ButtonReader> buttonReaders = new EnumMap<>(GamepadButton.class);
 
@@ -87,6 +89,7 @@ public class GamepadEx {
     public void up(GamepadButton btn, Runnable callback) {
         up(btn, (reader, gamepad) -> callback.run());
     }
+
     /// Runs Once When Key Is Released
     public void released(GamepadButton btn, BiConsumer<ButtonReader, Gamepad> callback) {
         if(releases.containsKey(btn)) panic();
@@ -104,6 +107,14 @@ public class GamepadEx {
     public void released(GamepadButton btn, Runnable callback) {
         released(btn, (reader, gamepad) -> callback.run());
     }
+
+    /// Runs Always
+//    public void always(Consumer<Gamepad> callback) {
+//    }
+//
+//    public void always(Consumer<Gamepad> callback) {
+//
+//    }
 
     public void update() {
         for(GamepadButton btn : GamepadButton.values()) {

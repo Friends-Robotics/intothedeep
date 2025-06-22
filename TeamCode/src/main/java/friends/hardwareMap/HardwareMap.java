@@ -125,8 +125,6 @@ public class HardwareMap {
         IntakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         IntakeServo = hardwaremap.get(Servo.class, "IS");
-        IntakeServo.scaleRange(0.35, 0.65);
-        IntakeServo.setPosition(1);
     }
 
     public HardwareMap(com.qualcomm.robotcore.hardware.HardwareMap hardwaremap) {

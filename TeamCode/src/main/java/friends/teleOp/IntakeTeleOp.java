@@ -41,7 +41,7 @@ public class IntakeTeleOp extends LinearOpMode {
 
         while(opModeIsActive()){
             primary.update();
-            primary.setColour(intake.getColour());
+            primary.setColour(intake.getTargetColour());
 
             float[] hsv = new float[3];
             Color.RGBToHSV(map.ColorSensor.red(), map.ColorSensor.blue(), map.ColorSensor.green(), hsv);
@@ -72,7 +72,7 @@ public class IntakeTeleOp extends LinearOpMode {
             telemetry.addData("S:", hsv[1]);
             telemetry.addData("V:", hsv[2]);
 
-            telemetry.addData("Currently Selected Colour", intake.getColour().toString());
+            telemetry.addData("Currently Selected Colour", intake.getTargetColour().toString());
 
 //          intake.runSlidePID();
             intake.slideOutWithSetPower(-gamepad1.right_stick_y);

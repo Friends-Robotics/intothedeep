@@ -9,7 +9,6 @@ import friends.hardwareMap.components.Arm;
 import friends.hardwareMap.components.Hang;
 import friends.hardwareMap.components.Intake;
 import friends.hardwareMap.components.Mecanum;
-import friends.helper.Colours;
 import friends.helper.Count;
 import friends.helper.MotorControl.ViperPIDFConstants;
 import friends.helper.gamepad.GamepadEx;
@@ -18,24 +17,25 @@ import friends.helper.MotorControl.PIDFController;
 import static friends.helper.gamepad.GamepadButton.*;
 
 import java.util.Optional;
-import java.util.Timer;
 
 @TeleOp(name = "Competition", group = "Competition")
 public class CompTeleOp extends LinearOpMode {
     // Components
+    Mecanum mecanum;
     Intake intake;
     Arm arm;
     Hang hang;
-    Count macro_state = new Count();
+
+    Count hang_macro_state = new Count();
+    PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
     Count viper_target = new Count();
-    Timer hangTimer = new Timer();
 
     @Override
     public void runOpMode() {
         HardwareMap map = new HardwareMap(hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Status", "Initialised HardwareMap");
 
-        Mecanum mecanum = new Mecanum(map.FrontRightMotor,
+        mecanum = new Mecanum(map.FrontRightMotor,
                 map.BackRightMotor,
                 map.BackLeftMotor,
                 map.FrontLeftMotor,
@@ -49,7 +49,7 @@ public class CompTeleOp extends LinearOpMode {
 
         arm.openClaw();
 
-        PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
+        viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
         telemetry.addData("Status", "Initialised PIDF Controller");
 
         GamepadEx primary = new GamepadEx(gamepad1);
@@ -58,8 +58,13 @@ public class CompTeleOp extends LinearOpMode {
 
         primary.down(RIGHT_BUMPER, mecanum::lowPower);
         primary.up(RIGHT_BUMPER, mecanum::highPower);
-        ///  Primary Controls
-        /// Touchpad -> Unlatch Level 2 Hooks
+
+        /// Primary Controls
+        /// Joysticks -> Mecanum
+        /// Touchpad -> Unlatch level 2 hooks & init hang
+        /// Playstation -> Hang
+        primary.down(ALWAYS, mecanum::move);
+
         primary.pressed(TOUCHPAD, () -> {
             hang.setUnlatch();
             viper_target.value = 900;
@@ -67,10 +72,8 @@ public class CompTeleOp extends LinearOpMode {
 
         primary.pressed(PLAYSTATION, () -> {
             if(viper_target.value > 20) return;
-            macro_state.value = 0;
+            hang_macro_state.value = 0;
         });
-
-        primary.down(ALWAYS, mecanum::move);
 
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
@@ -83,13 +86,13 @@ public class CompTeleOp extends LinearOpMode {
         ///  Square -> Close claw
         ///  Cross -> Open claw
         ///  Right Stick -> Move intake position
-        secondary.released(CIRCLE,  arm::wall);
-        secondary.down(CIRCLE, (gamepad) -> {
+        secondary.pressed(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
             arm.readyToWall();
         });
+        secondary.released(CIRCLE,  arm::wall);
 
-        secondary.down(TRIANGLE, (gamepad) -> {
+        secondary.pressed(TRIANGLE, (gamepad) -> {
             if(gamepad.circle) return;
             arm.readyToScore();
         });
@@ -104,13 +107,13 @@ public class CompTeleOp extends LinearOpMode {
         secondary.down(LEFT_BUMPER, intake::spit);
 
         secondary.pressed(TOUCHPAD, intake::cycle);
+        secondary.down(ALWAYS, intake::slideOutWithSetPower);
 
         telemetry.update();
 
         arm.openClaw();
 
         waitForStart();
-
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
@@ -119,50 +122,48 @@ public class CompTeleOp extends LinearOpMode {
             primary.setColour(mecanum.getColour());
 
             secondary.update();
-            secondary.setColour(intake.getColour());
+            secondary.setColour(intake.getTargetColour());
 
-            telemetry.addData("Current Colour", intake.ViewedColour);
-
-            switch((int)macro_state.value) {
+            switch((int) hang_macro_state.value) {
                 case 1:
                     break;
                 case 2:
                     viper_target.value = 40;
-                    if (map.RightViperMotor.getCurrentPosition() < 45) macro_state.value = 1;
+                    if (map.RightViperMotor.getCurrentPosition() < 45) hang_macro_state.value = 1;
                     break;
                 case 3:
                     hang.setLatch();
-                    macro_state.value = 2;
+                    hang_macro_state.value = 2;
                     break;
                 case 4:
                     viper_target.value = 5000;
                     if(map.RightViperMotor.getCurrentPosition() > 4900) {
-                        macro_state.value = 3;
+                        hang_macro_state.value = 3;
                     }
                     break;
                 case 5:
                     map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                     map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
                     viper_target.value = 2000;
                     if(map.RightViperMotor.getCurrentPosition() < 2100) {
-                        macro_state.value = 0;
+                        hang_macro_state.value = 0;
                     }
                     break;
             }
-
-            // Who cares
-            intake.slideOutWithSetPower(-gamepad2.left_stick_y);
 
             // PID for viper
             double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
 
+            // Open viper slide if above value
             if(map.RightViperMotor.getCurrentPosition() > 865){
                 arm.openClaw();
             }
 
-            telemetry.addData("Current Viper Target", viper_target.value);
+            telemetry.addData("Currently Viewed Colour: ", intake.getViewedColour());
+
             telemetry.update();
         }
     }
