@@ -35,6 +35,8 @@ public class IntakeTeleOp extends LinearOpMode {
             intake.standby();
         });
 
+        primary.down(ALWAYS, intake::slideOutWithSetPower);
+
         waitForStart();
 
         if (isStopRequested()) return;
@@ -61,6 +63,7 @@ public class IntakeTeleOp extends LinearOpMode {
             int green = (int)((double)sensor.green() * scalingFactor);
             int blue = (int)((double)sensor.blue() * scalingFactor);
 
+
             telemetry.addLine("Normalised Values");
             telemetry.addData("Scaling Factor:", 255.0f / map.ColorSensor.alpha());
             telemetry.addData("R:", red);
@@ -74,8 +77,6 @@ public class IntakeTeleOp extends LinearOpMode {
 
             telemetry.addData("Currently Selected Colour", intake.getTargetColour().toString());
 
-//          intake.runSlidePID();
-            intake.slideOutWithSetPower(-gamepad1.right_stick_y);
             telemetry.update();
         }
     }

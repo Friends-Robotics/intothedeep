@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Arm;
+import friends.hardwareMap.components.Hang;
 import friends.hardwareMap.components.Mecanum;
 import friends.helper.Count;
 import friends.helper.MotorControl.PIDFController;
@@ -18,6 +19,9 @@ import friends.helper.gamepad.GamepadEx;
 
 @TeleOp(name="Scoring Testing", group="Testing")
 public class ScoringTeleOp extends LinearOpMode {
+    Hang hang;
+
+    Count hang_macro_state = new Count();
     @Override
     public void runOpMode() {
         HardwareMap map = new HardwareMap(hardwareMap);
@@ -40,14 +44,16 @@ public class ScoringTeleOp extends LinearOpMode {
 
         Count target = new Count();
         Arm arm = new Arm(map, Optional.of(target));
+        hang = new Hang(map);
 
         telemetry.addData("Status","Initialised GamepadEx");
 
         primary.down(CROSS, (gamepad) -> {
             if(gamepad.circle) return;
+            arm.looseClaw();
             arm.readyToScore();
         });
-        primary.released(CROSS, arm::score);
+        primary.released(CROSS, () -> { arm.closeClaw(); arm.score(); });
 
         primary.down(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
@@ -68,6 +74,40 @@ public class ScoringTeleOp extends LinearOpMode {
             primary.update();
 
             mecanum.move(gamepad1);
+
+
+            // Open viper slide if above value
+            if(map.RightViperMotor.getCurrentPosition() > 865){
+                arm.openClaw();
+            }
+
+            switch((int) hang_macro_state.value) {
+                case 1:
+                    break;
+                case 2:
+                    target.value = 40;
+                    if (map.RightViperMotor.getCurrentPosition() < 45) hang_macro_state.value = 1;
+                    break;
+                case 3:
+                    hang.setLatch();
+                    hang_macro_state.value = 2;
+                    break;
+                case 4:
+                    target.value = 5000;
+                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
+                        hang_macro_state.value = 3;
+                    }
+                    break;
+                case 5:
+                    map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+                    target.value = 2000;
+                    if(map.RightViperMotor.getCurrentPosition() < 2100) {
+                        hang_macro_state.value = 0;
+                    }
+                    break;
+            }
 
             double power = viperpidf.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)target.value);
             map.LeftViperMotor.setPower(power);
