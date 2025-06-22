@@ -185,7 +185,7 @@ public class PathChainsAuto extends OpMode {
                     arm.score();
                 }
 
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2) {
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.8) {
                     follower.followPath(sweeps, true);
                     arm.readyToWall();
                     setPathState(2);
@@ -223,7 +223,7 @@ public class PathChainsAuto extends OpMode {
                     arm.score();
                 }
 
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.8) {
                     follower.followPath(pickupTwo);
                     setPathState(5);
                 }
@@ -257,7 +257,7 @@ public class PathChainsAuto extends OpMode {
                     arm.score();
                 }
 
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.8) {
                     follower.followPath(pickupThree);
                     setPathState(7);
                 }
@@ -291,7 +291,7 @@ public class PathChainsAuto extends OpMode {
                     arm.score();
                 }
 
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.8) {
                     setPathState(-1);
                 }
                 break;
