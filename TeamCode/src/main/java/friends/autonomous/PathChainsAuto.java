@@ -141,30 +141,30 @@ public class PathChainsAuto extends OpMode {
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-                new Point(7.900, 31.000, Point.CARTESIAN),
+                new Point(7.900, 34.000, Point.CARTESIAN),
                 new Point(38.75, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
                 new Point(38.75, 72.000, Point.CARTESIAN),
-                new Point(7.700, 31.000, Point.CARTESIAN)
+                new Point(7.700, 34.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
-                new Point(7.800, 31.000, Point.CARTESIAN),
+                new Point(7.800, 34.000, Point.CARTESIAN),
                 new Point(38.850, 71.000, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
                 new Point(38.850, 71.000, Point.CARTESIAN),
-                new Point(7.7000, 31.000, Point.CARTESIAN)
+                new Point(7.7000, 34.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
-                new Point(7.500, 31.000, Point.CARTESIAN),
+                new Point(7.500, 34.000, Point.CARTESIAN),
                 new Point(38.950, 70.000, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
