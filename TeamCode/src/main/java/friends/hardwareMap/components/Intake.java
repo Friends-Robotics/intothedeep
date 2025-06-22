@@ -10,6 +10,7 @@ import friends.helper.MotorControl.DrawerPIDFConstants;
 import friends.helper.MotorControl.PIDController;
 
 public class Intake {
+    public Colours ViewedColour = Colours.NONE;
     private final Servo servo;
     private final DcMotorEx drawerMotor;
     private final DcMotorEx intakeMotor;
@@ -37,12 +38,10 @@ public class Intake {
     }
 
     public void ready() {
-        // Set to default
-
         // Get current colour from sensor
-        Colours viewing_colour = Colours.fromSensor(sensor);
+        ViewedColour = Colours.fromSensor(sensor);
 
-        if(viewing_colour == colour) {
+        if(ViewedColour == colour) {
             pieceHeld = true;
             standby();
             return;

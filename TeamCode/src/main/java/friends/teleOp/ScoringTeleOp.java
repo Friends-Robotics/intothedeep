@@ -55,8 +55,9 @@ public class ScoringTeleOp extends LinearOpMode {
         });
         primary.released(CIRCLE, arm::wall);
 
-        primary.pressed(LEFT_BUMPER, arm::closeClaw);
-        primary.pressed(RIGHT_BUMPER, arm::openClaw);
+        primary.pressed(DPAD_RIGHT, arm::closeClaw);
+        primary.pressed(DPAD_LEFT, arm::openClaw);
+        primary.pressed(DPAD_UP, arm::slideClaw);
 
         telemetry.update();
         waitForStart();

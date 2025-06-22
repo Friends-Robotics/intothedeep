@@ -52,6 +52,10 @@ public class Arm {
         clawServo.setPosition(0.37);
     }
 
+    public void slideClaw() {
+        clawServo.setPosition(0.32);
+    }
+
     public void openClaw(){
         clawServo.setPosition(0.05);
     }

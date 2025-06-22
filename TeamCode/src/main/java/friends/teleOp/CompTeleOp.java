@@ -9,6 +9,7 @@ import friends.hardwareMap.components.Arm;
 import friends.hardwareMap.components.Hang;
 import friends.hardwareMap.components.Intake;
 import friends.hardwareMap.components.Mecanum;
+import friends.helper.Colours;
 import friends.helper.Count;
 import friends.helper.MotorControl.ViperPIDFConstants;
 import friends.helper.gamepad.GamepadEx;
@@ -96,6 +97,7 @@ public class CompTeleOp extends LinearOpMode {
 
         secondary.pressed(DPAD_RIGHT, arm::openClaw);
         secondary.pressed(DPAD_LEFT, arm::closeClaw);
+        secondary.pressed(DPAD_UP, arm::slideClaw);
 
         secondary.down(RIGHT_BUMPER, intake::ready);
         secondary.up(RIGHT_BUMPER, intake::standby);
@@ -118,6 +120,8 @@ public class CompTeleOp extends LinearOpMode {
 
             secondary.update();
             secondary.setColour(intake.getColour());
+
+            telemetry.addData("Current Colour", intake.ViewedColour);
 
             switch((int)macro_state.value) {
                 case 1:
@@ -154,7 +158,7 @@ public class CompTeleOp extends LinearOpMode {
             map.LeftViperMotor.setPower(power);
             map.RightViperMotor.setPower(power);
 
-            if(map.RightViperMotor.getCurrentPosition() > 860){
+            if(map.RightViperMotor.getCurrentPosition() > 865){
                 arm.openClaw();
             }
 
