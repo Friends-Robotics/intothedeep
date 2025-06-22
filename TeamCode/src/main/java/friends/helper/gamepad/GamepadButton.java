@@ -23,5 +23,6 @@ public enum GamepadButton {
     LEFT_STICK_BUTTON,
     RIGHT_STICK_BUTTON,
     PLAYSTATION,
+    ALWAYS,
 }
 

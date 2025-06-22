@@ -49,10 +49,10 @@ public class Arm {
     }
 
     public void closeClaw(){
-        clawServo.setPosition(0.65);
+        clawServo.setPosition(0.37);
     }
 
     public void openClaw(){
-        clawServo.setPosition(1);
+        clawServo.setPosition(0.05);
     }
 }

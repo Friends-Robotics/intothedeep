@@ -69,6 +69,8 @@ public class CompTeleOp extends LinearOpMode {
             macro_state.value = 0;
         });
 
+        primary.down(ALWAYS, mecanum::move);
+
         /// Secondary Controls
         ///  Right Bumper -> Sets Intake to ready position
         ///  Left Bumper -> Spits Intake
@@ -116,7 +118,6 @@ public class CompTeleOp extends LinearOpMode {
 
             secondary.update();
             secondary.setColour(intake.getColour());
-            mecanum.move(gamepad1);
 
             switch((int)macro_state.value) {
                 case 1:
