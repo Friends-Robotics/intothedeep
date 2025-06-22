@@ -71,7 +71,7 @@ public class PathChainsAuto extends OpMode {
         scoreInitial = new Path(
                 new BezierLine(
                         new Point(8.503, 64.040, Point.CARTESIAN),
-                        new Point(38.20, 73.000, Point.CARTESIAN)
+                        new Point(38.00, 73.000, Point.CARTESIAN)
                 )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
@@ -80,7 +80,7 @@ public class PathChainsAuto extends OpMode {
 
         builder.addPath(
                         new BezierCurve(
-                                new Point(38.20, 73.000, Point.CARTESIAN),
+                                new Point(38.00, 73.000, Point.CARTESIAN),
                                 new Point(4.161, 19.538, Point.CARTESIAN),
                                 new Point(62.774, 42.513, Point.CARTESIAN),
                                 new Point(57.348, 27.125, Point.CARTESIAN)
@@ -181,11 +181,11 @@ public class PathChainsAuto extends OpMode {
                 setPathState(1);
                 break;
             case 1:
-                if (pathTimer.getElapsedTimeSeconds() > 1.4) {
+                if (pathTimer.getElapsedTimeSeconds() > 1.5) {
                     arm.score();
                 }
 
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.8) {
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2) {
                     follower.followPath(sweeps, true);
                     arm.readyToWall();
                     setPathState(2);
@@ -221,8 +221,9 @@ public class PathChainsAuto extends OpMode {
                     arm.score();
                 }
 
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.7) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.8) {
                     follower.followPath(pickupTwo);
+                    arm.readyToWall();
                     setPathState(5);
                 }
                 break;
