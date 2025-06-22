@@ -99,31 +99,6 @@ public class Mecanum {
         backLeftMotor.setPower(backLeftPower * powerMultiplier);
     }
 
-    public void FieldCentricMove(Gamepad gp){
-        double y = -gp.left_stick_y;
-        double x = gp.left_stick_x;
-        double rx = gp.right_stick_x;
-
-        if(gp.options) robotIMU.resetYaw();
-
-        double heading = robotIMU.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-
-        double rotx = x * Math.cos(-heading) - y * Math.sin(-heading);
-        double roty = x * Math.sin(-heading) + y * Math.sin(-heading);
-
-        rotx = rotx * 1.1;
-
-        double denominator = Math.max(Math.abs(roty) + Math.abs(rotx) + Math.abs(rx), 1);
-        double frontLeftPower = (roty + rotx + rx) / denominator;
-        double backLeftPower = (roty - rotx + rx) / denominator;
-        double frontRightPower = (roty - rotx - rx) / denominator;
-        double backRightPower = (roty + rotx - rx) / denominator;
-
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
-    }
 
     public void highPower() { powerMultiplier = 1; }
     public void midPower() { powerMultiplier = 0.5; }

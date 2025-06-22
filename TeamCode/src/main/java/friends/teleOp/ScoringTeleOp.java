@@ -34,8 +34,7 @@ public class ScoringTeleOp extends LinearOpMode {
                 map.BackRightMotor,
                 map.BackLeftMotor,
                 map.FrontLeftMotor,
-                1,
-                map.Mew);
+                1);
 
         telemetry.addData("Status", "Initialised HardwareMap");
 
@@ -60,6 +59,16 @@ public class ScoringTeleOp extends LinearOpMode {
             arm.readyToWall();
         });
         primary.released(CIRCLE, arm::fromWall);
+
+        primary.pressed(TOUCHPAD, () -> {
+            hang.setUnlatch();
+            target.value = 900;
+        });
+
+        primary.pressed(PLAYSTATION, () -> {
+            if(target.value > 20) return;
+            hang_macro_state.value = 1;
+        });
 
         primary.pressed(DPAD_RIGHT, arm::closeClaw);
         primary.pressed(DPAD_LEFT, arm::openClaw);

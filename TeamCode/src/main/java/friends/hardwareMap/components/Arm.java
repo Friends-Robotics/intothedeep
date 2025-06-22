@@ -18,7 +18,6 @@ public class Arm {
         leftArmServo = map.LeftArmServo;
         clawServo = map.Claw;
         viper_target = t.orElse(new Count());
-        map.Wrist.setPosition(1);
     }
 
     /// Scoring Position
