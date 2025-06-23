@@ -42,7 +42,7 @@ public class PathChainsAuto extends OpMode {
 
     private int pathState;
 
-    private final Pose startPose = new Pose(8.503, 65.04, Math.toRadians(0));
+    private final Pose startPose = new Pose(8.503, 65.040, Math.toRadians(0));
 
     private Path scoreInitial, pickupOne, scoreOne, pickupTwo, scoreTwo, pickupThree, scoreThree;
     private PathChain sweeps;

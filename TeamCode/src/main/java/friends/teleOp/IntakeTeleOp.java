@@ -8,6 +8,8 @@ import static friends.helper.gamepad.GamepadButton.*;
 
 import android.graphics.Color;
 
+import org.firstinspires.ftc.teamcode.R;
+
 import friends.hardwareMap.HardwareMap;
 import friends.hardwareMap.components.Intake;
 import friends.helper.Colours;
@@ -23,17 +25,16 @@ public class IntakeTeleOp extends LinearOpMode {
 
         GamepadEx primary = new GamepadEx(gamepad1);
 
-//        primary.pressed(RIGHT_BUMPER, intake::slideOut);
-//        primary.pressed(LEFT_BUMPER, intake::slideIn);
         primary.pressed(CROSS, intake::cycle);
 
-        primary.down(CIRCLE, intake::ready);
-        primary.down(TOUCHPAD, intake::spit);
-
-        primary.up(CIRCLE, (gamepad) -> {
+        primary.pressed(CIRCLE, intake::ready);
+        primary.released(CIRCLE, (gamepad) -> {
             if(gamepad.touchpad) return;
             intake.standby();
         });
+
+        primary.down(RIGHT_BUMPER, intake::suck);
+        primary.down(LEFT_BUMPER, intake::spit);
 
         primary.down(ALWAYS, intake::slideOutWithSetPower);
 

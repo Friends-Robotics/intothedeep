@@ -14,10 +14,12 @@ public class Intake {
     private final DcMotorEx intakeMotor;
     private final ColorSensor sensor;
 
+    private static final double INTAKE_POWER = 0.7;
+
     private Colours targetColour;
     private Colours viewedColour = Colours.NONE;
 
-    public Intake(HardwareMap map){
+    public Intake(HardwareMap map) {
         this.servo = map.IntakeServo;
         this.sensor = map.ColorSensor;
         this.drawerMotor = map.DrawerSlideMotor;
@@ -45,19 +47,23 @@ public class Intake {
             servo.setPosition(0.35);
         }
 
-        intakeMotor.setPower(0.7);
+        intakeMotor.setPower(INTAKE_POWER);
     }
 
     public void spit() {
-        intakeMotor.setPower(-0.7);
+        intakeMotor.setPower(-INTAKE_POWER);
+    }
+    
+    public void suck() {
+        intakeMotor.setPower(INTAKE_POWER);
     }
 
     public void cycle() {
         targetColour = targetColour.next();
     }
 
-    public void slideOutWithSetPower(Gamepad gamepad){
-        drawerMotor.setPower(-gamepad.left_stick_y);
+    public void slideOutWithSetPower(Gamepad gamepad) {
+        drawerMotor.setPower(-gamepad.left_stick_y * 0.6);
     }
 
     public Colours getTargetColour() {
