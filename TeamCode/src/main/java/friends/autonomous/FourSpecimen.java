@@ -15,7 +15,7 @@ import com.pedropathing.util.DashboardPoseTracker;
 import com.pedropathing.util.Drawing;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -40,8 +40,8 @@ import pedroPathing.constants.LConstants;
  * @version 2.0, 11/28/2024
  */
 
-@Autonomous(name = "AA CHAINS Auto", group = "Auto")
-public class PathChainsAuto extends OpMode {
+@Autonomous(name = "4 Specimen", group = "Comp")
+public class FourSpecimen extends OpMode {
 
     private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;
@@ -53,125 +53,105 @@ public class PathChainsAuto extends OpMode {
     private Path scoreInitial, scoreOne, pickupTwo, scoreTwo, pickupThree, scoreThree;
     private PathChain sweeps;
 
-
-    /** Build the paths for the auto (adds, for example, constant/linear headings while doing paths)
-     * It is necessary to do this so that all the paths are built before the auto starts. **/
     public void buildPaths() {
-
-        /* There are two major types of paths components: BezierCurves and BezierLines.
-         *    * BezierCurves are curved, and require >= 3 points. There are the start and end points, and the control points.
-         *    - Control points manipulate the curve between the start and end points.
-         *    - A good visualizer for this is [this](https://pedro-path-generator.vercel.app/).
-         *    * BezierLines are straight, and require 2 points. There are the start and end points.
-         * Paths have can have heading interpolation: Constant, Linear, or Tangential
-         *    * Linear heading interpolation:
-         *    - Pedro will slowly change the heading of the robot from the startHeading to the endHeading over the course of the entire path.
-         *    * Constant Heading Interpolation:
-         *    - Pedro will maintain one heading throughout the entire path.
-         *    * Tangential Heading Interpolation:
-         *    - Pedro will follows the angle of the path such that the robot is always driving forward when it follows the path.
-         * PathChains hold Path(s) within it and are able to hold their end point, meaning that they will holdPoint until another path is followed.
-         * Here is a explanation of the difference between Paths and PathChains <https://pedropathing.com/commonissues/pathtopathchain.html> */
-
-        /* This is our scorePreload path. We are using a BezierLine, which is a straight line. */
         scoreInitial = new Path(
-                new BezierLine(
-                        new Point(8.503, 64.040, Point.CARTESIAN),
-                        new Point(38.5, 73.000, Point.CARTESIAN)
-                )
+            new BezierLine(
+                new Point(8.503, 64.040, Point.CARTESIAN),
+                new Point(38.5, 73.000, Point.CARTESIAN)
+            )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         PathBuilder builder = new PathBuilder();
 
         builder.addPath(
-                        new BezierCurve(
-                                new Point(38.5, 73.000, Point.CARTESIAN),
-                                new Point(4.161, 19.538, Point.CARTESIAN),
-                                new Point(62.774, 42.513, Point.CARTESIAN),
-                                new Point(57.348, 27.125, Point.CARTESIAN)
-                        )
-                )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
+            new BezierCurve(
+                new Point(38.5, 73.000, Point.CARTESIAN),
+                new Point(4.161, 19.538, Point.CARTESIAN),
+                new Point(62.774, 42.513, Point.CARTESIAN),
+                new Point(57.348, 27.125, Point.CARTESIAN)
+            )
+        )
+            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
-                        new BezierLine(
-                                new Point(57.348, 27.125, Point.CARTESIAN),
-                                new Point(21.528, 26.412, Point.CARTESIAN)
-                        )
-                )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
+            new BezierLine(
+                new Point(57.348, 27.125, Point.CARTESIAN),
+                new Point(21.528, 26.412, Point.CARTESIAN)
+            )
+        )
+            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
-                        new BezierCurve(
-                                new Point(21.528, 26.412, Point.CARTESIAN),
-                                new Point(68.450, 30.584, Point.CARTESIAN),
-                                new Point(53.797, 14.382, Point.CARTESIAN)
-                        )
-                )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
+            new BezierCurve(
+                new Point(21.528, 26.412, Point.CARTESIAN),
+                new Point(68.450, 30.584, Point.CARTESIAN),
+                new Point(53.797, 14.382, Point.CARTESIAN)
+            )
+        )
+            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
-                        new BezierLine(
-                                new Point(53.797, 14.382, Point.CARTESIAN),
-                                new Point(22.000, 14.111, Point.CARTESIAN)
-                        )
-                )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
+            new BezierLine(
+                new Point(53.797, 14.382, Point.CARTESIAN),
+                new Point(22.000, 14.111, Point.CARTESIAN)
+            )
+        )
+            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
-                        new BezierCurve(
-                                new Point(22.000, 14.111, Point.CARTESIAN),
-                                new Point(66.935, 17.910, Point.CARTESIAN),
-                                new Point(54.399, 9.831, Point.CARTESIAN)
-                        )
-                )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
+            new BezierCurve(
+                new Point(22.000, 14.111, Point.CARTESIAN),
+                new Point(66.935, 17.910, Point.CARTESIAN),
+                new Point(54.399, 9.831, Point.CARTESIAN)
+            )
+        )
+            .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
-                        new BezierLine(
-                                new Point(54.399, 9.831, Point.CARTESIAN),
-                                new Point(22.000, 9.800, Point.CARTESIAN)
-                        )
-                )
-                .setConstantHeadingInterpolation(Math.toRadians(90));
+            new BezierLine(
+                new Point(54.399, 9.831, Point.CARTESIAN),
+                new Point(22.000, 9.800, Point.CARTESIAN)
+            )
+        )
+            .setConstantHeadingInterpolation(Math.toRadians(90));
 
         builder.addPath(
-                new BezierCurve(
-                        new Point(22.000, 9.800, Point.CARTESIAN),
-                        new Point(16.931, 31.130, Point.CARTESIAN),
-                        new Point(8.5, 34.000, Point.CARTESIAN)
-                )
+            new BezierCurve(
+                new Point(22.000, 9.800, Point.CARTESIAN),
+                new Point(16.931, 31.130, Point.CARTESIAN),
+                new Point(8.5, 34.000, Point.CARTESIAN)
+            )
         ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0));
 
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-                new Point(8.5, 34.000, Point.CARTESIAN),
-                new Point(38.85, 72.000, Point.CARTESIAN)
+            new Point(8.5, 34.000, Point.CARTESIAN),
+            new Point(38.85, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
-                new Point(38.85, 72.000, Point.CARTESIAN),
-                new Point(8.5, 34.000, Point.CARTESIAN)
+            new Point(38.85, 72.000, Point.CARTESIAN),
+            new Point(8.5, 34.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
-                new Point(8.5, 34.000, Point.CARTESIAN),
-                new Point(38.850, 70.500, Point.CARTESIAN)
+            new Point(8.5, 34.000, Point.CARTESIAN),
+            new Point(38.850, 70.500, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
-                new Point(38.850, 70.500, Point.CARTESIAN),
-                new Point(8.5, 34.000, Point.CARTESIAN)
+            new Point(38.850, 70.500, Point.CARTESIAN),
+            new Point(8.5, 34.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
-                new Point(8.5, 34.000, Point.CARTESIAN),
-                new Point(38.850, 69.000, Point.CARTESIAN)
+            new Point(8.5, 34.000, Point.CARTESIAN),
+            new Point(38.850, 69.000, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
     }
@@ -185,7 +165,7 @@ public class PathChainsAuto extends OpMode {
                 follower.followPath(scoreInitial);
                 arm.readyToScore();
                 setPathState(1);
-                break;
+            break;
             case 1:
                 if (pathTimer.getElapsedTimeSeconds() > 1.5) {
                     arm.score();
@@ -196,13 +176,13 @@ public class PathChainsAuto extends OpMode {
                     arm.readyToWall();
                     setPathState(2);
                 }
-                break;
+            break;
             case 2:
                 if (!follower.isBusy()) {
                     arm.readyToWall();
                     setPathState(3);
                 }
-                break;
+            break;
             case 3:
                 arm.closeClaw();
 
@@ -216,7 +196,7 @@ public class PathChainsAuto extends OpMode {
                     arm.looseClaw();
                     setPathState(4);
                 }
-                break;
+            break;
 
             case 4:
                 if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() < 2.5) {
@@ -232,7 +212,7 @@ public class PathChainsAuto extends OpMode {
                     arm.readyToWall();
                     setPathState(5);
                 }
-                break;
+            break;
 
             case 5:
                 if(pathTimer.getElapsedTimeSeconds() < 1.5) {
@@ -251,7 +231,7 @@ public class PathChainsAuto extends OpMode {
                     arm.looseClaw();
                     setPathState(6);
                 }
-                break;
+            break;
 
             case 6:
                 if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() < 2.5) {
@@ -266,7 +246,7 @@ public class PathChainsAuto extends OpMode {
                     follower.followPath(pickupThree);
                     setPathState(7);
                 }
-                break;
+            break;
 
             case 7:
                 if(pathTimer.getElapsedTimeSeconds() < 1.5) {
@@ -285,7 +265,7 @@ public class PathChainsAuto extends OpMode {
                     arm.looseClaw();
                     setPathState(8);
                 }
-                break;
+            break;
 
             case 8:
                 if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() > 2.5) {
@@ -299,7 +279,7 @@ public class PathChainsAuto extends OpMode {
                 if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.8) {
                     setPathState(-1);
                 }
-                break;
+            break;
         }
     }
 
@@ -362,7 +342,7 @@ public class PathChainsAuto extends OpMode {
 
         telemetryA = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         telemetryA.addLine("This will print your robot's position to telemetry while "
-                + "allowing robot control through a basic mecanum drive on gamepad 1.");
+            + "allowing robot control through a basic mecanum drive on gamepad 1.");
         telemetryA.update();
 
         Drawing.drawRobot(follower.poseUpdater.getPose(), "#4CAF50");
