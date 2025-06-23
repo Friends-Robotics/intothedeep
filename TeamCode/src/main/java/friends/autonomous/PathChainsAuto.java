@@ -1,5 +1,7 @@
 package friends.autonomous;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
@@ -9,10 +11,14 @@ import com.pedropathing.pathgen.PathBuilder;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.Constants;
+import com.pedropathing.util.DashboardPoseTracker;
+import com.pedropathing.util.Drawing;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.Optional;
 
@@ -44,7 +50,7 @@ public class PathChainsAuto extends OpMode {
 
     private final Pose startPose = new Pose(8.503, 65.040, Math.toRadians(0));
 
-    private Path scoreInitial, pickupOne, scoreOne, pickupTwo, scoreTwo, pickupThree, scoreThree;
+    private Path scoreInitial, scoreOne, pickupTwo, scoreTwo, pickupThree, scoreThree;
     private PathChain sweeps;
 
 
@@ -71,7 +77,7 @@ public class PathChainsAuto extends OpMode {
         scoreInitial = new Path(
                 new BezierLine(
                         new Point(8.503, 64.040, Point.CARTESIAN),
-                        new Point(38.00, 73.000, Point.CARTESIAN)
+                        new Point(38.5, 73.000, Point.CARTESIAN)
                 )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
@@ -80,7 +86,7 @@ public class PathChainsAuto extends OpMode {
 
         builder.addPath(
                         new BezierCurve(
-                                new Point(38.00, 73.000, Point.CARTESIAN),
+                                new Point(38.5, 73.000, Point.CARTESIAN),
                                 new Point(4.161, 19.538, Point.CARTESIAN),
                                 new Point(62.774, 42.513, Point.CARTESIAN),
                                 new Point(57.348, 27.125, Point.CARTESIAN)
@@ -134,38 +140,38 @@ public class PathChainsAuto extends OpMode {
                 new BezierCurve(
                         new Point(22.000, 9.800, Point.CARTESIAN),
                         new Point(16.931, 31.130, Point.CARTESIAN),
-                        new Point(7.900, 31.000, Point.CARTESIAN)
+                        new Point(8.5, 34.000, Point.CARTESIAN)
                 )
         ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0));
 
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-                new Point(7.900, 34.000, Point.CARTESIAN),
-                new Point(38.75, 72.000, Point.CARTESIAN)
+                new Point(8.5, 34.000, Point.CARTESIAN),
+                new Point(38.85, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
-                new Point(38.75, 72.000, Point.CARTESIAN),
-                new Point(7.700, 34.000, Point.CARTESIAN)
+                new Point(38.85, 72.000, Point.CARTESIAN),
+                new Point(8.5, 34.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
-                new Point(7.800, 34.000, Point.CARTESIAN),
-                new Point(38.850, 71.000, Point.CARTESIAN)
+                new Point(8.5, 34.000, Point.CARTESIAN),
+                new Point(38.850, 70.500, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
-                new Point(38.850, 71.000, Point.CARTESIAN),
-                new Point(7.7000, 34.000, Point.CARTESIAN)
+                new Point(38.850, 70.500, Point.CARTESIAN),
+                new Point(8.5, 34.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
-                new Point(7.500, 34.000, Point.CARTESIAN),
-                new Point(38.950, 70.000, Point.CARTESIAN)
+                new Point(8.5, 34.000, Point.CARTESIAN),
+                new Point(38.850, 69.000, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
     }
@@ -200,7 +206,7 @@ public class PathChainsAuto extends OpMode {
             case 3:
                 arm.closeClaw();
 
-                if (pathTimer.getElapsedTimeSeconds() > 0.2){
+                if (pathTimer.getElapsedTimeSeconds() > 0.2) {
                     arm.fromWall();
                 }
 
@@ -213,11 +219,11 @@ public class PathChainsAuto extends OpMode {
                 break;
 
             case 4:
-                if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() < 2.2) {
+                if(pathTimer.getElapsedTimeSeconds() > 2 && pathTimer.getElapsedTimeSeconds() < 2.5) {
                     arm.closeClaw();
                 }
 
-                if(pathTimer.getElapsedTimeSeconds() > 2.2) {
+                if(pathTimer.getElapsedTimeSeconds() > 2.5) {
                     arm.score();
                 }
 
@@ -232,10 +238,10 @@ public class PathChainsAuto extends OpMode {
                 if(pathTimer.getElapsedTimeSeconds() < 1.5) {
                     arm.readyToWall();
                 }
-                if(pathTimer.getElapsedTimeSeconds() > 1.9) {
+                if(pathTimer.getElapsedTimeSeconds() > 2.0) {
                     arm.closeClaw();
                 }
-                if(pathTimer.getElapsedTimeSeconds() > 2.2) {
+                if(pathTimer.getElapsedTimeSeconds() > 2.5) {
                     arm.fromWall();
                 }
 
@@ -323,12 +329,17 @@ public class PathChainsAuto extends OpMode {
         // Hold in the intake
         map.DrawerSlideMotor.setTargetPosition(0);
 
-        if(map.RightViperMotor.getCurrentPosition() > 865){
+        if(map.RightViperMotor.getCurrentPosition() > 860){
             arm.openClaw();
         }
 
+        Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
+        Drawing.drawRobot(follower.poseUpdater.getPose(), "#4CAF50");
+        Drawing.sendPacket();
     }
 
+    private DashboardPoseTracker dashboardPoseTracker;
+    private Telemetry telemetryA;
     private HardwareMap map;
     private Arm arm;
     private Count target = new Count();
@@ -341,10 +352,21 @@ public class PathChainsAuto extends OpMode {
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
+
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(startPose);
         buildPaths();
+
+        dashboardPoseTracker = new DashboardPoseTracker(follower.poseUpdater);
+
+        telemetryA = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetryA.addLine("This will print your robot's position to telemetry while "
+                + "allowing robot control through a basic mecanum drive on gamepad 1.");
+        telemetryA.update();
+
+        Drawing.drawRobot(follower.poseUpdater.getPose(), "#4CAF50");
+        Drawing.sendPacket();
 
         map = new HardwareMap(hardwareMap);
         arm = new Arm(map, Optional.of(target));

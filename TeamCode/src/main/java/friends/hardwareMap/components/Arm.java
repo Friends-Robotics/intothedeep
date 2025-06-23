@@ -25,9 +25,6 @@ public class Arm {
     public void readyToScore() {
         rightArmServo.setPosition(0.8);
         leftArmServo.setPosition(0.2);
-
-        looseClaw();
-
         viper_target.value = 0;
     }
 
@@ -50,7 +47,7 @@ public class Arm {
     }
 
     public void closeClaw(){
-        clawServo.setPosition(0.37);
+        clawServo.setPosition(0.4);
     }
 
     public void looseClaw() {
