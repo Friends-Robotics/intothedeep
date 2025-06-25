@@ -112,6 +112,8 @@ public class CompTeleOp extends LinearOpMode {
             secondary.update();
             secondary.setColour(intake.getTargetColour());
 
+            mecanum.sendMecanumTelemetry(telemetry);
+
             switch((int) hang_macro_state.value) {
                 case 0:
                     break;

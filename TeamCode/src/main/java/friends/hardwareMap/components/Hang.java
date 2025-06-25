@@ -14,15 +14,18 @@ public class Hang {
     }
 
     public void setLatch() {
-        leftHangServo.setPosition(0.45);
+        leftHangServo.setPosition(0.37);
         rightHangServo.setPosition(0.15);
     }
 
     public void setUnlatch() {
-        leftHangServo.setPosition(0.75);
+        leftHangServo.setPosition(0.54);
         rightHangServo.setPosition(0);
     }
 
+    // INIT UnHATCH
+    // VIPER UP
+    // RELATCH
     public void powerOff() {
         if (leftHangServo instanceof  PwmControl) ((PwmControl)leftHangServo).setPwmDisable();
         if (rightHangServo instanceof PwmControl) ((PwmControl)rightHangServo).setPwmDisable();

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import friends.hardwareMap.HardwareMap;
+import friends.hardwareMap.components.Mecanum;
 import friends.helper.Count;
 import friends.helper.gamepad.GamepadEx;
 import pedroPathing.examples.Triangle;
@@ -12,12 +14,13 @@ import static friends.helper.gamepad.GamepadButton.*;
 
 @TeleOp(name="Servo Testing", group="Testing")
 public class ServoControlTeleOp extends LinearOpMode {
-    final String servoName = "IS";
+    final String servoName = "LHS";
 
     @Override
     public void runOpMode() {
         Servo servo = hardwareMap.get(Servo.class, servoName);
         GamepadEx primary = new GamepadEx(gamepad1);
+        HardwareMap map = new HardwareMap(hardwareMap);
 
         Count pos = new Count();
 
