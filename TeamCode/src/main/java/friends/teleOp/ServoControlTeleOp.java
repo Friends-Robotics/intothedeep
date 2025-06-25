@@ -12,7 +12,7 @@ import static friends.helper.gamepad.GamepadButton.*;
 
 @TeleOp(name="Servo Testing", group="Testing")
 public class ServoControlTeleOp extends LinearOpMode {
-    final String servoName = "LHS";
+    final String servoName = "IS";
 
     @Override
     public void runOpMode() {

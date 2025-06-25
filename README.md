@@ -9,6 +9,11 @@ OTHER -> HORZIONTAL EXTENSION ( r + l bumper )
          CLAW                 ( SQUARE + TRIANGLE )
          CYCLE COLOUR         ( TOUCHPAD ) { NEED STATE }
 
+### Optimisation
+
+- Secondary PID
+- Fine Tune Paths
+
 ## Please read
 
 DO NOT click on the dialogue box saying "Upgrade AGP" or something similar—ignore it—it will break everything. Also, if Gradle says it has an error, do not click any blue links. Look in the [FTC Cookbook](https://cookbook.dairy.foundation/introduction.html) for more info about these issues.
