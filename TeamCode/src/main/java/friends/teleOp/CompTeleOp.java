@@ -62,9 +62,6 @@ public class CompTeleOp extends LinearOpMode {
         primary.up(RIGHT_BUMPER, mecanum::highPower);
 
         /// Primary Controls
-        /// Joysticks -> Mecanum
-        /// Touchpad -> Unlatch level 2 hooks & init hang
-        /// Playstation -> Hang
         primary.down(ALWAYS, mecanum::move);
 
         primary.pressed(TOUCHPAD, () -> {
@@ -77,16 +74,6 @@ public class CompTeleOp extends LinearOpMode {
         });
 
         /// Secondary Controls
-        ///  Right Bumper -> Sets Intake to ready position
-        ///  Left Bumper -> Spits Intake
-        ///  Dpad Up -> Slide Intake Out
-        ///  Dpad Down -> Slide Intake In
-        ///  Touchpad -> Cycles Intake To Next Colour
-        ///  Triangle -> Sets arm to scoring position
-        ///  Circle -> Sets arm to wall position
-        ///  Square -> Close claw
-        ///  Cross -> Open claw
-        ///  Right Stick -> Move intake position
         secondary.pressed(CIRCLE, (gamepad) -> {
             if(gamepad.cross) return;
             arm.readyToWall();
