@@ -26,7 +26,6 @@ public class IntakeTeleOp extends LinearOpMode {
         GamepadEx primary = new GamepadEx(gamepad1);
 
         primary.pressed(CROSS, intake::cycle);
-
         primary.pressed(CIRCLE, intake::ready);
         primary.released(CIRCLE, (gamepad) -> {
             if(gamepad.touchpad) return;
@@ -35,7 +34,6 @@ public class IntakeTeleOp extends LinearOpMode {
 
         primary.down(RIGHT_BUMPER, intake::suck);
         primary.down(LEFT_BUMPER, intake::spit);
-
         primary.down(ALWAYS, intake::slideOutWithSetPower);
 
         waitForStart();
@@ -63,7 +61,6 @@ public class IntakeTeleOp extends LinearOpMode {
             int red = (int)((double)sensor.red() * scalingFactor);
             int green = (int)((double)sensor.green() * scalingFactor);
             int blue = (int)((double)sensor.blue() * scalingFactor);
-
 
             telemetry.addLine("Normalised Values");
             telemetry.addData("Scaling Factor:", 255.0f / map.ColorSensor.alpha());

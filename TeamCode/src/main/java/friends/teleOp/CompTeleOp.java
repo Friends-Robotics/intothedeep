@@ -26,9 +26,13 @@ public class CompTeleOp extends LinearOpMode {
     Intake intake;
     Arm arm;
     Hang hang;
-    Timer hang_timer = new Timer();
 
+    Timer pre_hang_timer = new Timer();
+    Count pre_hang_macro_state = new Count();
+
+    Timer hang_timer = new Timer();
     Count hang_macro_state = new Count();
+
     PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
     Count viper_target = new Count();
 
@@ -65,8 +69,7 @@ public class CompTeleOp extends LinearOpMode {
         primary.down(ALWAYS, mecanum::move);
 
         primary.pressed(TOUCHPAD, () -> {
-            hang.setUnlatch();
-            viper_target.value = 900;
+            pre_hang_macro_state.value = 1;
         });
 
         primary.pressed(PLAYSTATION, () -> {
@@ -105,53 +108,87 @@ public class CompTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-
             primary.update();
             primary.setColour(mecanum.getColour());
 
             secondary.update();
             secondary.setColour(intake.getTargetColour());
 
-            switch((int) hang_macro_state.value) {
-                case 0:
-                    break;
-                case 1:
-                    viper_target.value = 40;
-                    if (map.RightViperMotor.getCurrentPosition() < 45) {
-                        hang_macro_state.value = 2;
-                        hang_timer.resetTimer();
-                    }
-                    break;
-                case 2:
-                    hang.setLatch();
-                    if (hang_timer.getElapsedTimeSeconds() > 1.5) {
-                        hang_macro_state.value = 3;
-                    }
-                    break;
-                case 3:
-                    viper_target.value = 5000;
-                    if(map.RightViperMotor.getCurrentPosition() > 4900) {
-                        hang_macro_state.value = 4;
-                    }
-                    break;
-                case 4:
-                    map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-                    viper_target.value = 2000;
-                    if(map.RightViperMotor.getCurrentPosition() < 2100) {
-                        hang_macro_state.value = 0;
-                    }
-                    break;
-            }
+            preHangMacro();
+            hangMacro(map);
 
             // Open claw if the viper slides are above a value
             if(map.RightViperMotor.getCurrentPosition() > 865){
                 arm.openClaw();
             }
 
+            double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
+            map.RightViperMotor.setPower(power);
+            map.LeftViperMotor.setPower(power);
+
             telemetry.addData("Currently Viewed Colour: ", intake.getViewedColour());
             telemetry.update();
+        }
+    }
+
+    private void preHangMacro() {
+        switch ((int)pre_hang_macro_state.value) {
+            case 0:
+                break;
+            case 1:
+                viper_target.value = 900;
+                pre_hang_macro_state.value = 2;
+                pre_hang_timer.resetTimer();
+                hang.setUnlatch();
+                break;
+            case 2:
+                if (pre_hang_timer.getElapsedTimeSeconds() > 1.2) {
+                    hang.setLatch();
+                    pre_hang_macro_state.value = 3;
+                    pre_hang_timer.resetTimer();
+                }
+                break;
+            case 3:
+                if (pre_hang_timer.getElapsedTimeSeconds() > 1.2) {
+                    hang.powerOff();
+                    pre_hang_macro_state.value = 0;
+                }
+                break;
+        }
+    }
+
+    private void hangMacro(HardwareMap map) {
+        switch((int) hang_macro_state.value) {
+            case 0:
+                break;
+            case 1:
+                viper_target.value = 40;
+                if (map.RightViperMotor.getCurrentPosition() < 45) {
+                    hang_macro_state.value = 2;
+                    hang_timer.resetTimer();
+                }
+                break;
+            case 2:
+                hang.setLatch();
+                if (hang_timer.getElapsedTimeSeconds() > 1.5) {
+                    hang_macro_state.value = 3;
+                }
+                break;
+            case 3:
+                viper_target.value = 5000;
+                if(map.RightViperMotor.getCurrentPosition() > 4900) {
+                    hang_macro_state.value = 4;
+                }
+                break;
+            case 4:
+                map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+                viper_target.value = 2000;
+                if(map.RightViperMotor.getCurrentPosition() < 2100) {
+                    hang_macro_state.value = 0;
+                }
+                break;
         }
     }
 }

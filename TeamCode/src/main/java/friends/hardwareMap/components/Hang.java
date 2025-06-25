@@ -14,22 +14,22 @@ public class Hang {
     }
 
     public void setLatch() {
-        leftHangServo.setPosition(0.45);
-        rightHangServo.setPosition(0.15);
+        leftHangServo.setPosition(0.1);
+        rightHangServo.setPosition(0.21);
     }
 
     public void setUnlatch() {
-        leftHangServo.setPosition(0.75);
-        rightHangServo.setPosition(0);
+        leftHangServo.setPosition(0.35);
+        rightHangServo.setPosition(0.08);
     }
 
     public void powerOff() {
-        if (leftHangServo instanceof  PwmControl) ((PwmControl)leftHangServo).setPwmDisable();
+        if (leftHangServo instanceof PwmControl) ((PwmControl)leftHangServo).setPwmDisable();
         if (rightHangServo instanceof PwmControl) ((PwmControl)rightHangServo).setPwmDisable();
     }
 
     public void powerOn() {
-        if (leftHangServo instanceof  PwmControl) ((PwmControl)leftHangServo).setPwmEnable();
+        if (leftHangServo instanceof PwmControl) ((PwmControl)leftHangServo).setPwmEnable();
         if (rightHangServo instanceof PwmControl) ((PwmControl)rightHangServo).setPwmEnable();
     }
 }

@@ -1,0 +1,1 @@
+start_re = re.compile(r'startPosition\wr*=\w*new Pose\((\d+\.\d+)\)')

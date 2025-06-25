@@ -47,14 +47,14 @@ public class Arm {
     }
 
     public void closeClaw(){
-        clawServo.setPosition(0.4);
+        clawServo.setPosition(0.35);
     }
 
     public void looseClaw() {
-        clawServo.setPosition(0.32);
+        clawServo.setPosition(0.27);
     }
 
     public void openClaw(){
-        clawServo.setPosition(0.05);
+        clawServo.setPosition(0);
     }
 }
