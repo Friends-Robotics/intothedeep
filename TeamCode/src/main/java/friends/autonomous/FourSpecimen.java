@@ -109,37 +109,37 @@ public class FourSpecimen extends OpMode {
             new BezierCurve(
                 new Point(22.000, 9.800, Point.CARTESIAN),
                 new Point(16.931, 31.130, Point.CARTESIAN),
-                new Point(8.5, 34.000, Point.CARTESIAN)
+                new Point(9, 34.000, Point.CARTESIAN)
             )
         ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0));
 
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-            new Point(8.5, 34.000, Point.CARTESIAN),
+            new Point(9, 34.000, Point.CARTESIAN),
             new Point(38.85, 72.000, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
             new Point(38.85, 72.000, Point.CARTESIAN),
-            new Point(8.5, 34.000, Point.CARTESIAN)
+            new Point(9, 34.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
-            new Point(8.5, 34.000, Point.CARTESIAN),
+            new Point(9, 34.000, Point.CARTESIAN),
             new Point(38.850, 70.500, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
             new Point(38.850, 70.500, Point.CARTESIAN),
-            new Point(8.5, 34.000, Point.CARTESIAN)
+            new Point(9, 34.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
-            new Point(8.5, 34.000, Point.CARTESIAN),
+            new Point(9, 34.000, Point.CARTESIAN),
             new Point(38.850, 69.000, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
