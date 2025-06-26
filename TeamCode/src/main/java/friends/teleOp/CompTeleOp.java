@@ -48,6 +48,8 @@ public class CompTeleOp extends LinearOpMode {
                 1);
         telemetry.addData("Status", "Initialised Mecanum");
 
+        telemetry.speak("hello my devious little gremlin child");
+
         intake = new Intake(map);
         arm = new Arm(map, Optional.of(viper_target));
         hang = new Hang(map);
@@ -132,6 +134,7 @@ public class CompTeleOp extends LinearOpMode {
     }
 
     private void preHangMacro() {
+        telemetry.speak("BALLS INITIATED");
         switch ((int)pre_hang_macro_state.value) {
             case 0:
                 break;
@@ -158,6 +161,7 @@ public class CompTeleOp extends LinearOpMode {
     }
 
     private void hangMacro(HardwareMap map) {
+        telemetry.speak("GURT HAS BEEN CREATED");
         switch((int) hang_macro_state.value) {
             case 0:
                 break;

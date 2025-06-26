@@ -36,14 +36,13 @@ public class MotorTeleOp extends LinearOpMode {
 
         telemetry.addData("Status","Initialised GamepadEx");
         PIDFController viperpidf = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF);
-
         Count viper_target = new Count();
 
-        primary.pressed(CROSS, () -> viper_target.value += 50);
-        primary.pressed(CIRCLE, () -> viper_target.value -= 50);
+        primary.pressed(CROSS, () -> { viper_target.value += 100; telemetry.speak("100"); });
+        primary.pressed(CIRCLE, () -> { viper_target.value -= 100; telemetry.speak("-100");});
 
-        primary.pressed(X, () -> viper_target.value = 5000);
-        primary.pressed(Y, () -> viper_target.value = 0);
+        primary.pressed(X, () -> { viper_target.value += 20; telemetry.speak("20"); });
+        primary.pressed(Y, () -> { viper_target.value -= 20; telemetry.speak("-20"); });
 
         telemetry.update();
         waitForStart();
