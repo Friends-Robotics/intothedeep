@@ -22,8 +22,6 @@ public class MotorTeleOp extends LinearOpMode {
     public void runOpMode() {
         // Create hardware map
         HardwareMap map = new HardwareMap(hardwareMap, DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        map.RightViperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        map.LeftViperMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         map.RightViperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         map.LeftViperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

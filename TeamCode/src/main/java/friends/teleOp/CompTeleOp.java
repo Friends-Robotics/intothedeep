@@ -139,7 +139,7 @@ public class CompTeleOp extends LinearOpMode {
 
     // COUNT -> 1
     private void preHangMacro() {
-        if(current_macro.value > 1) return;
+        if(current_macro.value != 1) return;
         switch ((int)pre_hang_macro_state.value) {
             case 0:
                 break;
@@ -160,6 +160,7 @@ public class CompTeleOp extends LinearOpMode {
                 if (pre_hang_timer.getElapsedTimeSeconds() > 1.2) {
                     hang.powerOff();
                     pre_hang_macro_state.value = 0;
+                    current_macro.value = 0;
                 }
                 break;
         }
@@ -167,13 +168,13 @@ public class CompTeleOp extends LinearOpMode {
 
     // Count -> 2
     private void hangMacro(HardwareMap map) {
-        if (current_macro.value != 0 && current_macro.value != 2) return;
+        if (current_macro.value != 2) return;
         switch((int) hang_macro_state.value) {
             case 0:
                 break;
             case 1:
-                viper_target.value = 40;
-                if (map.RightViperMotor.getCurrentPosition() < 45) {
+                viper_target.value = 0;
+                if (map.RightViperMotor.getCurrentPosition() < 5) {
                     hang_macro_state.value = 2;
                     hang_timer.resetTimer();
                 }
@@ -198,6 +199,7 @@ public class CompTeleOp extends LinearOpMode {
                 if(map.RightViperMotor.getCurrentPosition() < 2100) {
                     hang_macro_state.value = 0;
                 }
+                current_macro.value = 0;
                 break;
         }
     }
