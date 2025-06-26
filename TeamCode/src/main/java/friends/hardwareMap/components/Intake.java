@@ -14,7 +14,7 @@ public class Intake {
     private final DcMotorEx intakeMotor;
     private final ColorSensor sensor;
 
-    private static final double INTAKE_POWER = 0.7;
+    private static final double INTAKE_POWER = 0.8;
 
     private Colours targetColour;
     private Colours viewedColour = Colours.NONE;
@@ -44,7 +44,7 @@ public class Intake {
             standby();
             return;
         } else {
-            servo.setPosition(0.35);
+            servo.setPosition(0.38);
         }
 
         intakeMotor.setPower(INTAKE_POWER);

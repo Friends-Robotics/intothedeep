@@ -45,8 +45,8 @@ public class FourSpecimen extends OpMode {
     public void buildPaths() {
         scoreInitial = new Path(
             new BezierLine(
-                new Point(8.503, 64.040, Point.CARTESIAN),
-                new Point(38.5, 73.000, Point.CARTESIAN)
+                    new Point(8.503, 64.040, Point.CARTESIAN),
+                    new Point(38.000, 78.000, Point.CARTESIAN)
             )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
@@ -55,92 +55,97 @@ public class FourSpecimen extends OpMode {
 
         builder.addPath(
             new BezierCurve(
-                new Point(38.5, 73.000, Point.CARTESIAN),
-                new Point(4.161, 19.538, Point.CARTESIAN),
-                new Point(62.774, 42.513, Point.CARTESIAN),
-                new Point(57.348, 27.125, Point.CARTESIAN)
+                    new Point(38.000, 78.000, Point.CARTESIAN),
+                    new Point(4.161, 19.538, Point.CARTESIAN),
+                    new Point(32.925, 48.844, Point.CARTESIAN),
+                    new Point(56.080, 26.231, Point.CARTESIAN)
             )
         )
             .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
             new BezierLine(
-                new Point(57.348, 27.125, Point.CARTESIAN),
-                new Point(21.528, 26.412, Point.CARTESIAN)
+                    new Point(68.020, 26.231, Point.CARTESIAN),
+                    new Point(22.432, 26.231, Point.CARTESIAN)
             )
         )
             .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
             new BezierCurve(
-                new Point(21.528, 26.412, Point.CARTESIAN),
-                new Point(68.450, 30.584, Point.CARTESIAN),
-                new Point(53.797, 14.382, Point.CARTESIAN)
+                    new Point(22.432, 26.231, Point.CARTESIAN),
+                    new Point(65.126, 30.754, Point.CARTESIAN),
+                    new Point(54.000, 14.382, Point.CARTESIAN)
             )
         )
             .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
             new BezierLine(
-                new Point(53.797, 14.382, Point.CARTESIAN),
-                new Point(22.000, 14.111, Point.CARTESIAN)
+                    new Point(54.000, 14.382, Point.CARTESIAN),
+                    new Point(22.000, 14.111, Point.CARTESIAN)
             )
         )
             .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
             new BezierCurve(
-                new Point(22.000, 14.111, Point.CARTESIAN),
-                new Point(66.935, 17.910, Point.CARTESIAN),
-                new Point(54.399, 9.831, Point.CARTESIAN)
+                    new Point(22.000, 14.111, Point.CARTESIAN),
+                    new Point(66.935, 17.910, Point.CARTESIAN),
+                    new Point(54.000, 9.400, Point.CARTESIAN)
             )
         )
             .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90));
 
         builder.addPath(
             new BezierLine(
-                new Point(54.399, 9.831, Point.CARTESIAN),
-                new Point(22.000, 9.800, Point.CARTESIAN)
+                    new Point(54.000, 9.400, Point.CARTESIAN),
+                    new Point(22.000, 9.400, Point.CARTESIAN)
             )
         )
             .setConstantHeadingInterpolation(Math.toRadians(90));
 
         builder.addPath(
             new BezierCurve(
-                new Point(22.000, 9.800, Point.CARTESIAN),
-                new Point(16.931, 31.130, Point.CARTESIAN),
-                new Point(9, 34.000, Point.CARTESIAN)
+                    new Point(22.000, 9.400, Point.CARTESIAN),
+                    new Point(16.931, 31.130, Point.CARTESIAN),
+                    new Point(8.500, 35.000, Point.CARTESIAN)
             )
         ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(0));
 
         sweeps = builder.build();
 
         scoreOne = new Path(new BezierCurve(
-            new Point(9, 34.000, Point.CARTESIAN),
-            new Point(38.85, 72.000, Point.CARTESIAN)
+                new Point(8.500, 35.000, Point.CARTESIAN),
+                new Point(9.226, 64.221, Point.CARTESIAN),
+                new Point(38.000, 76.500, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
-            new Point(38.85, 72.000, Point.CARTESIAN),
-            new Point(9, 34.000, Point.CARTESIAN)
+                new Point(38.000, 76.500, Point.CARTESIAN),
+                new Point(8.503, 63.678, Point.CARTESIAN),
+                new Point(8.500, 35.000, Point.CARTESIAN)
         ));
         pickupTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         scoreTwo = new Path(new BezierCurve(
-            new Point(9, 34.000, Point.CARTESIAN),
-            new Point(38.850, 70.500, Point.CARTESIAN)
+                new Point(8.500, 35.000, Point.CARTESIAN),
+                new Point(8.864, 65.487, Point.CARTESIAN),
+                new Point(38.000, 75.000, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupThree = new Path(new BezierCurve(
-            new Point(38.850, 70.500, Point.CARTESIAN),
-            new Point(9, 34.000, Point.CARTESIAN)
+                new Point(38.000, 75.000, Point.CARTESIAN),
+                new Point(9.045, 62.412, Point.CARTESIAN),
+                new Point(8.500, 35.000, Point.CARTESIAN)
         ));
         pickupThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
         scoreThree = new Path(new BezierCurve(
-            new Point(9, 34.000, Point.CARTESIAN),
-            new Point(38.850, 69.000, Point.CARTESIAN)
+                new Point(8.500, 35.000, Point.CARTESIAN),
+                new Point(8.503, 62.955, Point.CARTESIAN),
+                new Point(38.000, 73.500, Point.CARTESIAN)
         ));
         scoreThree.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
     }
