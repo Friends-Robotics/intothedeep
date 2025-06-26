@@ -17,8 +17,6 @@ public class Mecanum {
             backRightMotor,
             backLeftMotor;
 
-    private IMU robotIMU;
-
     public double powerMultiplier = 1;
 
     /**
@@ -50,7 +48,6 @@ public class Mecanum {
         this.backLeftMotor = backLeftMotor;
         this.frontLeftMotor = frontLeftMotor;
         this.powerMultiplier = powerMultiplier;
-        this.robotIMU = robotIMU;
     }
 
     public void sendMecanumTelemetry(Telemetry telemetry){

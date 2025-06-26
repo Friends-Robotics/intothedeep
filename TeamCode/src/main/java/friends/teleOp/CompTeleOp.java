@@ -33,6 +33,8 @@ public class CompTeleOp extends LinearOpMode {
     Timer hang_timer = new Timer();
     Count hang_macro_state = new Count();
 
+    Count current_macro = new Count();
+
     PIDFController viper_controller = new PIDFController(ViperPIDFConstants.KP, ViperPIDFConstants.KI, ViperPIDFConstants.KD, ViperPIDFConstants.KF, ViperPIDFConstants.tolerance);
     Count viper_target = new Count();
 
@@ -64,18 +66,20 @@ public class CompTeleOp extends LinearOpMode {
         GamepadEx secondary = new GamepadEx(gamepad2);
         telemetry.addData("Status", "Initialised GamepadEx");
 
-        primary.down(RIGHT_BUMPER, mecanum::lowPower);
-        primary.up(RIGHT_BUMPER, mecanum::highPower);
+        primary.down(CROSS, mecanum::lowPower);
+        primary.up(CROSS, mecanum::highPower);
 
         /// Primary Controls
         primary.down(ALWAYS, mecanum::move);
 
         primary.pressed(TOUCHPAD, () -> {
             pre_hang_macro_state.value = 1;
+            current_macro.value = 1;
         });
 
         primary.pressed(PLAYSTATION, () -> {
             hang_macro_state.value = 1;
+            current_macro.value = 2;
         });
 
         /// Secondary Controls
@@ -91,8 +95,8 @@ public class CompTeleOp extends LinearOpMode {
         });
         secondary.released(TRIANGLE, arm::score);
 
-        secondary.pressed(DPAD_RIGHT, arm::openClaw);
-        secondary.pressed(DPAD_LEFT, arm::closeClaw);
+        secondary.pressed(DPAD_RIGHT, arm::closeClaw);
+        secondary.pressed(DPAD_LEFT, arm::openClaw);
         secondary.pressed(DPAD_UP, arm::looseClaw);
 
         secondary.down(RIGHT_BUMPER, intake::ready);
@@ -133,8 +137,9 @@ public class CompTeleOp extends LinearOpMode {
         }
     }
 
+    // COUNT -> 1
     private void preHangMacro() {
-        telemetry.speak("BALLS INITIATED");
+        if(current_macro.value > 1) return;
         switch ((int)pre_hang_macro_state.value) {
             case 0:
                 break;
@@ -160,8 +165,9 @@ public class CompTeleOp extends LinearOpMode {
         }
     }
 
+    // Count -> 2
     private void hangMacro(HardwareMap map) {
-        telemetry.speak("GURT HAS BEEN CREATED");
+        if (current_macro.value != 0 && current_macro.value != 2) return;
         switch((int) hang_macro_state.value) {
             case 0:
                 break;
