@@ -57,7 +57,7 @@ public class FourSpecimen extends OpMode {
             new BezierCurve(
                     new Point(38.000, 78.000, Point.CARTESIAN),
                     new Point(4.161, 19.538, Point.CARTESIAN),
-                    new Point(32.925, 48.844, Point.CARTESIAN),
+                    new Point(51.196, 49.387, Point.CARTESIAN),
                     new Point(56.080, 26.231, Point.CARTESIAN)
             )
         )
@@ -65,7 +65,7 @@ public class FourSpecimen extends OpMode {
 
         builder.addPath(
             new BezierLine(
-                    new Point(68.020, 26.231, Point.CARTESIAN),
+                    new Point(56.080, 26.231, Point.CARTESIAN),
                     new Point(22.432, 26.231, Point.CARTESIAN)
             )
         )
