@@ -103,6 +103,8 @@ public class CompTeleOp extends LinearOpMode {
         secondary.up(RIGHT_BUMPER, intake::standby);
         secondary.down(LEFT_BUMPER, intake::spit);
 
+        secondary.pressed(PLAYSTATION, () -> { hang_macro_state.value = 2; current_macro.value = 2;});
+
         secondary.pressed(TOUCHPAD, intake::cycle);
         secondary.down(ALWAYS, intake::slideOutWithSetPower);
 
@@ -128,9 +130,11 @@ public class CompTeleOp extends LinearOpMode {
                 arm.openClaw();
             }
 
-            double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
-            map.RightViperMotor.setPower(power);
-            map.LeftViperMotor.setPower(power);
+            if(usePid) {
+                double power = viper_controller.PIDControl(map.RightViperMotor.getCurrentPosition(), (int)viper_target.value);
+                map.RightViperMotor.setPower(power);
+                map.LeftViperMotor.setPower(power);
+            }
 
             telemetry.addData("Currently Viewed Colour: ", intake.getViewedColour());
             telemetry.update();
@@ -166,6 +170,8 @@ public class CompTeleOp extends LinearOpMode {
         }
     }
 
+    private boolean usePid = true;
+
     // Count -> 2
     private void hangMacro(HardwareMap map) {
         if (current_macro.value != 2) return;
@@ -173,17 +179,17 @@ public class CompTeleOp extends LinearOpMode {
             case 0:
                 break;
             case 1:
-                viper_target.value = 0;
-                if (map.RightViperMotor.getCurrentPosition() < 5) {
-                    hang_macro_state.value = 2;
-                    hang_timer.resetTimer();
-                }
+                usePid = false;
+
+                map.RightViperMotor.setPower(-1);
+                map.LeftViperMotor.setPower(-1);
+
+                hang_macro_state.value = 2;
+                hang_timer.resetTimer();
                 break;
             case 2:
-                hang.setLatch();
-                if (hang_timer.getElapsedTimeSeconds() > 1.5) {
-                    hang_macro_state.value = 3;
-                }
+                usePid = true;
+                hang_macro_state.value = 3;
                 break;
             case 3:
                 viper_target.value = 5000;
@@ -192,14 +198,22 @@ public class CompTeleOp extends LinearOpMode {
                 }
                 break;
             case 4:
+                usePid = false;
                 map.RightViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 map.LeftViperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-                viper_target.value = 2000;
-                if(map.RightViperMotor.getCurrentPosition() < 2100) {
+                map.RightViperMotor.setPower(-1);
+                map.LeftViperMotor.setPower(-1);
+
+                if(map.RightViperMotor.getCurrentPosition() < 50) {
+                    map.RightViperMotor.setPower(0);
+                    map.LeftViperMotor.setPower(0);
+
                     hang_macro_state.value = 0;
                 }
+
                 current_macro.value = 0;
+                usePid = true;
                 break;
         }
     }

@@ -46,7 +46,7 @@ public class FourSpecimen extends OpMode {
         scoreInitial = new Path(
             new BezierLine(
                     new Point(8.503, 64.040, Point.CARTESIAN),
-                    new Point(38.000, 78.000, Point.CARTESIAN)
+                    new Point(29.000, 78.000, Point.CARTESIAN)
             )
         );
         scoreInitial.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
@@ -55,7 +55,7 @@ public class FourSpecimen extends OpMode {
 
         builder.addPath(
             new BezierCurve(
-                    new Point(38.000, 78.000, Point.CARTESIAN),
+                    new Point(29.000, 78.000, Point.CARTESIAN),
                     new Point(4.161, 19.538, Point.CARTESIAN),
                     new Point(51.196, 49.387, Point.CARTESIAN),
                     new Point(56.080, 26.231, Point.CARTESIAN)
@@ -118,12 +118,12 @@ public class FourSpecimen extends OpMode {
         scoreOne = new Path(new BezierCurve(
                 new Point(8.500, 35.000, Point.CARTESIAN),
                 new Point(9.226, 64.221, Point.CARTESIAN),
-                new Point(38.000, 76.500, Point.CARTESIAN)
+                new Point(36.000, 76.500, Point.CARTESIAN)
         ));
         scoreOne.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
         pickupTwo = new Path(new BezierCurve(
-                new Point(38.000, 76.500, Point.CARTESIAN),
+                new Point(36.000, 76.500, Point.CARTESIAN),
                 new Point(8.503, 63.678, Point.CARTESIAN),
                 new Point(8.500, 35.000, Point.CARTESIAN)
         ));
@@ -132,7 +132,7 @@ public class FourSpecimen extends OpMode {
         scoreTwo = new Path(new BezierCurve(
                 new Point(8.500, 35.000, Point.CARTESIAN),
                 new Point(8.864, 65.487, Point.CARTESIAN),
-                new Point(38.000, 75.000, Point.CARTESIAN)
+                new Point(36.000, 75.000, Point.CARTESIAN)
         ));
         scoreTwo.setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0));
 
