@@ -2,13 +2,6 @@
 
 This contains all of the code for the Into The Deep FTC competition ( 24 / 25 )
 
-DRIVER -> SPEED               ( CROSS + CIRCLE )
-OTHER -> HORZIONTAL EXTENSION ( r + l bumper )
-         VERTICAL EXTENSION   ( r + l trigger )
-         WRIST                ( CROSS + CIRCLE )
-         CLAW                 ( SQUARE + TRIANGLE )
-         CYCLE COLOUR         ( TOUCHPAD ) { NEED STATE }
-
 ### Optimisation
 
 - Secondary PID
